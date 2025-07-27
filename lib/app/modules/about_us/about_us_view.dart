@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:haly/app/modules/about_us/widgets/about_us_header.dart';
+import 'package:haly/app/modules/about_us/widgets/about_us_images.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/widgets/custom_app_bar.dart';
 
 class AboutUsView extends StatelessWidget {
   const AboutUsView({super.key});
@@ -9,14 +10,7 @@ class AboutUsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            Assets.back,
-          ),
-          onPressed: () => Get.back(),
-        ),
-      ),
+      appBar: const CustomAppBar(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isTablet = constraints.maxWidth > 600;
@@ -28,22 +22,7 @@ class AboutUsView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                  child: Image.asset(
-                    Assets.logo,
-                    height: isTablet ? 102 : 60,
-                    width: 166,
-                  ),
-                ),
-                SizedBox(height: isTablet ? 24 : 16),
-                Text(
-                  "Biz barada",
-                  style: TextStyle(
-                    fontSize: isTablet ? 16 : 16,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                SizedBox(height: isTablet ? 10 : 5),
+                AboutUsHeader(isTablet: isTablet),
                 Text(
                   "Iň soňky täzelenen senesi: [Senesi]\n"
                   "[Şereketiňiziň Ady] ('biz,' 'bize,' ýa-da 'biziň') müşderilerimiziň gizlinligini goramaga berk boýun bolýar. Bu Gizlinlik Syýasaty, internet sahypamyza [Web sahypanyň URL-sini goýuň] gireniňizde ýa-da platformamyz arkaly söwda eden wagtyňyz maglumatlaryňyzy nädip ýygnap, ulanýandygymyzy we gorap saklaýandygymyzy düşündirýär. Şu syýasaty üns bilen okaň, sebäbi şahsy maglumatlaryňyzyň nähili ulanyljagyny bilmek size peýdalydyr",
@@ -54,23 +33,7 @@ class AboutUsView extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: isTablet ? 24 : 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height: isTablet ? 283 : 100,
-                        child: Image.asset(Assets.about1, fit: BoxFit.cover),
-                      ),
-                    ),
-                    SizedBox(width: isTablet ? 20 : 10),
-                    Expanded(
-                      child: SizedBox(
-                        height: isTablet ? 283 : 100,
-                        child: Image.asset(Assets.about2, fit: BoxFit.cover),
-                      ),
-                    ),
-                  ],
-                ),
+                AboutUsImages(isTablet: isTablet),
                 SizedBox(height: isTablet ? 24 : 16),
                 Text(
                   "1. Ýygnanýan Maglumatlarymyz\n"

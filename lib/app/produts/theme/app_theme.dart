@@ -36,6 +36,10 @@ class Assets {
   static const String tab1 = 'assets/images/tab1.png';
   static const String tab2 = 'assets/images/tab2.png';
   static const String tab3 = 'assets/images/tab3.png';
+
+  static const String settings = 'assets/images/settings.svg';
+  static const String sargutlar = 'assets/images/sargutlar.svg';
+  static const String tas_sar = 'assets/images/tas_sar.svg';
 }
 
 class Fonts {

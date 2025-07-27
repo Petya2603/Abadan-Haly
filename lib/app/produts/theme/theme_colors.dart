@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:haly/app/modules/home/home_view.dart';
+import 'package:haly/app/modules/home/view/home_view.dart';
+import 'package:haly/app/modules/order/order_view.dart';
+import 'package:haly/app/modules/profile/profile_view.dart';
 import 'package:haly/app/modules/search/search_view.dart';
+
+import '../../modules/cart/cart_view.dart';
 
 class AppColors {
   static const Color green = Color.fromRGBO(0, 147, 61, 1);
@@ -14,7 +18,7 @@ class AppColors {
 final List<Widget> screens = [
   HomeView(),
   SearchView(),
-  HomeView(),
-  HomeView(),
-  HomeView(),
+  CartView(),
+  OrderListView(),
+  ProfileView(),
 ];

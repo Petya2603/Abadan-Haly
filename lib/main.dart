@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:haly/app/modules/onboarding/splash_view.dart';
+import 'package:haly/app/modules/onboarding/views/splash_view.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
 void main() {

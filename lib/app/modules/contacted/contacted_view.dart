@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
+import 'package:haly/app/modules/contacted/widgets/contact_card.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/widgets/custom_app_bar.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
@@ -10,14 +11,7 @@ class ContactScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            Assets.back,
-          ),
-          onPressed: () => Get.back(),
-        ),
-      ),
+      appBar: const CustomAppBar(),
       body: LayoutBuilder(builder: (context, constraints) {
         final isTablet = constraints.maxWidth > 600;
         return Padding(
@@ -43,7 +37,7 @@ class ContactScreen extends StatelessWidget {
                       fontFamily: Fonts.gilroySemiBold,
                       color: AppColors.green)),
               const SizedBox(height: 18),
-              contactCard(
+              ContactCard(
                 icon: SvgPicture.asset(
                   Assets.location,
                 ),
@@ -52,7 +46,7 @@ class ContactScreen extends StatelessWidget {
                     "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
                 isTablet: isTablet,
               ),
-              contactCard(
+              ContactCard(
                 icon: SvgPicture.asset(
                   Assets.email,
                 ),
@@ -60,7 +54,7 @@ class ContactScreen extends StatelessWidget {
                 subtitle: "info@naduaashgabat.com.tm",
                 isTablet: isTablet,
               ),
-              contactCard(
+              ContactCard(
                 icon: SvgPicture.asset(
                   Assets.call,
                 ),
@@ -68,7 +62,7 @@ class ContactScreen extends StatelessWidget {
                 subtitle: "+993-12-39-90-06",
                 isTablet: isTablet,
               ),
-              contactCard(
+              ContactCard(
                 icon: SvgPicture.asset(
                   Assets.fax,
                 ),
@@ -80,55 +74,6 @@ class ContactScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-
-  Widget contactCard({
-    required Widget icon,
-    required String title,
-    required String subtitle,
-    bool isTablet = false,
-  }) {
-    return Container(
-      height: isTablet ? 144 : 100,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(24),
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(244, 244, 244, 1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          icon,
-          SizedBox(width: isTablet ? 24 : 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: Fonts.gilroySemiBold,
-                    fontSize: isTablet ? 16 : 12,
-                  ),
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    fontSize: isTablet ? 16 : 14,
-                    color: const Color.fromRGBO(111, 110, 110, 1),
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
