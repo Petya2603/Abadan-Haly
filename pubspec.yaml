@@ -1,0 +1,56 @@
+name: haly
+description: "A new Flutter project."
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  cupertino_icons: ^1.0.8
+  get: ^4.7.2
+  flutter_launcher_icons: ^0.14.4
+  flutter_svg: ^2.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/logosplash.jpg"
+  min_sdk_android: 21
+  
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icon/
+    - assets/font/
+
+  fonts:
+    - family: GilroyBold
+      fonts:
+        - asset: assets/font/Gilroy-Bold.ttf
+    - family: GilroySemiBold
+      fonts:
+        - asset: assets/font/Gilroy-SemiBold.ttf
+    - family: GilroyMedium
+      fonts:
+        - asset: assets/font/Gilroy-Medium.ttf
+    - family: GilroyRegular
+      fonts:
+        - asset: assets/font/Gilroy-Regular.ttf
+    - family: DancingScript
+      fonts:
+        - asset: assets/font/dancing-script.regular.ttf
+  generate: true
