@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:haly/app/modules/order/widgets/order_item_card.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 
@@ -28,36 +28,9 @@ class OrderListView extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ...orders.map((order) {
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(2),
-                  border: Border.all(
-                      color: const Color.fromARGB(255, 245, 245, 245)),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      Assets.sargutlar,
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        order["id"]!,
-                        style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: Fonts.gilroySemiBold),
-                      ),
-                    ),
-                    Text(order["date"]!,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w500)),
-                  ],
-                ),
+              return OrderItemCard(
+                orderId: order["id"]!,
+                orderDate: order["date"]!,
               );
             }),
           ],
