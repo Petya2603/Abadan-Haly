@@ -4,6 +4,7 @@ import 'package:haly/app/modules/contacted/widgets/contact_card.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 import 'package:haly/app/widgets/custom_app_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatelessWidget {
   const ContactScreen({super.key});
@@ -37,43 +38,64 @@ class ContactScreen extends StatelessWidget {
                       fontFamily: Fonts.gilroySemiBold,
                       color: AppColors.green)),
               const SizedBox(height: 18),
-              ContactCard(
-                icon: SvgPicture.asset(
-                  Assets.location,
+              InkWell(
+                onTap: () => _launchUrl(
+                    'https://www.google.com/maps/search/?api=1&query=Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27'),
+                child: ContactCard(
+                  icon: SvgPicture.asset(
+                    Assets.location,
+                  ),
+                  title: "Bizin salgymyz",
+                  subtitle:
+                      "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
+                  isTablet: isTablet,
                 ),
-                title: "Bizin salgymyz",
-                subtitle:
-                    "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
-                isTablet: isTablet,
               ),
-              ContactCard(
-                icon: SvgPicture.asset(
-                  Assets.email,
+              InkWell(
+                onTap: () => _launchUrl("mailto:info@biznes.tm"),
+                child: ContactCard(
+                  icon: SvgPicture.asset(
+                    Assets.email,
+                  ),
+                  title: "Email",
+                  subtitle: "info@naduaashgabat.com.tm",
+                  isTablet: isTablet,
                 ),
-                title: "Email",
-                subtitle: "info@naduaashgabat.com.tm",
-                isTablet: isTablet,
               ),
-              ContactCard(
-                icon: SvgPicture.asset(
-                  Assets.call,
+              InkWell(
+                onTap: () => _launchUrl('tel:+99312399006'),
+                child: ContactCard(
+                  icon: SvgPicture.asset(
+                    Assets.call,
+                  ),
+                  title: "Telefon belgimiz",
+                  subtitle: "+993-12-39-90-06",
+                  isTablet: isTablet,
                 ),
-                title: "Telefon belgimiz",
-                subtitle: "+993-12-39-90-06",
-                isTablet: isTablet,
               ),
-              ContactCard(
-                icon: SvgPicture.asset(
-                  Assets.fax,
+              InkWell(
+                child: ContactCard(
+                  icon: SvgPicture.asset(
+                    Assets.fax,
+                  ),
+                  title: "FAX",
+                  subtitle: "39-90-05",
+                  isTablet: isTablet,
                 ),
-                title: "FAX",
-                subtitle: "39-90-05",
-                isTablet: isTablet,
               ),
             ],
           ),
         );
       }),
     );
+  }
+
+  void _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      debugPrint("Could not launch $url");
+    }
   }
 }

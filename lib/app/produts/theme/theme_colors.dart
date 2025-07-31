@@ -8,7 +8,6 @@ import '../../modules/cart/cart_view.dart';
 
 class AppColors {
   static const Color green = Color.fromRGBO(0, 147, 61, 1);
-
   static const Color white = Color.fromRGBO(255, 255, 255, 1);
   static const Color black = Color.fromRGBO(36, 35, 35, 1);
   static const Color background = Color.fromARGB(255, 226, 231, 253);

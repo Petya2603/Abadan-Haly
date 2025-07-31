@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       title: 'Abadan Haly',
-      home: SplashScreen(),
+      home: const SplashScreen(),
     );
   }
 }
