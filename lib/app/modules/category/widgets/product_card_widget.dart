@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:haly/app/data/carpet_model.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
+
+import '../../produts/product_detail/product_detail_view.dart';
 
 Widget buildProductCard(Product product, bool isTablet) {
   final cardHeight = isTablet ? 493.0 : 200.0;
@@ -27,8 +30,7 @@ Widget buildProductCard(Product product, bool isTablet) {
           padding: EdgeInsets.zero,
           margin: EdgeInsets.zero,
           child: Image.file(
-            File(product
-                .figures.first.image), // Assuming the first figure's image
+            File(product.figures.first.image),
             fit: BoxFit.cover,
           ),
         ),
@@ -74,7 +76,9 @@ Widget buildProductCard(Product product, bool isTablet) {
             bottom: isTablet ? 5 : 2,
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => ProductDetailView(product: product));
+            },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.green,
               minimumSize: Size.fromHeight(44),

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
@@ -50,8 +51,10 @@ Widget buildCustomTab(
             padding: EdgeInsets.only(
               top: isTablet ? 10 : 4,
             ),
-            child: Image.asset(
-              imagePath,
+            child: Image.file(
+              File(imagePath),
+              width: isTablet ? 50 : 40,
+              height: isTablet ? 50 : 40,
               fit: BoxFit.contain,
             ),
           ),
