@@ -1,15 +1,17 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:haly/app/data/carpet_model.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 
-Widget buildProductCard(int index, bool isTablet) {
+Widget buildProductCard(Product product, bool isTablet) {
   final cardHeight = isTablet ? 493.0 : 200.0;
   final imageHeight = isTablet ? 318.0 : 120.0;
 
   return Container(
     height: cardHeight,
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: AppColors.white,
       borderRadius: BorderRadius.circular(1),
       border: Border.all(
         color: const Color.fromARGB(255, 231, 231, 231),
@@ -24,8 +26,9 @@ Widget buildProductCard(int index, bool isTablet) {
           height: imageHeight,
           padding: EdgeInsets.zero,
           margin: EdgeInsets.zero,
-          child: Image.asset(
-            "assets/images/category_product${index % 4 + 1}.jpg",
+          child: Image.file(
+            File(product
+                .figures.first.image), // Assuming the first figure's image
             fit: BoxFit.cover,
           ),
         ),
@@ -35,7 +38,7 @@ Widget buildProductCard(int index, bool isTablet) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Güneş",
+                product.category.name,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontFamily: Fonts.gilroySemiBold,
@@ -43,7 +46,7 @@ Widget buildProductCard(int index, bool isTablet) {
                 ),
               ),
               Text(
-                "0123",
+                product.code,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontFamily: Fonts.gilroyMedium,
@@ -52,7 +55,7 @@ Widget buildProductCard(int index, bool isTablet) {
                 ),
               ),
               Text(
-                "KREM",
+                product.figures.first.colors.first.name,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontFamily: Fonts.gilroyMedium,
@@ -63,7 +66,7 @@ Widget buildProductCard(int index, bool isTablet) {
             ],
           ),
         ),
-        Spacer(),
+        const Spacer(),
         Padding(
           padding: EdgeInsets.only(
             left: isTablet ? 5 : 2,
@@ -75,7 +78,7 @@ Widget buildProductCard(int index, bool isTablet) {
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.green,
               minimumSize: Size.fromHeight(44),
-              foregroundColor: Colors.white,
+              foregroundColor: AppColors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(6),
               ),

@@ -7,39 +7,50 @@ import 'package:haly/app/produts/theme/app_theme.dart';
 
 class CategoryView extends StatelessWidget {
   final String title;
-  CategoryView({super.key, required this.title});
+  const CategoryView({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
-    final CategoryController controller = Get.put(CategoryController());
+    final CategoryController controller =
+        Get.put(CategoryController(categoryName: title));
 
     return Scaffold(
       appBar: const CategoryAppBar(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           final isTablet = constraints.maxWidth > 600;
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16, top: 16),
-                child: Text(
-                  '${title} haly',
-                  style: TextStyle(
-                    fontSize: isTablet ? 20 : 18,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: Fonts.gilroySemiBold,
-                    color: Colors.black,
+          return Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (controller.category.value == null) {
+              return const Center(child: Text('Category not found'));
+            }
+
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16, top: 16),
+                  child: Text(
+                    '${controller.category.value!.name} haly',
+                    style: TextStyle(
+                      fontSize: isTablet ? 20 : 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Fonts.gilroySemiBold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: CategoryTabsSection(
-                  controller: controller,
-                  isTablet: isTablet,
+                Expanded(
+                  child: CategoryTabsSection(
+                    controller: controller,
+                    isTablet: isTablet,
+                  ),
                 ),
-              ),
-            ],
-          );
+              ],
+            );
+          });
         },
       ),
     );

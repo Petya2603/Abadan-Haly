@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:haly/app/modules/category/controller/category_controller.dart';
 import 'package:haly/app/modules/category/widgets/product_card_widget.dart';
 
 class CategoryGridView extends StatelessWidget {
@@ -8,11 +10,14 @@ class CategoryGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = List.generate(19, (index) => index);
+    final CategoryController controller = Get.find();
+    final selectedSubcategory = controller.category.value!.subcategories![controller.selectedTabIndex.value];
+    final filteredProducts = controller.products.where((p) => p.subcategory.name == selectedSubcategory.name).toList();
+
     return Padding(
       padding: EdgeInsets.all(isTablet ? 16.0 : 8.0),
       child: GridView.builder(
-        itemCount: items.length,
+        itemCount: filteredProducts.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 231,
           mainAxisSpacing: isTablet ? 24 : 12,
@@ -20,7 +25,7 @@ class CategoryGridView extends StatelessWidget {
           childAspectRatio: 231 / 600,
         ),
         itemBuilder: (context, index) {
-          return buildProductCard(index, isTablet);
+          return buildProductCard(filteredProducts[index], isTablet);
         },
       ),
     );

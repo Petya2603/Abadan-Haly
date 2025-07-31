@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
@@ -9,13 +10,13 @@ class CarpetCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const CarpetCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.gradient,
     required this.image,
     this.isTablet = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +50,8 @@ class CarpetCard extends StatelessWidget {
               Positioned(
                 right: 0,
                 bottom: -10,
-                child: Image.asset(
-                  image,
+                child: Image.file(
+                  File(image),
                   width: isTablet ? 200 : 120,
                   height: isTablet ? 200 : 120,
                   fit: BoxFit.cover,
@@ -63,3 +64,4 @@ class CarpetCard extends StatelessWidget {
     );
   }
 }
+

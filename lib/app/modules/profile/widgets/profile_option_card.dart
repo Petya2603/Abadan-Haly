@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
 class ProfileOptionCard extends StatelessWidget {
   final String title;
   final String iconPath;
+  final RxBool isLoading;
 
   const ProfileOptionCard({
     super.key,
     required this.title,
     required this.iconPath,
+    required this.isLoading,
   });
 
   @override
@@ -24,9 +27,15 @@ class ProfileOptionCard extends StatelessWidget {
       child: Column(children: [
         Row(
           children: [
-            SvgPicture.asset(
-              iconPath,
-            ),
+            Obx(() => isLoading.value
+                ? const SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  )
+                : SvgPicture.asset(
+                    iconPath,
+                  )),
             const SizedBox(width: 12),
             Expanded(
               child: Text(
