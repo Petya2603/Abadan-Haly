@@ -4,6 +4,8 @@ import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 
 class OrderListView extends StatelessWidget {
+  OrderListView({super.key});
+
   final List<Map<String, String>> orders = [
     {"id": "Order ID (1)", "date": "14.07.2025"},
     {"id": "Order ID (2)", "date": "14.07.2025"},
@@ -21,7 +23,7 @@ class OrderListView extends StatelessWidget {
           children: [
             const Text(
               "Tassyklanan sargytlar",
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 20,
                   fontFamily: Fonts.gilroySemiBold,
                   fontWeight: FontWeight.w600),

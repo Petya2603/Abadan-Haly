@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
 class SearchInputField extends StatelessWidget {
-  const SearchInputField({super.key});
+  final ValueChanged<String> onChanged;
+
+  const SearchInputField({super.key, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -17,21 +19,23 @@ class SearchInputField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextField(
+          onChanged: onChanged,
           textAlign: TextAlign.left,
           style: const TextStyle(fontSize: 16),
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             isDense: true,
             hintText:
                 'Gözleg (halynyň adyny, reňkini we koduny gözledip bilersiňiz)',
             hintStyle: TextStyle(
-              color: const Color.fromARGB(255, 102, 102, 102),
+              color: Color.fromARGB(255, 102, 102, 102),
               fontSize: 16,
               fontWeight: FontWeight.w400,
               fontFamily: Fonts.gilroyRegular,
             ),
             border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(vertical: 14),
-            prefixIcon: const Icon(Icons.search, color: Colors.grey),
+            contentPadding: EdgeInsets.symmetric(vertical: 14),
+            prefixIcon:
+                Icon(Icons.search, color: Color.fromARGB(255, 102, 102, 102)),
           ),
         ),
       ),

@@ -25,7 +25,7 @@ class CartBottomBar extends StatelessWidget {
                 ),
               ),
               child: const Text("Tassyklamak",
-                  style: const TextStyle(
+                  style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,
                       fontFamily: Fonts.gilroySemiBold)),

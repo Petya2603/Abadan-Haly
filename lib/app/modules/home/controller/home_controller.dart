@@ -22,7 +22,7 @@ class HomeController extends GetxController {
       carpetData.value = await dataService.getCarpetData();
     } catch (e) {
       hasError(true);
-      print("Error fetching carpet data: $e");
+      // print("Error fetching carpet data: $e");
     } finally {
       isLoading(false);
     }

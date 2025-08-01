@@ -4,7 +4,7 @@ import 'package:haly/app/modules/home/widgets/home_carpet_grid.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key});
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {

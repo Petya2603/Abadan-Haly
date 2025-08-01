@@ -9,7 +9,7 @@ class ProfileView extends StatelessWidget {
   final List<Map<String, String>> options = [
     {"title": "Settings", "icon": Assets.settings},
     {"title": "Sargytlarym", "icon": Assets.sargutlar},
-    {"title": "Tassyklanan harytlar", "icon": Assets.tas_sar},
+    {"title": "Tassyklanan harytlar", "icon": Assets.tasSar},
     {"title": "Import", "icon": "assets/images/Box_alt_fill.svg"},
   ];
 

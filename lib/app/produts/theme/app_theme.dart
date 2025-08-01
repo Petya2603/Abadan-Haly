@@ -39,7 +39,7 @@ class Assets {
 
   static const String settings = 'assets/images/settings.svg';
   static const String sargutlar = 'assets/images/sargutlar.svg';
-  static const String tas_sar = 'assets/images/tas_sar.svg';
+  static const String tasSar = 'assets/images/tas_sar.svg';
   static const String boxalt = 'assets/images/Box_alt.svg';
 }
 

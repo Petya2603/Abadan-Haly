@@ -579,7 +579,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         children: [
                           SvgPicture.asset(
                             Assets.boxalt,
-                            color: AppColors.white,
+                            colorFilter: const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 12),
                           const Text(

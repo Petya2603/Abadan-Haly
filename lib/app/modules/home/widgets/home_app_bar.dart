@@ -21,7 +21,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Get.to(AboutUsView());
             },
-            child: Text("Biz barada",
+            child: const Text("Biz barada",
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: Fonts.gilroySemiBold,
@@ -31,7 +31,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Get.to(ContactScreen());
             },
-            child: Text("Habarlaşmak",
+            child: const Text("Habarlaşmak",
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: Fonts.gilroySemiBold,

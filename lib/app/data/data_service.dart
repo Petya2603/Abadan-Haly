@@ -26,7 +26,7 @@ class DataService {
         await file.writeAsBytes(response.bodyBytes);
         return file.path;
       } else {
-        print('Failed to download image: $imageUrl');
+        // print('Failed to download image: $imageUrl');
         return imageUrl;
       }
     }
