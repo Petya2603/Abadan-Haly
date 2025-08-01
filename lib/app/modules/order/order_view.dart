@@ -1,42 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:haly/app/modules/order/widgets/order_item_card.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:get/get.dart';
+import 'package:haly/app/modules/order/order_controller.dart';
+import 'package:haly/app/modules/order/order_detail_view.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 
-class OrderListView extends StatelessWidget {
-  OrderListView({super.key});
-
-  final List<Map<String, String>> orders = [
-    {"id": "Order ID (1)", "date": "14.07.2025"},
-    {"id": "Order ID (2)", "date": "14.07.2025"},
-    {"id": "Order ID (3)", "date": "14.07.2025"},
-  ];
+class OrderView extends StatelessWidget {
+  const OrderView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final OrderController orderController = Get.put(OrderController());
+
     return Scaffold(
       appBar: customAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Tassyklanan sargytlar",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: Fonts.gilroySemiBold,
-                  fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 16),
-            ...orders.map((order) {
-              return OrderItemCard(
-                orderId: order["id"]!,
-                orderDate: order["date"]!,
-              );
-            }),
-          ],
-        ),
+      body: Obx(
+        () => orderController.orders.isEmpty
+            ? const Center(
+                child: Text(
+                  'Henüz siparişiniz bulunmamaktadır.',
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              )
+            : ListView.builder(
+                itemCount: orderController.orders.length,
+                padding: const EdgeInsets.all(16),
+                itemBuilder: (context, index) {
+                  final order = orderController.orders[index];
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: ListTile(
+                      title: Text('Sipariş ID: ${order.id}'),
+                      subtitle: Text(
+                          'Tarih: ${order.orderDate.toLocal().toString().split(' ')[0]}'),
+                      trailing: Text('Ürün Sayısı: ${order.items.length}'),
+                      onTap: () {
+                        Get.to(() => OrderDetailView(order: order));
+                      },
+                    ),
+                  );
+                },
+              ),
       ),
     );
   }

@@ -176,6 +176,6 @@ class ProductDetailController extends GetxController {
 
     // Add to cart and navigate
     _cartController.addToCart(cartItem);
-    Get.to(() => const CartView());
+    Get.to(() => CartView());
   }
 }

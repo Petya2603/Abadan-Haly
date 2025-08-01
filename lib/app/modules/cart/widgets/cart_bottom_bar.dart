@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 
@@ -7,6 +9,8 @@ class CartBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find<CartController>();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -16,7 +20,9 @@ class CartBottomBar extends StatelessWidget {
             height: 60,
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                cartController.placeOrder();
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.green,
                 foregroundColor: Colors.white,

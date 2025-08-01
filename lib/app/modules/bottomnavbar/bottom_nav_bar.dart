@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:haly/app/modules/cart/cart_controller.dart';
+import 'package:haly/app/modules/order/order_controller.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 
@@ -26,6 +28,9 @@ class CustomBottomNavBar extends StatelessWidget {
       label: label,
     );
   }
+
+  final OrderController orderController = Get.put(OrderController());
+  final CartController cartController = Get.put(CartController());
 
   @override
   Widget build(BuildContext context) {

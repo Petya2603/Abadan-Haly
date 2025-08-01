@@ -18,7 +18,7 @@ class AppColors {
 final List<Widget> screens = [
   const HomeView(),
   const SearchView(),
-  const CartView(),
-  OrderListView(),
+  CartView(),
+  OrderView(),
   ProfileView(),
 ];
