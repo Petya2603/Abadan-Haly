@@ -11,13 +11,7 @@ class SearchController extends GetxController {
   List<Product> get filteredProducts => _filteredProducts;
   String get searchQuery => _searchQuery.value;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _fetchProducts();
-  }
-
-  void _fetchProducts() async {
+  void fetchData() async {
     try {
       final carpetData = await _dataService.getCarpetData();
       _products.assignAll(carpetData.products);
@@ -25,6 +19,12 @@ class SearchController extends GetxController {
     } catch (e) {
       // print("Error fetching products: $e");
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    fetchData();
   }
 
   void search(String query) {

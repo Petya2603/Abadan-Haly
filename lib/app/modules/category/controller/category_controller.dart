@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:haly/app/data/data_service.dart';
 import 'package:haly/app/data/carpet_model.dart';
 
-class CategoryController extends GetxController with GetSingleTickerProviderStateMixin {
+class CategoryController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final DataService dataService = DataService();
   final String categoryName;
   var isLoading = true.obs;
@@ -18,17 +19,21 @@ class CategoryController extends GetxController with GetSingleTickerProviderStat
   @override
   void onInit() {
     super.onInit();
-    fetchCategoryData();
+    fetchData();
   }
 
-  void fetchCategoryData() async {
+  void fetchData() async {
     try {
       isLoading(true);
       CarpetData carpetData = await dataService.getCarpetData();
-      category.value = carpetData.categories.firstWhere((c) => c.name == categoryName);
-      products.value = carpetData.products.where((p) => p.category.name == categoryName).toList();
+      category.value =
+          carpetData.categories.firstWhere((c) => c.name == categoryName);
+      products.value = carpetData.products
+          .where((p) => p.category.name == categoryName)
+          .toList();
       if (category.value != null && category.value!.subcategories!.isNotEmpty) {
-        tabController = TabController(length: category.value!.subcategories!.length, vsync: this);
+        tabController = TabController(
+            length: category.value!.subcategories!.length, vsync: this);
         isTabControllerReady.value = true;
       }
     } finally {

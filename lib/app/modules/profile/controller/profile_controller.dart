@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/data_service.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
+import 'package:haly/app/modules/search/controller/search_controller.dart'
+    as search_controller;
 import 'package:haly/app/modules/profile/widgets/import_progress_dialog.dart';
+
 import 'package:hugeicons/hugeicons.dart';
 
 class ProfileController extends GetxController {
@@ -21,7 +24,15 @@ class ProfileController extends GetxController {
         downloadProgress.value = progress;
       });
       Get.find<HomeController>().fetchCarpetData();
-      Get.back();
+      // Refresh other controllers
+      if (Get.isRegistered<search_controller.SearchController>()) {
+        Get.find<search_controller.SearchController>().fetchData();
+      }
+      // CategoryController needs a specific instance, so we can't just Get.find()
+      // If there's a way to get all active CategoryController instances, we'd do it here.
+      // For now, we'll assume CategoryView will refetch its data when it's rebuilt.
+      // Also, remove the duplicate import for search_controller.dart
+      Get.back(); // Close the dialog
       Get.snackbar(
         'Üstünlikli Tamamlandy',
         'Maglumatlar üstünlikli ýüklenildi!',
@@ -55,7 +66,7 @@ class ProfileController extends GetxController {
         duration: const Duration(seconds: 4),
       );
 
-      print(e);
+      
     } finally {
       downloadProgress.value = 0.0;
     }
