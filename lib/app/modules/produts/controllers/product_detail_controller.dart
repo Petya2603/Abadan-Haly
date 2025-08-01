@@ -7,30 +7,32 @@ class ProductDetailController extends GetxController {
 
   ProductDetailController({required this.product});
 
-  // State variables
-  final RxInt selectedIndex = 0.obs; // For PageView image selection
+  final RxInt selectedIndex = 0.obs;
   final RxInt quantity = 1.obs;
   final RxInt selectedFigureIndex = 0.obs;
-  final RxInt selectedSizeIndex = (-1).obs; // -1 means no size selected
+  final RxInt selectedSizeIndex = (-1).obs;
 
   final RxString selectedColorName = ''.obs;
   final RxString selectedColorHex = ''.obs;
 
   late TextEditingController widthController;
   late TextEditingController lengthController;
-  late PageController pageController; // Add PageController
+  late PageController pageController;
 
   @override
   void onInit() {
     super.onInit();
     widthController = TextEditingController();
     lengthController = TextEditingController();
-    pageController = PageController(initialPage: selectedIndex.value); // Initialize PageController
+    pageController = PageController(initialPage: selectedIndex.value);
 
-    // Initialize selected color based on the first figure's first color
     if (product.figures.isNotEmpty && product.figures.first.colors.isNotEmpty) {
       selectedColorName.value = product.figures.first.colors.first.name;
       selectedColorHex.value = product.figures.first.colors.first.hexCode;
+    } else if (product.figures.isNotEmpty) {
+      // If first figure has no colors, set to empty
+      selectedColorName.value = '';
+      selectedColorHex.value = '';
     }
   }
 
@@ -38,7 +40,7 @@ class ProductDetailController extends GetxController {
   void onClose() {
     widthController.dispose();
     lengthController.dispose();
-    pageController.dispose(); // Dispose PageController
+    pageController.dispose();
     super.onClose();
   }
 
@@ -65,10 +67,9 @@ class ProductDetailController extends GetxController {
 
   void selectFigure(int index) {
     selectedFigureIndex.value = index;
-    selectedSizeIndex.value = -1; // Reset selected size when figure changes
+    selectedSizeIndex.value = -1;
 
-    // Update selected color based on the newly selected figure's first color
-    if (product.figures[index].colors.isNotEmpty) {
+    if (product.figures.isNotEmpty && product.figures[index].colors.isNotEmpty) {
       selectedColorName.value = product.figures[index].colors.first.name;
       selectedColorHex.value = product.figures[index].colors.first.hexCode;
     } else {

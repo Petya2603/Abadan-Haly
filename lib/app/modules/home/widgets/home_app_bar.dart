@@ -19,7 +19,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         TextButton(
             onPressed: () {
-              Get.to(AboutUsView());
+              Get.to(const AboutUsView());
             },
             child: const Text("Biz barada",
                 style: TextStyle(
@@ -29,7 +29,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     fontWeight: FontWeight.w600))),
         TextButton(
             onPressed: () {
-              Get.to(ContactScreen());
+              Get.to(const ContactScreen());
             },
             child: const Text("Habarlaşmak",
                 style: TextStyle(

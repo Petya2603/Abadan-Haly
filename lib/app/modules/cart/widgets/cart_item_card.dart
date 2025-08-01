@@ -64,8 +64,8 @@ class CartItemCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        Text("Geometriki şekli",
-                            style: const TextStyle(
+                        const Text("Geometriki şekli",
+                            style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 fontFamily: Fonts.gilroyMedium)),
@@ -86,18 +86,18 @@ class CartItemCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Row(
+                    const Row(
                       children: [
-                        const QuantityButton(Icons.remove),
-                        const SizedBox(width: 12),
-                        const Text("1",
+                        QuantityButton(Icons.remove),
+                        SizedBox(width: 12),
+                        Text("1",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
                                 fontFamily: Fonts.gilroySemiBold)),
-                        const SizedBox(width: 12),
-                        const QuantityButton(Icons.add, isAdd: true),
+                        SizedBox(width: 12),
+                        QuantityButton(Icons.add, isAdd: true),
                       ],
                     )
                   ],

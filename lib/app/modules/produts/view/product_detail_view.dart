@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/carpet_model.dart';
-import 'package:haly/app/modules/produts/controllers/product_detail_controller.dart'; // Import the controller
+import 'package:haly/app/modules/produts/controllers/product_detail_controller.dart';
 import 'package:haly/app/modules/produts/view/product_image_screen.dart';
 import 'package:haly/app/modules/produts/view/widgets/product_detail_appbar.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
@@ -191,12 +191,18 @@ class ProductDetailView extends StatelessWidget {
                             Obx(() => Text(
                                   controller.selectedColorName.value.isNotEmpty
                                       ? controller.selectedColorName.value
-                                      : product
-                                          .figures[controller
-                                              .selectedFigureIndex.value]
-                                          .colors
-                                          .first
-                                          .name,
+                                      : (product
+                                              .figures[controller
+                                                  .selectedFigureIndex.value]
+                                              .colors
+                                              .isNotEmpty
+                                          ? product
+                                              .figures[controller
+                                                  .selectedFigureIndex.value]
+                                              .colors
+                                              .first
+                                              .name
+                                          : ''),
                                   style: const TextStyle(
                                     fontSize: 24,
                                     color: Color.fromARGB(255, 110, 110, 112),
@@ -229,31 +235,33 @@ class ProductDetailView extends StatelessWidget {
                                         onTap: () {
                                           controller.selectColor(color);
                                         },
-                                        child: Obx(() => Container(
-                                              width: 50,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                color: Color(int.parse(color
-                                                    .hexCode
-                                                    .replaceAll('#', '0xFF'))),
-                                                borderRadius:
-                                                    BorderRadius.circular(54),
-                                                border: Border.all(
-                                                  color: controller
-                                                              .selectedColorHex
-                                                              .value ==
-                                                          color.hexCode
-                                                      ? AppColors.green
-                                                      : AppColors.white,
-                                                  width: controller
-                                                              .selectedColorHex
-                                                              .value ==
-                                                          color.hexCode
-                                                      ? 3.0
-                                                      : 0,
-                                                ),
+                                        child: Obx(() {
+                                          return Container(
+                                            width: 50,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              color: Color(int.parse(color
+                                                  .hexCode
+                                                  .replaceAll('#', '0xFF'))),
+                                              borderRadius:
+                                                  BorderRadius.circular(54),
+                                              border: Border.all(
+                                                color: controller
+                                                            .selectedColorHex
+                                                            .value ==
+                                                        color.hexCode
+                                                    ? AppColors.green
+                                                    : Colors.transparent,
+                                                width: controller
+                                                            .selectedColorHex
+                                                            .value ==
+                                                        color.hexCode
+                                                    ? 3.0
+                                                    : 0,
                                               ),
-                                            )),
+                                            ),
+                                          );
+                                        }),
                                       ))
                                   .toList(),
                             ),
@@ -339,11 +347,10 @@ class ProductDetailView extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 8),
                             decoration: BoxDecoration(
-                              color: controller.selectedFigureIndex.value ==
-                                      index
-                                  ? AppColors.green // Seçili ise yeşil
-                                  : const Color.fromRGBO(
-                                      239, 244, 254, 1), // Değilse varsayılan
+                              color:
+                                  controller.selectedFigureIndex.value == index
+                                      ? AppColors.green
+                                      : const Color.fromRGBO(239, 244, 254, 1),
                               borderRadius: BorderRadius.circular(14),
                             ),
                             child: Text(
@@ -392,9 +399,8 @@ class ProductDetailView extends StatelessWidget {
                                 horizontal: 12, vertical: 8),
                             decoration: BoxDecoration(
                               color: controller.selectedSizeIndex.value == index
-                                  ? AppColors.green // Seçili ise yeşil
-                                  : const Color.fromRGBO(
-                                      239, 244, 254, 1), // Değilse varsayılan
+                                  ? AppColors.green
+                                  : const Color.fromRGBO(239, 244, 254, 1),
                               borderRadius: BorderRadius.circular(14),
                             ),
                             child: Text(
@@ -405,8 +411,8 @@ class ProductDetailView extends StatelessWidget {
                                   fontWeight: FontWeight.w600,
                                   color: controller.selectedSizeIndex.value ==
                                           index
-                                      ? AppColors.white // Seçili ise beyaz
-                                      : AppColors.black), // Değilse siyah
+                                      ? AppColors.white
+                                      : AppColors.black),
                             ),
                           ),
                         );

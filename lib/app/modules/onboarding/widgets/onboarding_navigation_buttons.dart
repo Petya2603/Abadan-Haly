@@ -25,7 +25,7 @@ class OnboardingNavigationButtons extends StatelessWidget {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.green,
-              shape: RoundedRectangleBorder(
+              shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadii.borderRadius12,
               ),
             ),
