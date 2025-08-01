@@ -14,19 +14,12 @@ class ProductDetailView extends StatelessWidget {
 
   ProductDetailView({super.key, required this.product});
 
-  final ProductDetailController controller = Get.put(ProductDetailController(
-      product: Get.arguments ??
-          Product(
-              id: 0,
-              code: '',
-              description: '',
-              category: Category(id: 0, name: '', image: '', position: 0),
-              subcategory: Subcategory(id: 0, name: '', image: ''),
-              attributes: [],
-              figures: [])));
+  late final ProductDetailController controller;
 
   @override
   Widget build(BuildContext context) {
+    final ProductDetailController controller =
+        Get.put(ProductDetailController(product: product));
     return Scaffold(
       appBar: const ProductDetailAppbar(),
       body: SingleChildScrollView(
@@ -587,7 +580,7 @@ class ProductDetailView extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Buton tıklama işlemi
+                        controller.addProductToCart();
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,

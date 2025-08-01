@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // Import GetX
+import 'package:haly/app/modules/cart/cart_controller.dart'; // Import CartController
 import 'package:haly/app/modules/cart/widgets/cart_bottom_bar.dart';
 import 'package:haly/app/modules/cart/widgets/cart_item_card.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
@@ -8,34 +10,21 @@ class CartView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartItems = [
-      {
-        "name": "Güneş",
-        "code": "9122",
-        "size": "5×7",
-        "color": "Krem",
-        "shape": "Gönüburçly",
-        "image": "assets/images/category_product1.jpg"
-      },
-      {
-        "name": "Nusaý",
-        "code": "9122",
-        "size": "5×7",
-        "color": "Krem",
-        "shape": "Yolluk",
-        "image": "assets/images/category_product2.jpg"
-      },
-    ];
+    final CartController cartController = Get.put(CartController()); // Get CartController instance
 
     return Scaffold(
       appBar: customAppBar(),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        padding: const EdgeInsets.all(16),
-        itemBuilder: (context, index) {
-          final item = cartItems[index];
-          return CartItemCard(item: item);
-        },
+      body: Obx(
+        () => ListView.builder(
+          itemCount: cartController.cartItems.length,
+          padding: const EdgeInsets.all(16),
+          itemBuilder: (context, index) {
+            final item = cartController.cartItems[index];
+            // You might need to adjust CartItemCard to accept CartItem object directly
+            // For now, I'll pass a Map, but ideally CartItemCard should be updated.
+            return CartItemCard(cartItem: item);
+          },
+        ),
       ),
       bottomNavigationBar: const CartBottomBar(),
     );

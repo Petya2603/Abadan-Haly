@@ -1,14 +1,21 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:haly/app/data/cart_item_model.dart';
+import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:haly/app/modules/cart/widgets/quantity_button.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 
 class CartItemCard extends StatelessWidget {
-  final Map<String, String> item;
+  final CartItem cartItem;
 
-  const CartItemCard({super.key, required this.item});
+  const CartItemCard({super.key, required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find<CartController>();
+
     return Container(
       height: 394,
       margin: const EdgeInsets.only(bottom: 16),
@@ -25,8 +32,8 @@ class CartItemCard extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(1),
-                child: Image.asset(
-                  item["image"]!,
+                child: Image.file(
+                  File(cartItem.imagePath),
                   width: 230,
                   height: 329,
                   fit: BoxFit.cover,
@@ -38,25 +45,27 @@ class CartItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(item["name"]!,
+                    Text(cartItem.name,
                         style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                             fontFamily: Fonts.gilroySemiBold)),
                     const SizedBox(height: 5),
-                    Text("Kody: ${item["code"]}",
+                    Text("Kody: ${cartItem.code}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 5),
-                    Text("Ölçegi : ${item["size"]}",
+                    Text(
+                        "Ölçegi : ${cartItem.size != null ? '${cartItem.size!.width}x${cartItem.size!.height} ${cartItem.size!.measurementUnit}' : '-'}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 5),
-                    Text("Rengi :   ${item["color"]}",
+                    Text(
+                        "Rengi :   ${cartItem.color != null ? cartItem.color!.name : '-'}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -71,7 +80,10 @@ class CartItemCard extends StatelessWidget {
                                 fontFamily: Fonts.gilroyMedium)),
                         const SizedBox(width: 10),
                         Chip(
-                          label: Text(item["shape"]!,
+                          label: Text(
+                              cartItem.shape != null
+                                  ? cartItem.shape!.name
+                                  : '-',
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
@@ -86,18 +98,29 @@ class CartItemCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    const Row(
+                    Row(
                       children: [
-                        QuantityButton(Icons.remove),
-                        SizedBox(width: 12),
-                        Text("1",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: Fonts.gilroySemiBold)),
-                        SizedBox(width: 12),
-                        QuantityButton(Icons.add, isAdd: true),
+                        QuantityButton(
+                          Icons.remove,
+                          onTap: () =>
+                              cartController.decrementQuantity(cartItem),
+                        ),
+                        const SizedBox(width: 12),
+                        Text(
+                          '${cartItem.quantity}',
+                          style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: Fonts.gilroySemiBold),
+                        ),
+                        const SizedBox(width: 12),
+                        QuantityButton(
+                          Icons.add,
+                          isAdd: true,
+                          onTap: () =>
+                              cartController.incrementQuantity(cartItem),
+                        ),
                       ],
                     )
                   ],
@@ -110,7 +133,7 @@ class CartItemCard extends StatelessWidget {
             top: 0,
             child: IconButton(
               icon: const Icon(Icons.close),
-              onPressed: () {},
+              onPressed: () => cartController.removeFromCart(cartItem),
             ),
           )
         ],

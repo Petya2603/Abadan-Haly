@@ -40,7 +40,7 @@ class ContactScreen extends StatelessWidget {
               const SizedBox(height: 18),
               InkWell(
                 onTap: () => _launchUrl(
-                    'https://www.google.com/maps/search/?api=1&query=Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27'),
+                    'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
                 child: ContactCard(
                   icon: SvgPicture.asset(
                     Assets.location,
