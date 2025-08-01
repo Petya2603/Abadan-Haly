@@ -10,7 +10,10 @@ class ProfileView extends StatelessWidget {
     {"title": "Settings", "icon": Assets.settings},
     {"title": "Sargytlarym", "icon": Assets.sargutlar},
     {"title": "Tassyklanan harytlar", "icon": Assets.tasSar},
-    {"title": "Import", "icon": "assets/images/Box_alt_fill.svg"},
+    {
+      "title": "Maglumatlary ýüklemegiňizi haýyş edýarin",
+      "icon": "assets/images/Box_alt_fill.svg"
+    },
   ];
 
   ProfileView({super.key});
@@ -29,16 +32,14 @@ class ProfileView extends StatelessWidget {
           final item = options[index];
           return GestureDetector(
             onTap: () async {
-              if (item["title"] == "Import") {
-                if (!controller.isLoading.value) {
-                  await controller.importData();
-                }
+              if (item["title"] == "Maglumatlary ýüklemegiňizi haýyş edýarin") {
+                await controller.importData();
               }
             },
             child: ProfileOptionCard(
               title: item["title"]!,
               iconPath: item["icon"]!,
-              isLoading: item["title"] == "Import" ? controller.isLoading : false.obs,
+              isLoading: false.obs,
             ),
           );
         },

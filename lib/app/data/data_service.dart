@@ -60,51 +60,110 @@ class DataService {
     return CarpetData.fromJson(data);
   }
 
-  Future<void> importDataFromApi() async {
+  Future<void> importDataFromApi({Function(double)? onProgress}) async {
     final response =
         await http.get(Uri.parse('https://carpet.sada-devs.com/api/sync'));
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
 
-      // Process categories
+      final allImageUrls = <String>{}; // Use a Set to store unique URLs
+
+      // Collect all image URLs from categories
       if (jsonData.containsKey('categories')) {
         for (var category in jsonData['categories']) {
-          if (category.containsKey('image')) {
-            category['image'] = await _downloadImage(category['image']);
+          if (category['image'] != null) {
+            allImageUrls.add(category['image']);
           }
           if (category.containsKey('subcategories')) {
             for (var subcategory in category['subcategories']) {
-              if (subcategory.containsKey('image')) {
-                subcategory['image'] =
-                    await _downloadImage(subcategory['image']);
+              if (subcategory['image'] != null) {
+                allImageUrls.add(subcategory['image']);
               }
             }
           }
         }
       }
 
-      // Process products
+      // Collect all image URLs from products
       if (jsonData.containsKey('products')) {
         for (var product in jsonData['products']) {
           if (product.containsKey('category') &&
-              product['category'].containsKey('image')) {
-            product['category']['image'] =
-                await _downloadImage(product['category']['image']);
+              product['category']['image'] != null) {
+            allImageUrls.add(product['category']['image']);
           }
           if (product.containsKey('subcategory') &&
-              product['subcategory'].containsKey('image')) {
-            product['subcategory']['image'] =
-                await _downloadImage(product['subcategory']['image']);
+              product['subcategory']['image'] != null) {
+            allImageUrls.add(product['subcategory']['image']);
           }
           if (product.containsKey('figures')) {
             for (var figure in product['figures']) {
-              if (figure.containsKey('image')) {
-                figure['image'] = await _downloadImage(figure['image']);
+              if (figure['image'] != null) {
+                allImageUrls.add(figure['image']);
               }
               if (figure.containsKey('colors')) {
                 for (var color in figure['colors']) {
-                  if (color.containsKey('image')) {
-                    color['image'] = await _downloadImage(color['image']);
+                  if (color['image'] != null) {
+                    allImageUrls.add(color['image']);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      int downloadedCount = 0;
+      final totalImages = allImageUrls.length;
+      final downloadedImagePaths = <String, String>{};
+
+      // Download images and report progress
+      for (final imageUrl in allImageUrls) {
+        final localPath = await _downloadImage(imageUrl);
+        downloadedImagePaths[imageUrl] = localPath;
+        downloadedCount++;
+        if (onProgress != null) {
+          onProgress(downloadedCount / totalImages);
+        }
+      }
+
+      // Replace URLs with local paths in the JSON data
+      if (jsonData.containsKey('categories')) {
+        for (var category in jsonData['categories']) {
+          if (category['image'] != null) {
+            category['image'] = downloadedImagePaths[category['image']];
+          }
+          if (category.containsKey('subcategories')) {
+            for (var subcategory in category['subcategories']) {
+              if (subcategory['image'] != null) {
+                subcategory['image'] =
+                    downloadedImagePaths[subcategory['image']];
+              }
+            }
+          }
+        }
+      }
+
+      if (jsonData.containsKey('products')) {
+        for (var product in jsonData['products']) {
+          if (product.containsKey('category') &&
+              product['category']['image'] != null) {
+            product['category']['image'] =
+                downloadedImagePaths[product['category']['image']];
+          }
+          if (product.containsKey('subcategory') &&
+              product['subcategory']['image'] != null) {
+            product['subcategory']['image'] =
+                downloadedImagePaths[product['subcategory']['image']];
+          }
+          if (product.containsKey('figures')) {
+            for (var figure in product['figures']) {
+              if (figure['image'] != null) {
+                figure['image'] = downloadedImagePaths[figure['image']];
+              }
+              if (figure.containsKey('colors')) {
+                for (var color in figure['colors']) {
+                  if (color['image'] != null) {
+                    color['image'] = downloadedImagePaths[color['image']];
                   }
                 }
               }
