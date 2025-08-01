@@ -28,11 +28,7 @@ class ProfileController extends GetxController {
       if (Get.isRegistered<search_controller.SearchController>()) {
         Get.find<search_controller.SearchController>().fetchData();
       }
-      // CategoryController needs a specific instance, so we can't just Get.find()
-      // If there's a way to get all active CategoryController instances, we'd do it here.
-      // For now, we'll assume CategoryView will refetch its data when it's rebuilt.
-      // Also, remove the duplicate import for search_controller.dart
-      Get.back(); // Close the dialog
+      Get.back();
       Get.snackbar(
         'Üstünlikli Tamamlandy',
         'Maglumatlar üstünlikli ýüklenildi!',
@@ -65,8 +61,6 @@ class ProfileController extends GetxController {
         borderRadius: 8,
         duration: const Duration(seconds: 4),
       );
-
-      
     } finally {
       downloadProgress.value = 0.0;
     }

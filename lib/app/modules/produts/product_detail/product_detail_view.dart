@@ -31,7 +31,6 @@ class _ProductDetailViewState extends State<ProductDetailView> {
   @override
   void initState() {
     super.initState();
-    // Controller'ı başlangıçta oluştur
     _pageController = PageController();
     if (widget.product.figures.isNotEmpty &&
         widget.product.figures.first.colors.isNotEmpty) {
@@ -43,7 +42,6 @@ class _ProductDetailViewState extends State<ProductDetailView> {
 
   @override
   void dispose() {
-    // Bellek sızıntılarını önlemek için controller'ı temizle
     _pageController.dispose();
     _widthController.dispose();
     _lengthController.dispose();
@@ -579,7 +577,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         children: [
                           SvgPicture.asset(
                             Assets.boxalt,
-                            colorFilter: const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
+                            colorFilter: const ColorFilter.mode(
+                                AppColors.white, BlendMode.srcIn),
                           ),
                           const SizedBox(width: 12),
                           const Text(

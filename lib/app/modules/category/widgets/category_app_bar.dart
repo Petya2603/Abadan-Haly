@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/modules/search/search_view.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CategoryAppBar({super.key});
@@ -40,7 +41,9 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 54,
                 width: 54,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Get.to(() => const SearchView());
+              },
             ),
           ],
         ),
