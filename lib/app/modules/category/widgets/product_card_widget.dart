@@ -5,7 +5,7 @@ import 'package:haly/app/data/carpet_model.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 
-import '../../produts/product_detail/product_detail_view.dart';
+import '../../produts/view/product_detail_view.dart';
 
 Widget buildProductCard(Product product, bool isTablet) {
   final cardHeight = isTablet ? 493.0 : 200.0;

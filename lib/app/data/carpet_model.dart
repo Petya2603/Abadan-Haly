@@ -154,7 +154,7 @@ class Figure {
   final int id;
   final String name;
   final String image;
-  final List<Colors> colors;
+  final List<CarpetColor> colors;
   final List<Size> sizes;
 
   Figure({
@@ -169,8 +169,8 @@ class Figure {
         id: json["id"],
         name: json["name"],
         image: json["image"],
-        colors:
-            List<Colors>.from(json["colors"].map((x) => Colors.fromJson(x))),
+        colors: List<CarpetColor>.from(
+            json["colors"].map((x) => CarpetColor.fromJson(x))),
         sizes: List<Size>.from(json["sizes"].map((x) => Size.fromJson(x))),
       );
 
@@ -183,20 +183,20 @@ class Figure {
       };
 }
 
-class Colors {
+class CarpetColor {
   final int id;
   final String name;
   final String hexCode;
   final String image;
 
-  Colors({
+  CarpetColor({
     required this.id,
     required this.name,
     required this.hexCode,
     required this.image,
   });
 
-  factory Colors.fromJson(Map<String, dynamic> json) => Colors(
+  factory CarpetColor.fromJson(Map<String, dynamic> json) => CarpetColor(
         id: json["id"],
         name: json["name"],
         hexCode: json["hex_code"],
