@@ -14,6 +14,10 @@ class ProfileView extends StatelessWidget {
       "title": "Maglumatlary ýüklemegiňizi haýyş edýarin",
       "icon": "assets/images/Box_alt_fill.svg"
     },
+    {
+      "title": "Maglumatlary ugrat",
+      "icon": "assets/images/Box_alt.svg" // Placeholder icon
+    },
   ];
 
   ProfileView({super.key});
@@ -34,6 +38,8 @@ class ProfileView extends StatelessWidget {
             onTap: () async {
               if (item["title"] == "Maglumatlary ýüklemegiňizi haýyş edýarin") {
                 await controller.importData();
+              } else if (item["title"] == "Maglumatlary ugrat") {
+                await controller.uploadOrders();
               }
             },
             child: ProfileOptionCard(

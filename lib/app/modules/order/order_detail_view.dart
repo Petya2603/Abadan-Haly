@@ -79,13 +79,15 @@ class OrderDetailView extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
                               const SizedBox(height: 5),
-                              Text("Ölçegi : ${item.size != null ? '${item.size!.width}x${item.size!.height} ${item.size!.measurementUnit}' : '-'}",
+                              Text(
+                                  "Ölçegi : ${item.size != null ? '${item.size!.width}x${item.size!.height} ${item.size!.measurementUnit}' : '-'}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
                               const SizedBox(height: 5),
-                              Text("Rengi :   ${item.color != null ? item.color!.name : '-'}",
+                              Text(
+                                  "Rengi :   ${item.color != null ? item.color!.name : '-'}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
@@ -100,14 +102,17 @@ class OrderDetailView extends StatelessWidget {
                                           fontFamily: Fonts.gilroyMedium)),
                                   const SizedBox(width: 10),
                                   Chip(
-                                    label: Text(item.shape != null ? item.shape!.name : '-',
+                                    label: Text(
+                                        item.shape != null
+                                            ? item.shape!.name
+                                            : '-',
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
                                             fontFamily: Fonts.gilroyMedium)),
-                                    backgroundColor:
-                                        const Color.fromARGB(255, 239, 244, 254),
+                                    backgroundColor: const Color.fromARGB(
+                                        255, 239, 244, 254),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(14),
                                     ),
