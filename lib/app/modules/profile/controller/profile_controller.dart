@@ -6,9 +6,9 @@ import 'package:haly/app/modules/home/controller/home_controller.dart';
 import 'package:haly/app/modules/search/controller/search_controller.dart'
     as search_controller;
 import 'package:haly/app/modules/profile/widgets/import_progress_dialog.dart';
-import 'package:haly/app/modules/order/order_controller.dart'; // Import OrderController
-import 'package:http/http.dart' as http; // Import http package
-import 'dart:convert'; // Import dart:convert for JSON encoding
+import 'package:haly/app/modules/order/order_controller.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'package:hugeicons/hugeicons.dart';
 
@@ -38,35 +38,43 @@ class ProfileController extends GetxController {
       Get.back();
       Get.snackbar(
         'Üstünlikli Tamamlandy',
-        'Maglumatlar üstünlikli ýüklenildi!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-        icon: const HugeIcon(
-          icon: HugeIcons.strokeRoundedCloudDownload,
-          size: 28,
-          color: Colors.white,
+        "Maglumatlar üstünlikli ýüklenildi!",
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedCloudDownload,
+            size: 28,
+            color: Colors.white,
+          ),
         ),
-        margin: const EdgeInsets.all(12),
-        borderRadius: 8,
-        duration: const Duration(seconds: 3),
+        backgroundColor: Colors.green.shade600,
+        colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
     } catch (e) {
       Get.back();
       Get.snackbar(
         'Internet Baglanyşygy Ýok',
-        'Maglumatlary ýüklemek başartmady. Internet baglanyşygyňyzy barlaň.',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.redAccent,
-        colorText: Colors.white,
-        icon: const HugeIcon(
-          icon: HugeIcons.strokeRoundedWifiOff01,
-          size: 28,
-          color: Colors.white,
+        "Maglumatlary ýüklemek başartmady. Internet baglanyşygyňyzy barlaň.",
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedWifiOff01,
+            size: 28,
+            color: Colors.white,
+          ),
         ),
-        margin: const EdgeInsets.all(12),
-        borderRadius: 8,
-        duration: const Duration(seconds: 4),
+        backgroundColor: Colors.red.shade600,
+        colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
     } finally {
       downloadProgress.value = 0.0;
@@ -77,19 +85,33 @@ class ProfileController extends GetxController {
     final OrderController orderController = Get.find<OrderController>();
     if (orderController.orders.isEmpty) {
       Get.snackbar(
-        'Hata',
-        'Gönderilecek sipariş bulunmamaktadır.',
-        snackPosition: SnackPosition.BOTTOM,
+        'Ýalňyşlyk',
+        "Ugradylýan tassyklama ýok!",
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedWifiOff01,
+            size: 28,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red.shade600,
+        colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
+
       return;
     }
 
-    Get.dialog(
-      ImportProgressDialog(controller: this),
-      barrierDismissible: false,
-    );
-
     try {
+      Get.dialog(
+        ImportProgressDialog(controller: this),
+        barrierDismissible: false,
+      );
       final List<Map<String, dynamic>> ordersToUpload = [];
       for (var order in orderController.orders) {
         for (var item in order.items) {
@@ -120,31 +142,67 @@ class ProfileController extends GetxController {
       if (response.statusCode == 200) {
         Get.back();
         Get.snackbar(
-          'Üstünlikli',
-          'Siparişler başarıyla gönderildi!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
+          'Üstünlikli Tamamlandy',
+          "Tassyklama üstünlikli ugradyldy",
+          icon: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: HugeIcon(
+              icon: HugeIcons.strokeRoundedCloudDownload,
+              size: 28,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.green.shade600,
           colorText: Colors.white,
+          borderRadius: 12,
+          margin: const EdgeInsets.all(15),
+          isDismissible: true,
+          dismissDirection: DismissDirection.horizontal,
+          forwardAnimationCurve: Curves.easeOutBack,
         );
         orderController.orders.clear();
       } else {
         Get.back();
         Get.snackbar(
-          'Hata',
-          'Siparişler gönderilirken bir hata oluştu: ${response.statusCode}',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
+          'Internet Baglanyşygy Ýok',
+          "Maglumatlary ýüklemek başartmady. Internet baglanyşygyňyzy barlaň.",
+          icon: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: HugeIcon(
+              icon: HugeIcons.strokeRoundedWifiOff01,
+              size: 28,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.red.shade600,
           colorText: Colors.white,
+          borderRadius: 12,
+          margin: const EdgeInsets.all(15),
+          isDismissible: true,
+          dismissDirection: DismissDirection.horizontal,
+          forwardAnimationCurve: Curves.easeOutBack,
         );
       }
     } catch (e) {
       Get.back();
       Get.snackbar(
-        'Hata',
-        'Siparişler gönderilirken bir hata oluştu: ${e.toString()}',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        'Internet Baglanyşygy Ýok',
+        "Maglumatlary ýüklemek başartmady. Internet baglanyşygyňyzy barlaň.",
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedWifiOff01,
+            size: 28,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red.shade600,
         colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
     } finally {
       downloadProgress.value = 0.0;

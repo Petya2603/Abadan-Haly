@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/cart_item_model.dart';
-import 'package:haly/app/data/order_model.dart'; // Import Order model
-import 'package:haly/app/modules/order/order_controller.dart'; // Import OrderController
-import 'package:haly/app/modules/order/order_view.dart'; // Import OrderView
+import 'package:haly/app/data/order_model.dart';
+import 'package:haly/app/modules/order/order_controller.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class CartController extends GetxController {
   final RxList<CartItem> cartItems = <CartItem>[].obs;
-  final OrderController _orderController = Get.find<OrderController>(); // Get OrderController instance
+  final OrderController _orderController = Get.find<OrderController>();
 
   void addToCart(CartItem item) {
     final existingItemIndex = cartItems.indexWhere(
@@ -19,26 +20,40 @@ class CartController extends GetxController {
 
     if (existingItemIndex != -1) {
       cartItems[existingItemIndex].quantity += item.quantity;
-      cartItems.refresh(); // Notify listeners about the change
+      cartItems.refresh();
     } else {
       cartItems.add(item);
     }
     Get.snackbar(
-      'Sepet',
-      'Ürün sepete eklendi!',
-      snackPosition: SnackPosition.BOTTOM,
+      'Sebet',
+      'Haryt sebede goşuldy',
+      icon: const Padding(
+        padding: EdgeInsets.only(left: 8.0),
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedShoppingBagAdd,
+          size: 28,
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.green.shade700,
+      colorText: Colors.white,
+      borderRadius: 12,
+      margin: const EdgeInsets.all(15),
+      isDismissible: true,
+      dismissDirection: DismissDirection.horizontal,
+      forwardAnimationCurve: Curves.easeOutBack,
     );
   }
 
   void incrementQuantity(CartItem item) {
     item.quantity++;
-    cartItems.refresh(); // Notify listeners about the change
+    cartItems.refresh();
   }
 
   void decrementQuantity(CartItem item) {
     if (item.quantity > 1) {
       item.quantity--;
-      cartItems.refresh(); // Notify listeners about the change
+      cartItems.refresh();
     } else {
       removeFromCart(item);
     }
@@ -47,30 +62,58 @@ class CartController extends GetxController {
   void removeFromCart(CartItem item) {
     cartItems.remove(item);
     Get.snackbar(
-      'Sepet',
-      'Ürün sepetten çıkarıldı!',
-      snackPosition: SnackPosition.BOTTOM,
+      'Sebet',
+      'Haryt Sebetden çykaryldy',
+      icon: const Padding(
+        padding: EdgeInsets.only(left: 8.0),
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedTaskRemove01,
+          size: 28,
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.orange.shade700,
+      colorText: Colors.white,
+      borderRadius: 12,
+      margin: const EdgeInsets.all(15),
+      isDismissible: true,
+      dismissDirection: DismissDirection.horizontal,
+      forwardAnimationCurve: Curves.easeOutBack,
     );
   }
 
   void placeOrder() {
     if (cartItems.isEmpty) {
       Get.snackbar(
-        'Hata',
-        'Sepetiniz boş, sipariş oluşturulamaz!',
-        snackPosition: SnackPosition.BOTTOM,
+        'Ýalňyşlyk',
+        'Sebediňiz boş, sargyt döredip bolmaýar!',
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedAlertCircle,
+            size: 28,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red.shade600,
+        colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
       return;
     }
 
     final newOrder = Order(
-      id: DateTime.now().millisecondsSinceEpoch.toString(), // Unique ID for the order
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
       orderDate: DateTime.now(),
-      items: List<CartItem>.from(cartItems), // Create a copy of cart items for the order
+      items: List<CartItem>.from(cartItems),
     );
 
     _orderController.addOrder(newOrder);
-    cartItems.clear(); // Clear the cart after placing the order
-    Get.to(() => const OrderView()); // Navigate to OrderView
+    cartItems.clear();
+    // Get.find<BottomNavBarController>().changeIndex(3);
   }
 }

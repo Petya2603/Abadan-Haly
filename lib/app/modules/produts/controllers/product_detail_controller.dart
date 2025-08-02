@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:haly/app/data/carpet_model.dart';
-import 'package:haly/app/data/cart_item_model.dart'; // Import CartItem
+import 'package:haly/app/data/cart_item_model.dart';
 import 'package:haly/app/modules/cart/cart_controller.dart';
-import 'package:haly/app/modules/cart/cart_view.dart'; // Import CartController
+import 'package:hugeicons/hugeicons.dart';
 
 class ProductDetailController extends GetxController {
   final Product product;
@@ -22,8 +22,7 @@ class ProductDetailController extends GetxController {
   late TextEditingController lengthController;
   late PageController pageController;
 
-  final CartController _cartController =
-      Get.find<CartController>(); // Get CartController instance
+  final CartController _cartController = Get.find<CartController>();
 
   @override
   void onInit() {
@@ -94,30 +93,52 @@ class ProductDetailController extends GetxController {
   }
 
   void addProductToCart() {
-    // Ensure selectedFigureIndex is within bounds
     if (selectedFigureIndex.value < 0 ||
         selectedFigureIndex.value >= product.figures.length) {
       Get.snackbar(
-        'Hata',
-        'Lütfen bir ürün figürü seçiniz!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        'Ýalňyşlyk',
+        "Gemetrik şekili saýlaň!",
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedAlertCircle,
+            size: 28,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red.shade600,
         colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
       return;
     }
     final selectedFigure = product.figures[selectedFigureIndex.value];
 
-    // Color selection validation
     CarpetColor? selectedColor;
     if (selectedFigure.colors.isNotEmpty) {
       if (selectedColorHex.value.isEmpty) {
         Get.snackbar(
-          'Hata',
-          'Lütfen bir renk seçiniz!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
+          'Ýalňyşlyk',
+          "Haly reňkini saýlaň",
+          icon: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: HugeIcon(
+              icon: HugeIcons.strokeRoundedAlertCircle,
+              size: 28,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.red.shade600,
           colorText: Colors.white,
+          borderRadius: 12,
+          margin: const EdgeInsets.all(15),
+          isDismissible: true,
+          dismissDirection: DismissDirection.horizontal,
+          forwardAnimationCurve: Curves.easeOutBack,
         );
         return;
       }
@@ -125,45 +146,65 @@ class ProductDetailController extends GetxController {
           .firstWhereOrNull((c) => c.hexCode == selectedColorHex.value);
       if (selectedColor == null) {
         Get.snackbar(
-          'Hata',
-          'Seçilen renk bulunamadı!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
+          'Ýalňyşlyk',
+          "Saýlanan reňk tapylmady!",
+          icon: const Padding(
+            padding: EdgeInsets.only(left: 8.0),
+            child: HugeIcon(
+              icon: HugeIcons.strokeRoundedAlertCircle,
+              size: 28,
+              color: Colors.white,
+            ),
+          ),
+          backgroundColor: Colors.red.shade600,
           colorText: Colors.white,
+          borderRadius: 12,
+          margin: const EdgeInsets.all(15),
+          isDismissible: true,
+          dismissDirection: DismissDirection.horizontal,
+          forwardAnimationCurve: Curves.easeOutBack,
         );
         return;
       }
     }
 
-    // Size selection validation (standard or custom)
     Size? selectedSize;
     final customWidth = double.tryParse(widthController.text);
     final customLength = double.tryParse(lengthController.text);
 
     if (customWidth != null && customLength != null) {
-      // Custom size entered
       selectedSize = Size(
-          id: 0, // Custom sizes can have a default ID like 0 or a unique generated ID
+          id: 0,
           width: customWidth.toInt(),
           height: customLength.toInt(),
           measurementUnit: 'cm');
     } else if (selectedSizeIndex.value != -1 &&
         selectedSizeIndex.value < selectedFigure.sizes.length) {
-      // Standard size selected
       selectedSize = selectedFigure.sizes[selectedSizeIndex.value];
     } else {
-      // No size selected (neither custom nor standard)
       Get.snackbar(
-        'Hata',
-        'Lütfen bir ölçü seçiniz veya özel ölçü giriniz!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
+        'Ýalňyşlyk',
+        "Standart ölçegi saýlaň ýa-da ölçegi elde giriziň!",
+        icon: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: HugeIcon(
+            icon: HugeIcons.strokeRoundedAlertCircle,
+            size: 28,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.red.shade600,
         colorText: Colors.white,
+        borderRadius: 12,
+        margin: const EdgeInsets.all(15),
+        isDismissible: true,
+        dismissDirection: DismissDirection.horizontal,
+        forwardAnimationCurve: Curves.easeOutBack,
       );
+
       return;
     }
 
-    // Create CartItem
     final cartItem = CartItem(
       imagePath: selectedFigure.image,
       name: product.category.name,
@@ -174,8 +215,7 @@ class ProductDetailController extends GetxController {
       quantity: quantity.value,
     );
 
-    // Add to cart and navigate
     _cartController.addToCart(cartItem);
-    Get.to(() => CartView());
+    // Get.to(() => CartView());
   }
 }

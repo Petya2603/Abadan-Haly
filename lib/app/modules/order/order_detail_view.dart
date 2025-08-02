@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:haly/app/data/order_model.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class OrderDetailView extends StatelessWidget {
   final Order order;
@@ -18,28 +20,41 @@ class OrderDetailView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Sipariş ID: ${order.id}',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            Row(children: [
+              IconButton(
+                icon: const Icon(
+                  HugeIcons.strokeRoundedArrowLeft01,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+              const SizedBox(
+                width: 15,
+              ),
+              Text(
+                'Order ID (${order.id})',
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontFamily: Fonts.gilroySemiBold,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ]),
+            const SizedBox(height: 10),
+            Container(
+              height: 4,
+              color: const Color.fromRGBO(245, 245, 245, 1),
             ),
-            const SizedBox(height: 8),
-            Text(
-              'Sipariş Tarihi: ${order.orderDate.toLocal().toString().split(' ')[0]}',
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'Sipariş Edilen Ürünler:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
                 itemCount: order.items.length,
                 itemBuilder: (context, index) {
                   final item = order.items[index];
                   return Container(
-                    height: 394,
+                    height: 349,
                     margin: const EdgeInsets.only(bottom: 16),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
@@ -59,7 +74,7 @@ class OrderDetailView extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 20),
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +100,7 @@ class OrderDetailView extends StatelessWidget {
                                       fontFamily: Fonts.gilroyMedium)),
                               const SizedBox(height: 5),
                               Text(
-                                  "Rengi :   ${item.color != null ? item.color!.name : '-'}",
+                                  "Reňki :   ${item.color != null ? item.color!.name : '-'}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
@@ -117,14 +132,14 @@ class OrderDetailView extends StatelessWidget {
                                   )
                                 ],
                               ),
-                              const SizedBox(height: 12),
+                              const SizedBox(height: 6),
                               Text(
-                                'Miktar: ${item.quantity}',
+                                'Mukdary: ${item.quantity}',
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 24,
                                     fontWeight: FontWeight.w600,
-                                    fontFamily: Fonts.gilroySemiBold),
+                                    fontFamily: Fonts.gilroyMedium),
                               ),
                             ],
                           ),
