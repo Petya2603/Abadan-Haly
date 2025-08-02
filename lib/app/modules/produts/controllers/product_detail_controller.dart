@@ -17,6 +17,7 @@ class ProductDetailController extends GetxController {
 
   final RxString selectedColorName = ''.obs;
   final RxString selectedColorHex = ''.obs;
+  final RxString selectedColorImage = ''.obs;
 
   late TextEditingController widthController;
   late TextEditingController lengthController;
@@ -34,9 +35,11 @@ class ProductDetailController extends GetxController {
     if (product.figures.isNotEmpty && product.figures.first.colors.isNotEmpty) {
       selectedColorName.value = product.figures.first.colors.first.name;
       selectedColorHex.value = product.figures.first.colors.first.hexCode;
+      selectedColorImage.value = product.figures.first.colors.first.image;
     } else if (product.figures.isNotEmpty) {
       selectedColorName.value = '';
       selectedColorHex.value = '';
+      selectedColorImage.value = product.figures.first.image;
     }
   }
 
@@ -56,6 +59,13 @@ class ProductDetailController extends GetxController {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
+    }
+    // Update selectedColorImage when figure changes
+    if (product.figures.isNotEmpty &&
+        product.figures[index].colors.isNotEmpty) {
+      selectedColorImage.value = product.figures[index].colors.first.image;
+    } else if (product.figures.isNotEmpty) {
+      selectedColorImage.value = product.figures[index].image;
     }
   }
 
@@ -77,9 +87,11 @@ class ProductDetailController extends GetxController {
         product.figures[index].colors.isNotEmpty) {
       selectedColorName.value = product.figures[index].colors.first.name;
       selectedColorHex.value = product.figures[index].colors.first.hexCode;
+      selectedColorImage.value = product.figures[index].colors.first.image;
     } else {
       selectedColorName.value = '';
       selectedColorHex.value = '';
+      selectedColorImage.value = product.figures[index].image;
     }
   }
 
@@ -90,6 +102,14 @@ class ProductDetailController extends GetxController {
   void selectColor(CarpetColor color) {
     selectedColorName.value = color.name;
     selectedColorHex.value = color.hexCode;
+    selectedColorImage.value = color.image;
+
+    final currentFigureColors =
+        product.figures[selectedFigureIndex.value].colors;
+    final colorIndex = currentFigureColors.indexOf(color);
+    if (colorIndex != -1 && pageController.hasClients) {
+      pageController.jumpToPage(colorIndex);
+    }
   }
 
   void addProductToCart() {
@@ -206,7 +226,9 @@ class ProductDetailController extends GetxController {
     }
 
     final cartItem = CartItem(
-      imagePath: selectedFigure.image,
+      imagePath: selectedColorImage.value.isNotEmpty
+          ? selectedColorImage.value
+          : selectedFigure.image,
       name: product.category.name,
       code: product.code,
       color: selectedColor,

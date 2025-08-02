@@ -41,11 +41,10 @@ class CustomBottomNavBar extends StatelessWidget {
                       child: Text(
                         count.toString(),
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 9,
-                          fontFamily: Fonts.gilroySemiBold,
-                        ),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 9,
+                            fontFamily: Fonts.gilroySemiBold),
                         textAlign: TextAlign.center,
                       ),
                     )
@@ -69,11 +68,10 @@ class CustomBottomNavBar extends StatelessWidget {
                       child: Text(
                         count.toString(),
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 9,
-                          fontFamily: Fonts.gilroySemiBold,
-                        ),
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 9,
+                            fontFamily: Fonts.gilroySemiBold),
                         textAlign: TextAlign.center,
                       ),
                     )

@@ -34,20 +34,28 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               color: const Color.fromARGB(255, 246, 246, 248),
               height: Get.height * 0.4,
               child: PageView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 controller: controller.pageController,
                 onPageChanged: (index) {
                   controller.updatePageIndex(index);
                 },
-                itemCount: widget.product.figures.length,
+                itemCount: widget
+                    .product
+                    .figures[controller.selectedFigureIndex.value]
+                    .colors
+                    .length,
                 itemBuilder: (context, index) {
-                  final figure = widget.product.figures[index];
+                  final color = widget
+                      .product
+                      .figures[controller.selectedFigureIndex.value]
+                      .colors[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ImageZoomScreen(
-                            imagePath: figure.image,
+                            imagePath: color.image,
                             productCode: widget.product.code,
                             productName: widget.product.category.name,
                           ),
@@ -57,7 +65,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.file(
-                        File(figure.image),
+                        File(color.image),
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -66,18 +74,28 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               ),
             ),
             const SizedBox(height: 20),
-            if (widget.product.figures.length > 1)
+            if (widget.product.figures[controller.selectedFigureIndex.value]
+                    .colors.length >
+                1)
               SizedBox(
                 height: 102,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: widget.product.figures.length,
+                  itemCount: widget
+                      .product
+                      .figures[controller.selectedFigureIndex.value]
+                      .colors
+                      .length,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   itemBuilder: (context, index) {
-                    final figure = widget.product.figures[index];
+                    final color = widget
+                        .product
+                        .figures[controller.selectedFigureIndex.value]
+                        .colors[index];
                     return GestureDetector(
                       onTap: () {
-                        controller.updatePageIndex(index);
+                        controller.selectColor(color);
+                        controller.pageController.jumpToPage(index);
                       },
                       child: Obx(
                         () => Container(
@@ -86,10 +104,12 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6),
                             border: Border.all(
-                              color: controller.selectedIndex.value == index
+                              color: controller.selectedColorHex.value ==
+                                      color.hexCode
                                   ? const Color.fromARGB(255, 102, 102, 102)
                                   : const Color.fromARGB(255, 231, 231, 231),
-                              width: controller.selectedIndex.value == index
+                              width: controller.selectedColorHex.value ==
+                                      color.hexCode
                                   ? 2.5
                                   : 1,
                             ),
@@ -97,7 +117,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(6.0),
                             child: Image.file(
-                              File(figure.image),
+                              File(color.image),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -223,6 +243,16 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                               fontFamily: Fonts.gilroySemiBold,
                             ),
                           ),
+                          const SizedBox(width: 8),
+                          Obx(() => Text(
+                                '(${widget.product.figures[controller.selectedFigureIndex.value].colors.length})',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: Fonts.gilroySemiBold,
+                                  color: Colors.grey,
+                                ),
+                              )),
                           const SizedBox(height: 8),
                           Obx(
                             () => Wrap(

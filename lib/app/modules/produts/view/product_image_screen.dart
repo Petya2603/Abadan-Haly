@@ -40,8 +40,6 @@ class ImageZoomScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Back button
           Positioned(
             top: MediaQuery.of(context).padding.top + 8,
             left: 12,
