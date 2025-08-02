@@ -23,7 +23,7 @@ class ProductDetailController extends GetxController {
   late TextEditingController lengthController;
   late PageController pageController;
 
-  final CartController _cartController = Get.find<CartController>();
+  late final CartController _cartController;
 
   @override
   void onInit() {
@@ -31,6 +31,7 @@ class ProductDetailController extends GetxController {
     widthController = TextEditingController();
     lengthController = TextEditingController();
     pageController = PageController(initialPage: selectedIndex.value);
+    _cartController = Get.find<CartController>();
 
     if (product.figures.isNotEmpty && product.figures.first.colors.isNotEmpty) {
       selectedColorName.value = product.figures.first.colors.first.name;
