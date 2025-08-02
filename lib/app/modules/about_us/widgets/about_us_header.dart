@@ -11,6 +11,12 @@ class AboutUsHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+          height: 4,
+          width: double.infinity,
+          color: const Color.fromRGBO(245, 245, 245, 1),
+        ),
+        SizedBox(height: isTablet ? 24 : 16),
         Center(
           child: Image.asset(
             Assets.logo,

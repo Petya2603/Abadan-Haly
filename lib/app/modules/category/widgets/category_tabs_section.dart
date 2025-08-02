@@ -19,62 +19,66 @@ class CategoryTabsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (!controller.isTabControllerReady.value) {
-        return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
+        return Center(
+            child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Lottie.asset('assets/images/processing-circle.json')));
       }
-      return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5),
-            child: Container(
-              decoration: const BoxDecoration(
+      return Theme(
+        data: Theme.of(context).copyWith(
+          tabBarTheme: const TabBarTheme(
+            indicator: BoxDecoration(),
+            indicatorColor: Colors.transparent,
+            indicatorSize: TabBarIndicatorSize.tab,
+            dividerColor: Colors.transparent,
+            overlayColor: MaterialStatePropertyAll(Colors.transparent),
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Container(
                 color: Colors.white,
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.white,
-                    width: 0,
-                  ),
+                width: double.infinity,
+                alignment: Alignment.center,
+                child: TabBar(
+                  controller: controller.tabController,
+                  onTap: (index) {
+                    controller.changeTabIndex(index);
+                  },
+                  isScrollable: false,
+                  labelPadding:
+                      EdgeInsets.symmetric(horizontal: isTablet ? 10 : 4),
+                  tabs: controller.category.value!.subcategories!
+                      .map((subcategory) {
+                    final index = controller.category.value!.subcategories!
+                        .indexOf(subcategory);
+                    return Obx(
+                      () => buildCustomTab(
+                        context,
+                        subcategory.name,
+                        subcategory.image,
+                        isSelected: controller.selectedTabIndex.value == index,
+                        isTablet: isTablet,
+                      ),
+                    );
+                  }).toList(),
                 ),
               ),
-              width: double.infinity,
-              alignment: Alignment.center,
-              child: TabBar(
+            ),
+            Expanded(
+              child: TabBarView(
                 controller: controller.tabController,
-                onTap: (index) {
-                  controller.changeTabIndex(index);
-                },
-                isScrollable: false,
-                indicator: const BoxDecoration(),
-                indicatorColor: Colors.transparent,
-                indicatorWeight: 0,
-                labelPadding:
-                    EdgeInsets.symmetric(horizontal: isTablet ? 10 : 4),
-                tabs: controller.category.value!.subcategories!
-                    .map((subcategory) {
-                  final index = controller.category.value!.subcategories!
-                      .indexOf(subcategory);
-                  return Obx(
-                    () => buildCustomTab(
-                      context,
-                      subcategory.name,
-                      subcategory.image,
-                      isSelected: controller.selectedTabIndex.value == index,
-                      isTablet: isTablet,
-                    ),
-                  );
+                physics: const NeverScrollableScrollPhysics(),
+                children: controller.category.value!.subcategories!.map((_) {
+                  return CategoryGridView(isTablet: isTablet);
                 }).toList(),
               ),
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: controller.tabController,
-              physics: const NeverScrollableScrollPhysics(),
-              children: controller.category.value!.subcategories!.map((_) {
-                return CategoryGridView(isTablet: isTablet);
-              }).toList(),
-            ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }

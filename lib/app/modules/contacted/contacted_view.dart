@@ -24,6 +24,12 @@ class ContactScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Container(
+                  height: 4,
+                  width: double.infinity,
+                  color: const Color.fromRGBO(245, 245, 245, 1),
+                ),
+                SizedBox(height: isTablet ? 24 : 16),
                 Center(
                   child: Image.asset(
                     Assets.logo,
@@ -40,6 +46,10 @@ class ContactScreen extends StatelessWidget {
                         color: AppColors.green)),
                 const SizedBox(height: 18),
                 InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
                   onTap: () => _launchUrl(
                       'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
                   child: ContactCard(
@@ -53,6 +63,10 @@ class ContactScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
                   onTap: () => _launchUrl("mailto:info@biznes.tm"),
                   child: ContactCard(
                     icon: SvgPicture.asset(
@@ -64,6 +78,10 @@ class ContactScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
                   onTap: () => _launchUrl('tel:+99312399006'),
                   child: ContactCard(
                     icon: SvgPicture.asset(
@@ -75,6 +93,10 @@ class ContactScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  focusColor: Colors.transparent,
                   child: ContactCard(
                     icon: SvgPicture.asset(
                       Assets.fax,

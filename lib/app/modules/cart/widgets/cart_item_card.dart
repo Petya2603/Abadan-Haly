@@ -37,7 +37,7 @@ class CartItemCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              const SizedBox(width: 12),
+              const SizedBox(width: 25),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -48,20 +48,20 @@ class CartItemCard extends StatelessWidget {
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                             fontFamily: Fonts.gilroySemiBold)),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 6),
                     Text("Kody: ${cartItem.code}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 6),
                     Text(
                         "Ölçegi : ${cartItem.size != null ? '${cartItem.size!.width}x${cartItem.size!.height} ${cartItem.size!.measurementUnit}' : '-'}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 6),
                     Text(
                         "Reňki :   ${cartItem.color != null ? cartItem.color!.name : '-'}",
                         style: const TextStyle(
@@ -69,31 +69,43 @@ class CartItemCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        const Text("Geometriki şekili",
+                    Padding(
+                      padding: EdgeInsets.zero,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "Geometriki şekili",
                             style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: Fonts.gilroyMedium)),
-                        const SizedBox(width: 10),
-                        Chip(
-                          label: Text(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: Fonts.gilroyMedium,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Chip(
+                            label: Text(
                               cartItem.shape != null
                                   ? cartItem.shape!.name
                                   : '-',
                               style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: Fonts.gilroyMedium)),
-                          backgroundColor:
-                              const Color.fromARGB(255, 239, 244, 254),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: Fonts.gilroyMedium,
+                              ),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 239, 244, 254),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            padding: EdgeInsets.zero,
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
                           ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 12),
                     Row(
@@ -104,13 +116,18 @@ class CartItemCard extends StatelessWidget {
                               cartController.decrementQuantity(cartItem),
                         ),
                         const SizedBox(width: 12),
-                        Text(
-                          '${cartItem.quantity}',
-                          style: const TextStyle(
+                        SizedBox(
+                          width: 32,
+                          child: Text(
+                            '${cartItem.quantity}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 24,
+                              fontSize: 26,
                               fontWeight: FontWeight.w600,
-                              fontFamily: Fonts.gilroySemiBold),
+                              fontFamily: Fonts.gilroySemiBold,
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 12),
                         QuantityButton(

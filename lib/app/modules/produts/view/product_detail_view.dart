@@ -182,7 +182,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           "Dekor",
                           style: TextStyle(
                             color: AppColors.green,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                             fontFamily: Fonts.gilroySemiBold,
                           ),
                         ),
@@ -196,6 +197,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(
+                        flex: 2,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -243,62 +245,65 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           ],
                         ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            'Reňkler:',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: Fonts.gilroySemiBold,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Reňkler:',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: Fonts.gilroySemiBold,
+                              ),
                             ),
-                          ),
-                          const SizedBox(height: 8),
-                          Obx(
-                            () => Wrap(
-                              spacing: 10.0,
-                              runSpacing: 10.0,
-                              children: widget
-                                  .product
-                                  .figures[controller.selectedFigureIndex.value]
-                                  .colors
-                                  .map((color) => GestureDetector(
-                                        onTap: () {
-                                          controller.selectColor(color);
-                                        },
-                                        child: Obx(() {
-                                          return Container(
-                                            width: 50,
-                                            height: 50,
-                                            decoration: BoxDecoration(
-                                              color: Color(int.parse(color
-                                                  .hexCode
-                                                  .replaceAll('#', '0xFF'))),
-                                              borderRadius:
-                                                  BorderRadius.circular(54),
-                                              border: Border.all(
-                                                color: controller
-                                                            .selectedColorHex
-                                                            .value ==
-                                                        color.hexCode
-                                                    ? AppColors.green
-                                                    : Colors.transparent,
-                                                width: controller
-                                                            .selectedColorHex
-                                                            .value ==
-                                                        color.hexCode
-                                                    ? 3.0
-                                                    : 0,
+                            const SizedBox(height: 8),
+                            Obx(
+                              () => Wrap(
+                                spacing: 10.0,
+                                runSpacing: 10.0,
+                                children: widget
+                                    .product
+                                    .figures[
+                                        controller.selectedFigureIndex.value]
+                                    .colors
+                                    .map((color) => GestureDetector(
+                                          onTap: () {
+                                            controller.selectColor(color);
+                                          },
+                                          child: Obx(() {
+                                            return Container(
+                                              width: 50,
+                                              height: 50,
+                                              decoration: BoxDecoration(
+                                                color: Color(int.parse(color
+                                                    .hexCode
+                                                    .replaceAll('#', '0xFF'))),
+                                                borderRadius:
+                                                    BorderRadius.circular(54),
+                                                border: Border.all(
+                                                  color: controller
+                                                              .selectedColorHex
+                                                              .value ==
+                                                          color.hexCode
+                                                      ? AppColors.green
+                                                      : Colors.transparent,
+                                                  width: controller
+                                                              .selectedColorHex
+                                                              .value ==
+                                                          color.hexCode
+                                                      ? 3.0
+                                                      : 0,
+                                                ),
                                               ),
-                                            ),
-                                          );
-                                        }),
-                                      ))
-                                  .toList(),
+                                            );
+                                          }),
+                                        ))
+                                    .toList(),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -588,7 +593,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           Container(
                             color: const Color.fromARGB(255, 247, 250, 252),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.all(12.0),
                               child: Text(
                                 attr.name,
                                 style: const TextStyle(
@@ -600,7 +605,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(12.0),
                             child: Text(
                               attr.value,
                               style: const TextStyle(

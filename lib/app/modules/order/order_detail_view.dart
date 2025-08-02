@@ -74,7 +74,7 @@ class OrderDetailView extends StatelessWidget {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        const SizedBox(width: 20),
+                        const SizedBox(width: 25),
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -85,20 +85,20 @@ class OrderDetailView extends StatelessWidget {
                                       fontSize: 24,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: Fonts.gilroySemiBold)),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 6),
                               Text("Kody: ${item.code}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 6),
                               Text(
                                   "Ölçegi : ${item.size != null ? '${item.size!.width}x${item.size!.height} ${item.size!.measurementUnit}' : '-'}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
-                              const SizedBox(height: 5),
+                              const SizedBox(height: 6),
                               Text(
                                   "Reňki :   ${item.color != null ? item.color!.name : '-'}",
                                   style: const TextStyle(
@@ -106,31 +106,37 @@ class OrderDetailView extends StatelessWidget {
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
                               const SizedBox(height: 6),
-                              Row(
-                                children: [
-                                  const Text("Geometriki şekli",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: Fonts.gilroyMedium)),
-                                  const SizedBox(width: 10),
-                                  Chip(
-                                    label: Text(
-                                        item.shape != null
-                                            ? item.shape!.name
-                                            : '-',
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
+                              Padding(
+                                padding: EdgeInsets.zero,
+                                child: Row(
+                                  children: [
+                                    const Text("Geometriki şekli",
+                                        style: TextStyle(
+                                            fontSize: 20,
                                             fontWeight: FontWeight.w500,
                                             fontFamily: Fonts.gilroyMedium)),
-                                    backgroundColor: const Color.fromARGB(
-                                        255, 239, 244, 254),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(14),
-                                    ),
-                                  )
-                                ],
+                                    const SizedBox(width: 10),
+                                    Chip(
+                                      label: Text(
+                                          item.shape != null
+                                              ? item.shape!.name
+                                              : '-',
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: Fonts.gilroyMedium)),
+                                      backgroundColor: const Color.fromARGB(
+                                          255, 239, 244, 254),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      materialTapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    )
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 6),
                               Text(
