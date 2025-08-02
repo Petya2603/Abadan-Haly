@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Import GetX
-import 'package:haly/app/modules/cart/cart_controller.dart'; // Import CartController
+import 'package:get/get.dart';
+import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:haly/app/modules/cart/widgets/cart_bottom_bar.dart';
 import 'package:haly/app/modules/cart/widgets/cart_item_card.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';

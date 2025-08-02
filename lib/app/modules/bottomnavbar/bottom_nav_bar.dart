@@ -11,6 +11,7 @@ class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
 
   final BottomNavBarController controller = Get.put(BottomNavBarController());
+  final CartController cartController = Get.find<CartController>();
 
   BottomNavigationBarItem buildNavItem({
     required String selectedIconPath,
@@ -19,20 +20,82 @@ class CustomBottomNavBar extends StatelessWidget {
     required int index,
   }) {
     return BottomNavigationBarItem(
-      icon: Obx(() {
-        final isSelected = controller.selectedIndex.value == index;
-        return SvgPicture.asset(
-          isSelected ? selectedIconPath : unselectedIconPath,
-          width: 32,
-          height: 32,
-        );
-      }),
+      icon: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (index == 2)
+            Obx(() {
+              final count = cartController.cartItems.length;
+              return count > 0
+                  ? Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 231, 63, 63),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
+                      ),
+                      child: Text(
+                        count.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 9,
+                          fontFamily: Fonts.gilroySemiBold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : const SizedBox(height: 22);
+            })
+          else if (index == 3)
+            Obx(() {
+              final count = orderController.orders.length;
+              return count > 0
+                  ? Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      padding: const EdgeInsets.all(2),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 231, 63, 63),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      constraints: const BoxConstraints(
+                        minWidth: 16,
+                        minHeight: 16,
+                      ),
+                      child: Text(
+                        count.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 9,
+                          fontFamily: Fonts.gilroySemiBold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    )
+                  : const SizedBox(height: 22);
+            })
+          else
+            const SizedBox(height: 22),
+          Obx(() {
+            final isSelected = controller.selectedIndex.value == index;
+            return SvgPicture.asset(
+              isSelected ? selectedIconPath : unselectedIconPath,
+              width: 32,
+              height: 32,
+            );
+          }),
+        ],
+      ),
       label: label,
     );
   }
 
-  final OrderController orderController = Get.put(OrderController());
-  final CartController cartController = Get.put(CartController());
+  final OrderController orderController = Get.find<OrderController>();
 
   @override
   Widget build(BuildContext context) {

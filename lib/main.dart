@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/modules/onboarding/views/splash_view.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:haly/app/app_binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      initialBinding: AppBinding(),
       theme: ThemeData(
         fontFamily: Fonts.gilroyRegular,
         scaffoldBackgroundColor: Colors.white,
