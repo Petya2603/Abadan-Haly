@@ -30,7 +30,7 @@ Widget buildProductCard(Product product, bool isTablet) {
           padding: EdgeInsets.zero,
           margin: EdgeInsets.zero,
           child: Image.file(
-            File(product.figures.first.image),
+            File(product.figures.first.colors.first.image),
             fit: BoxFit.cover,
           ),
         ),
