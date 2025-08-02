@@ -10,12 +10,10 @@ import 'package:haly/app/produts/theme/app_theme.dart';
 class CartItemCard extends StatelessWidget {
   final CartItem cartItem;
 
-  const CartItemCard({super.key, required this.cartItem});
-
+  CartItemCard({super.key, required this.cartItem});
+  final CartController cartController = Get.find<CartController>();
   @override
   Widget build(BuildContext context) {
-    final CartController cartController = Get.find<CartController>();
-
     return Container(
       height: 394,
       margin: const EdgeInsets.only(bottom: 16),
@@ -65,7 +63,7 @@ class CartItemCard extends StatelessWidget {
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 5),
                     Text(
-                        "Rengi :   ${cartItem.color != null ? cartItem.color!.name : '-'}",
+                        "Reňki :   ${cartItem.color != null ? cartItem.color!.name : '-'}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -73,7 +71,7 @@ class CartItemCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Text("Geometriki şekli",
+                        const Text("Geometriki şekili",
                             style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,

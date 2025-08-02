@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/profile/controller/profile_controller.dart';
 import 'package:haly/app/modules/profile/widgets/profile_option_card.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ProfileView extends StatelessWidget {
-  final List<Map<String, String>> options = [
-    {"title": "Settings", "icon": Assets.settings},
-    {"title": "Sargytlarym", "icon": Assets.sargutlar},
-    {"title": "Tassyklanan harytlar", "icon": Assets.tasSar},
+  final List<Map<String, Object>> options = [
+    {"title": "Sazlamalar", "icon": HugeIcons.strokeRoundedSetting06},
+    {"title": "Sargytlarym", "icon": HugeIcons.strokeRoundedNote02},
+    {"title": "Tassyklanan harytlar", "icon": HugeIcons.strokeRoundedCheckList},
     {
-      "title": "Maglumatlary ýüklemegiňizi haýyş edýarin",
-      "icon": "assets/images/Box_alt_fill.svg"
+      "title": "Maglumatlary ýükle",
+      "icon": HugeIcons.strokeRoundedDownloadCircle02
     },
     {
-      "title": "Maglumatlary ugrat",
-      "icon": "assets/images/Box_alt.svg" // Placeholder icon
+      "title": "Maglumatlary iber",
+      "icon": HugeIcons.strokeRoundedUploadCircle02
     },
   ];
 
@@ -43,8 +43,8 @@ class ProfileView extends StatelessWidget {
               }
             },
             child: ProfileOptionCard(
-              title: item["title"]!,
-              iconPath: item["icon"]!,
+              title: item["title"]! as String,
+              iconPath: item["icon"]! as IconData,
               isLoading: false.obs,
             ),
           );

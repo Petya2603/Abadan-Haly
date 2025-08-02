@@ -19,6 +19,6 @@ final List<Widget> screens = [
   const HomeView(),
   const SearchView(),
   CartView(),
-  OrderView(),
+  const OrderView(),
   ProfileView(),
 ];

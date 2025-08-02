@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:haly/app/data/order_model.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';

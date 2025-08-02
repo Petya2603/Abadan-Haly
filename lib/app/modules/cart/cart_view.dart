@@ -6,7 +6,7 @@ import 'package:haly/app/modules/cart/widgets/cart_item_card.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 
 class CartView extends StatelessWidget {
-   CartView({super.key});
+  CartView({super.key});
   final CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {

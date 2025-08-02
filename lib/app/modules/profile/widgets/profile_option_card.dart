@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class ProfileOptionCard extends StatelessWidget {
   final String title;
-  final String iconPath;
+  final IconData iconPath;
   final RxBool isLoading;
 
   const ProfileOptionCard({
@@ -33,8 +33,10 @@ class ProfileOptionCard extends StatelessWidget {
                     height: 24,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                : SvgPicture.asset(
-                    iconPath,
+                : HugeIcon(
+                    icon: iconPath,
+                    size: 35,
+                    color: Colors.green,
                   )),
             const SizedBox(width: 12),
             Expanded(

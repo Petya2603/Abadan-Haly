@@ -81,8 +81,7 @@ class ProfileController extends GetxController {
     }
 
     Get.dialog(
-      ImportProgressDialog(
-          controller: this), // Reusing the existing progress dialog
+      ImportProgressDialog(controller: this),
       barrierDismissible: false,
     );
 
@@ -92,7 +91,7 @@ class ProfileController extends GetxController {
         for (var item in order.items) {
           ordersToUpload.add({
             "order_id": order.id,
-            "category": item.name, // Assuming item.name is the category
+            "category": item.name,
             "product_code": item.code,
             "size": item.size != null
                 ? '${item.size!.width}x${item.size!.height} ${item.size!.measurementUnit}'
