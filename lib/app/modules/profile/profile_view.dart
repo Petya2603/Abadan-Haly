@@ -10,7 +10,10 @@ import 'package:hugeicons/hugeicons.dart';
 class ProfileView extends StatelessWidget {
   final List<Map<String, Object>> options = [
     {"title": "Sazlamalar", "icon": HugeIcons.strokeRoundedSetting06},
-    {"title": "Tassyklanan harytlar", "icon": HugeIcons.strokeRoundedNote02},
+    {
+      "title": "Tassyklanan harytlar",
+      "icon": HugeIcons.strokeRoundedDocumentAttachment
+    },
     {
       "title": "Maglumatlary ýükle",
       "icon": HugeIcons.strokeRoundedDownloadCircle02

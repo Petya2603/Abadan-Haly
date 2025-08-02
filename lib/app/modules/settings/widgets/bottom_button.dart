@@ -26,7 +26,7 @@ class BottomButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text("Domaini üýtget",
+              child: const Text("Domeni üýtget",
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w600,

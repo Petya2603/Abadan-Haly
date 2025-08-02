@@ -68,10 +68,7 @@ class _SearchViewState extends State<SearchView> {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            '"'
-                            '${controller.searchQuery}'
-                            '"'
-                            ' üçin hiç haryt tapylmady.\nBaşga bir söz bilen gözläp görüň.',
+                            'Gözlegi täzeden amala aşyryň',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
