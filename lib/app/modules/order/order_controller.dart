@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/order_model.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class OrderController extends GetxController {
   final RxList<Order> orders = <Order>[].obs;
@@ -23,9 +25,23 @@ class OrderController extends GetxController {
   void addOrder(Order order) {
     orders.add(order);
     Get.snackbar(
-      'Sipariş',
-      'Siparişiniz oluşturuldu!',
-      snackPosition: SnackPosition.BOTTOM,
+      'Tassyklama',
+      'Tassyklama üstünlikli amala aşyryldy',
+      icon: const Padding(
+        padding: EdgeInsets.only(left: 8.0),
+        child: HugeIcon(
+          icon: HugeIcons.strokeRoundedTick01,
+          size: 28,
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Colors.green.shade700,
+      colorText: Colors.white,
+      borderRadius: 12,
+      margin: const EdgeInsets.all(15),
+      isDismissible: true,
+      dismissDirection: DismissDirection.horizontal,
+      forwardAnimationCurve: Curves.easeOutBack,
     );
   }
 }

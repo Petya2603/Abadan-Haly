@@ -4,6 +4,7 @@ import 'package:haly/app/modules/category/controller/category_controller.dart';
 import 'package:haly/app/modules/category/widgets/category_app_bar.dart';
 import 'package:haly/app/modules/category/widgets/category_tabs_section.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:lottie/lottie.dart';
 
 class CategoryView extends StatelessWidget {
   final String title;
@@ -21,7 +22,7 @@ class CategoryView extends StatelessWidget {
           final isTablet = constraints.maxWidth > 600;
           return Obx(() {
             if (controller.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
+              return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
             }
 
             if (controller.category.value == null) {

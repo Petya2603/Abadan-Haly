@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:lottie/lottie.dart';
 
 class ImageZoomScreen extends StatelessWidget {
   final String imagePath;
@@ -30,15 +31,9 @@ class ImageZoomScreen extends StatelessWidget {
               backgroundDecoration: const BoxDecoration(color: Colors.white),
               loadingBuilder: (context, event) => Center(
                 child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    value: event == null
-                        ? 0
-                        : event.cumulativeBytesLoaded /
-                            event.expectedTotalBytes!,
-                    color: Colors.white,
-                  ),
+                  width: 50,
+                  height: 50,
+                  child: Lottie.asset('assets/images/processing-circle.json'),
                 ),
               ),
             ),

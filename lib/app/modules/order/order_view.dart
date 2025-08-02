@@ -19,10 +19,39 @@ class OrderView extends StatelessWidget {
       appBar: customAppBar(),
       body: Obx(
         () => orderController.orders.isEmpty
-            ? const Center(
-                child: Text(
-                  'Henüz siparişiniz bulunmamaktadır.',
-                  style: TextStyle(fontSize: 18, color: Colors.grey),
+            ? Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HugeIcon(
+                        icon: HugeIcons.strokeRoundedDocumentAttachment,
+                        size: 100,
+                        color: Colors.grey.shade400,
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        'Tassyklanan sargyt ýok',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: Fonts.gilroySemiBold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Sargyt edeniňizden soň, bu ýerde görnüp bilersiňiz.',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.grey.shade400,
+                          fontFamily: Fonts.gilroyRegular,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               )
             : ListView.separated(

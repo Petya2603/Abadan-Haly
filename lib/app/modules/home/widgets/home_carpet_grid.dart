@@ -5,6 +5,7 @@ import 'package:haly/app/modules/category/view/category_view.dart';
 import 'package:haly/app/modules/home/widgets/carpet_card.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeCarpetGrid extends StatelessWidget {
   final bool isTablet;
@@ -18,7 +19,7 @@ class HomeCarpetGrid extends StatelessWidget {
     return Expanded(
       child: Obx(() {
         if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
         } else if (controller.hasError.value) {
           return const Center(
             child: Padding(

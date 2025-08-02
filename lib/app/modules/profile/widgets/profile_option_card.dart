@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:lottie/lottie.dart';
 
 class ProfileOptionCard extends StatelessWidget {
   final String title;
@@ -28,10 +29,10 @@ class ProfileOptionCard extends StatelessWidget {
         Row(
           children: [
             Obx(() => isLoading.value
-                ? const SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                ? SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: Lottie.asset('assets/images/processing-circle.json'),
                   )
                 : HugeIcon(
                     icon: iconPath,

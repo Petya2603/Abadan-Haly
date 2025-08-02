@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/modules/category/controller/category_controller.dart';
 import 'package:haly/app/modules/category/widgets/category_grid_view.dart';
 import 'package:haly/app/modules/category/widgets/custom_tab_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class CategoryTabsSection extends StatelessWidget {
   final CategoryController controller;
@@ -18,7 +19,7 @@ class CategoryTabsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (!controller.isTabControllerReady.value) {
-        return const Center(child: CircularProgressIndicator());
+        return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
       }
       return Column(
         children: [
