@@ -29,6 +29,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProfileController controller = Get.put(ProfileController());
+    Get.put(BottomNavBarController()); // Add this line
 
     return Scaffold(
       appBar: customAppBar(),

@@ -19,7 +19,11 @@ class HomeCarpetGrid extends StatelessWidget {
     return Expanded(
       child: Obx(() {
         if (controller.isLoading.value) {
-          return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
+          return Center(
+              child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Lottie.asset('assets/images/processing-circle.json')));
         } else if (controller.hasError.value) {
           return const Center(
             child: Padding(
