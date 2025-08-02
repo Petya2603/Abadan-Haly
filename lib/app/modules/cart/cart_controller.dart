@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/cart_item_model.dart';
 import 'package:haly/app/data/order_model.dart';
 import 'package:haly/app/modules/order/order_controller.dart';
@@ -8,6 +9,21 @@ import 'package:hugeicons/hugeicons.dart';
 class CartController extends GetxController {
   final RxList<CartItem> cartItems = <CartItem>[].obs;
   final OrderController _orderController = Get.find<OrderController>();
+  final _box = GetStorage();
+
+  @override
+  void onInit() {
+    super.onInit();
+    List? storedCart = _box.read('cartItems');
+    if (storedCart != null) {
+      cartItems.assignAll(storedCart.map((e) => CartItem.fromJson(e)).toList());
+    }
+    ever(cartItems, (_) => _saveCartToStorage());
+  }
+
+  void _saveCartToStorage() {
+    _box.write('cartItems', cartItems.toList());
+  }
 
   void addToCart(CartItem item) {
     final existingItemIndex = cartItems.indexWhere(
