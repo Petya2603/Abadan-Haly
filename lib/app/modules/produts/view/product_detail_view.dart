@@ -30,63 +30,21 @@ class _ProductDetailViewState extends State<ProductDetailView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              color: const Color.fromARGB(255, 246, 246, 248),
-              height: Get.height * 0.4,
-              child: PageView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                controller: controller.pageController,
-                onPageChanged: (index) {
-                  controller.updatePageIndex(index);
-                },
-                itemCount: widget
-                    .product
-                    .figures[controller.selectedFigureIndex.value]
-                    .colors
-                    .length,
-                itemBuilder: (context, index) {
-                  final color = widget
-                      .product
-                      .figures[controller.selectedFigureIndex.value]
-                      .colors[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ImageZoomScreen(
-                            imagePath: color.image,
-                            productCode: widget.product.code,
-                            productName: widget.product.category.name,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.file(
-                        File(color.image),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-            if (widget.product.figures[controller.selectedFigureIndex.value]
-                    .colors.length >
-                1)
-              SizedBox(
-                height: 102,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
+            Obx(
+              () => Container(
+                color: const Color.fromARGB(255, 246, 246, 248),
+                height: Get.height * 0.4,
+                child: PageView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: controller.pageController,
+                  onPageChanged: (index) {
+                    controller.updatePageIndex(index);
+                  },
                   itemCount: widget
                       .product
                       .figures[controller.selectedFigureIndex.value]
                       .colors
                       .length,
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
                   itemBuilder: (context, index) {
                     final color = widget
                         .product
@@ -94,39 +52,92 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         .colors[index];
                     return GestureDetector(
                       onTap: () {
-                        controller.selectColor(color);
-                        controller.pageController.jumpToPage(index);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ImageZoomScreen(
+                              imagePath: color.image,
+                              productCode: widget.product.code,
+                              productName: widget.product.category.name,
+                            ),
+                          ),
+                        );
                       },
-                      child: Obx(
-                        () => Container(
-                          width: 102,
-                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                              color: controller.selectedColorHex.value ==
-                                      color.hexCode
-                                  ? const Color.fromARGB(255, 102, 102, 102)
-                                  : const Color.fromARGB(255, 231, 231, 231),
-                              width: controller.selectedColorHex.value ==
-                                      color.hexCode
-                                  ? 2.5
-                                  : 1,
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(6.0),
-                            child: Image.file(
-                              File(color.image),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.file(
+                          File(color.image),
+                          fit: BoxFit.contain,
                         ),
                       ),
                     );
                   },
                 ),
               ),
+            ),
+            const SizedBox(height: 20),
+            Obx(
+              () {
+                if (widget.product.figures[controller.selectedFigureIndex.value]
+                        .colors.length >
+                    1) {
+                  return SizedBox(
+                    height: 102,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: widget
+                          .product
+                          .figures[controller.selectedFigureIndex.value]
+                          .colors
+                          .length,
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      itemBuilder: (context, index) {
+                        final color = widget
+                            .product
+                            .figures[controller.selectedFigureIndex.value]
+                            .colors[index];
+                        return GestureDetector(
+                          onTap: () {
+                            controller.selectColor(color);
+                            controller.pageController.jumpToPage(index);
+                          },
+                          child: Obx(
+                            () => Container(
+                              width: 102,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(6),
+                                border: Border.all(
+                                  color: controller.selectedColorHex.value ==
+                                          color.hexCode
+                                      ? const Color.fromARGB(255, 102, 102, 102)
+                                      : const Color.fromARGB(
+                                          255, 231, 231, 231),
+                                  width: controller.selectedColorHex.value ==
+                                          color.hexCode
+                                      ? 2.5
+                                      : 1,
+                                ),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(6.0),
+                                child: Image.file(
+                                  File(color.image),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
             const SizedBox(
               height: 40,
             ),
@@ -243,16 +254,6 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                               fontFamily: Fonts.gilroySemiBold,
                             ),
                           ),
-                          const SizedBox(width: 8),
-                          Obx(() => Text(
-                                '(${widget.product.figures[controller.selectedFigureIndex.value].colors.length})',
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: Fonts.gilroySemiBold,
-                                  color: Colors.grey,
-                                ),
-                              )),
                           const SizedBox(height: 8),
                           Obx(
                             () => Wrap(
