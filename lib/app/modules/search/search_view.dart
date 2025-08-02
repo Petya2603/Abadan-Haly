@@ -5,8 +5,21 @@ import 'package:haly/app/modules/search/controller/search_controller.dart' as se
 import 'package:haly/app/modules/search/widgets/search_input_field.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 
-class SearchView extends StatelessWidget {
+class SearchView extends StatefulWidget {
   const SearchView({super.key});
+
+  @override
+  State<SearchView> createState() => _SearchViewState();
+}
+
+class _SearchViewState extends State<SearchView> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +35,7 @@ class SearchView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SearchInputField(
+              focusNode: _focusNode,
               onChanged: (query) => controller.search(query),
             ),
             const SizedBox(height: 25),

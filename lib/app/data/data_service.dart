@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/carpet_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class DataService {
   static const String _fileName = 'carpet_data.json';
+  final _box = GetStorage();
+
+  String get domain => _box.read('domain') ?? 'https://carpet.sada-devs.com';
 
   Future<String> get _imagesPath async {
     final directory = await getApplicationDocumentsDirectory();
@@ -61,8 +65,7 @@ class DataService {
   }
 
   Future<void> importDataFromApi({Function(double)? onProgress}) async {
-    final response =
-        await http.get(Uri.parse('https://carpet.sada-devs.com/api/sync'));
+    final response = await http.get(Uri.parse('$domain/api/sync'));
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
 

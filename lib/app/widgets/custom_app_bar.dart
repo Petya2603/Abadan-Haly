@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
@@ -18,10 +17,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: showBackButton
           ? IconButton(
-              icon: SvgPicture.asset(
-                Assets.back,
+              icon: const Icon(
+                HugeIcons.strokeRoundedArrowLeft01,
+                size: 30,
               ),
-              onPressed: () => Get.back(),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Get.back();
+              },
             )
           : null,
       title: title != null

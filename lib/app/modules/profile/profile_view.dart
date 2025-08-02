@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:haly/app/modules/bottomnavbar/bottom_nav_bar_controller.dart';
 import 'package:haly/app/modules/profile/controller/profile_controller.dart';
 import 'package:haly/app/modules/profile/widgets/profile_option_card.dart';
+import 'package:haly/app/modules/settings/settings_view.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 import 'package:hugeicons/hugeicons.dart';
 
 class ProfileView extends StatelessWidget {
   final List<Map<String, Object>> options = [
     {"title": "Sazlamalar", "icon": HugeIcons.strokeRoundedSetting06},
-    {"title": "Sargytlarym", "icon": HugeIcons.strokeRoundedNote02},
-    {"title": "Tassyklanan harytlar", "icon": HugeIcons.strokeRoundedCheckList},
+    {"title": "Tassyklanan harytlar", "icon": HugeIcons.strokeRoundedNote02},
     {
       "title": "Maglumatlary ýükle",
       "icon": HugeIcons.strokeRoundedDownloadCircle02
@@ -36,9 +37,13 @@ class ProfileView extends StatelessWidget {
           final item = options[index];
           return GestureDetector(
             onTap: () async {
-              if (item["title"] == "Maglumatlary ýüklemegiňizi haýyş edýarin") {
+              if (item["title"] == "Sazlamalar") {
+                Get.to(() => SettingsView());
+              } else if (item["title"] == "Tassyklanan harytlar") {
+                Get.find<BottomNavBarController>().changeIndex(3);
+              } else if (item["title"] == "Maglumatlary ýükle") {
                 await controller.importData();
-              } else if (item["title"] == "Maglumatlary ugrat") {
+              } else if (item["title"] == "Maglumatlary iber") {
                 await controller.uploadOrders();
               }
             },

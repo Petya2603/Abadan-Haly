@@ -5,10 +5,12 @@ import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:haly/app/modules/order/order_controller.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/modules/bottomnavbar/bottom_nav_bar_controller.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
-  final RxInt selectedIndex = 0.obs;
+
+  final BottomNavBarController controller = Get.put(BottomNavBarController());
 
   BottomNavigationBarItem buildNavItem({
     required String selectedIconPath,
@@ -18,7 +20,7 @@ class CustomBottomNavBar extends StatelessWidget {
   }) {
     return BottomNavigationBarItem(
       icon: Obx(() {
-        final isSelected = selectedIndex.value == index;
+        final isSelected = controller.selectedIndex.value == index;
         return SvgPicture.asset(
           isSelected ? selectedIconPath : unselectedIconPath,
           width: 32,
@@ -36,7 +38,7 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
           body: IndexedStack(
-            index: selectedIndex.value,
+            index: controller.selectedIndex.value,
             children: screens,
           ),
           bottomNavigationBar: Padding(
@@ -50,8 +52,8 @@ class CustomBottomNavBar extends StatelessWidget {
                 type: BottomNavigationBarType.fixed,
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                currentIndex: selectedIndex.value,
-                onTap: (index) => selectedIndex.value = index,
+                currentIndex: controller.selectedIndex.value,
+                onTap: (index) => controller.changeIndex(index),
                 selectedItemColor: AppColors.green,
                 unselectedItemColor: const Color.fromARGB(255, 129, 129, 129),
                 selectedLabelStyle: const TextStyle(

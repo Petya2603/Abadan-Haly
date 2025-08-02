@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/data/carpet_model.dart';
 import 'package:haly/app/modules/produts/controllers/product_detail_controller.dart';
 import 'package:haly/app/modules/produts/view/product_image_screen.dart';
-import 'package:haly/app/modules/produts/view/widgets/product_detail_appbar.dart';
+import 'package:haly/app/widgets/custom_detail_appbar.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 

@@ -3,8 +3,10 @@ import 'package:haly/app/produts/theme/app_theme.dart';
 
 class SearchInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;
+  final FocusNode focusNode;
 
-  const SearchInputField({super.key, required this.onChanged});
+  const SearchInputField(
+      {super.key, required this.onChanged, required this.focusNode});
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class SearchInputField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
         child: TextField(
+          focusNode: focusNode,
           onChanged: onChanged,
           textAlign: TextAlign.left,
           style: const TextStyle(fontSize: 16),

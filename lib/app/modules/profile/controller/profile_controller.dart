@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/data_service.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
 import 'package:haly/app/modules/search/controller/search_controller.dart'
@@ -15,6 +16,9 @@ class ProfileController extends GetxController {
   var isLoading = false.obs;
   final DataService dataService = DataService();
   final RxDouble downloadProgress = 0.0.obs;
+  final _box = GetStorage();
+
+  String get domain => _box.read('domain') ?? 'https://carpet.sada-devs.com';
 
   Future<void> importData() async {
     Get.dialog(
@@ -103,7 +107,7 @@ class ProfileController extends GetxController {
         }
       }
 
-      final url = Uri.parse('https://carpet.sada-devs.com/api/sync/orders');
+      final url = Uri.parse('$domain/api/sync/orders');
       final headers = {'Content-Type': 'application/json'};
       final body = json.encode(ordersToUpload);
       for (int i = 0; i <= 100; i += 10) {

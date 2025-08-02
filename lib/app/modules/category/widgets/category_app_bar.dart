@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/modules/search/search_view.dart';
+import 'package:hugeicons/hugeicons.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CategoryAppBar({super.key});
@@ -18,12 +19,14 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-              icon: SvgPicture.asset(
-                Assets.back,
-                height: 24,
-                width: 24,
+              icon: const Icon(
+                HugeIcons.strokeRoundedArrowLeft01,
+                size: 30,
               ),
-              onPressed: () => Get.back(),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Get.back();
+              },
             ),
             Expanded(
               child: Center(

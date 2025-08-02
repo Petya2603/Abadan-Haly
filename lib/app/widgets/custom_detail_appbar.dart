@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:hugeicons/hugeicons.dart'; // HugeIcons eklendi
 
 class ProductDetailAppbar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -18,12 +18,14 @@ class ProductDetailAppbar extends StatelessWidget
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             IconButton(
-              icon: SvgPicture.asset(
-                Assets.back,
-                height: 24,
-                width: 24,
+              icon: const Icon(
+                HugeIcons.strokeRoundedArrowLeft01,
+                size: 30,
               ),
-              onPressed: () => Get.back(),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Get.back();
+              },
             ),
             Expanded(
               child: Center(

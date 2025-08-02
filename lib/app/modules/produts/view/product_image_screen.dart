@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImageZoomScreen extends StatelessWidget {
@@ -22,6 +24,17 @@ class ImageZoomScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(
+            HugeIcons.strokeRoundedArrowLeft01,
+            size: 30,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            FocusScope.of(context).unfocus();
+            Get.back();
+          },
+        ),
       ),
       body: Center(
         child: PhotoView(

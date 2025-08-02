@@ -15,75 +15,77 @@ class ContactScreen extends StatelessWidget {
       appBar: const CustomAppBar(),
       body: LayoutBuilder(builder: (context, constraints) {
         final isTablet = constraints.maxWidth > 600;
-        return Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: isTablet ? 52.0 : 16.0,
-            vertical: 24.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Image.asset(
-                  Assets.logo,
-                  height: isTablet ? 102 : 60,
-                  width: 166,
-                ),
-              ),
-              SizedBox(height: isTablet ? 30 : 20),
-              Text("Habarlaşmak üçin",
-                  style: TextStyle(
-                      fontSize: isTablet ? 24 : 18,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: Fonts.gilroySemiBold,
-                      color: AppColors.green)),
-              const SizedBox(height: 18),
-              InkWell(
-                onTap: () => _launchUrl(
-                    'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
-                child: ContactCard(
-                  icon: SvgPicture.asset(
-                    Assets.location,
+        return SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isTablet ? 52.0 : 16.0,
+              vertical: 24.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Image.asset(
+                    Assets.logo,
+                    height: isTablet ? 102 : 60,
+                    width: 166,
                   ),
-                  title: "Bizin salgymyz",
-                  subtitle:
-                      "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
-                  isTablet: isTablet,
                 ),
-              ),
-              InkWell(
-                onTap: () => _launchUrl("mailto:info@biznes.tm"),
-                child: ContactCard(
-                  icon: SvgPicture.asset(
-                    Assets.email,
+                SizedBox(height: isTablet ? 30 : 20),
+                Text("Habarlaşmak üçin",
+                    style: TextStyle(
+                        fontSize: isTablet ? 24 : 18,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: Fonts.gilroySemiBold,
+                        color: AppColors.green)),
+                const SizedBox(height: 18),
+                InkWell(
+                  onTap: () => _launchUrl(
+                      'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
+                  child: ContactCard(
+                    icon: SvgPicture.asset(
+                      Assets.location,
+                    ),
+                    title: "Bizin salgymyz",
+                    subtitle:
+                        "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
+                    isTablet: isTablet,
                   ),
-                  title: "Email",
-                  subtitle: "info@naduaashgabat.com.tm",
-                  isTablet: isTablet,
                 ),
-              ),
-              InkWell(
-                onTap: () => _launchUrl('tel:+99312399006'),
-                child: ContactCard(
-                  icon: SvgPicture.asset(
-                    Assets.call,
+                InkWell(
+                  onTap: () => _launchUrl("mailto:info@biznes.tm"),
+                  child: ContactCard(
+                    icon: SvgPicture.asset(
+                      Assets.email,
+                    ),
+                    title: "Email",
+                    subtitle: "info@naduaashgabat.com.tm",
+                    isTablet: isTablet,
                   ),
-                  title: "Telefon belgimiz",
-                  subtitle: "+993-12-39-90-06",
-                  isTablet: isTablet,
                 ),
-              ),
-              InkWell(
-                child: ContactCard(
-                  icon: SvgPicture.asset(
-                    Assets.fax,
+                InkWell(
+                  onTap: () => _launchUrl('tel:+99312399006'),
+                  child: ContactCard(
+                    icon: SvgPicture.asset(
+                      Assets.call,
+                    ),
+                    title: "Telefon belgimiz",
+                    subtitle: "+993-12-39-90-06",
+                    isTablet: isTablet,
                   ),
-                  title: "FAX",
-                  subtitle: "39-90-05",
-                  isTablet: isTablet,
                 ),
-              ),
-            ],
+                InkWell(
+                  child: ContactCard(
+                    icon: SvgPicture.asset(
+                      Assets.fax,
+                    ),
+                    title: "FAX",
+                    subtitle: "39-90-05",
+                    isTablet: isTablet,
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       }),

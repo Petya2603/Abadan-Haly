@@ -45,9 +45,12 @@ class CategoryTabsSection extends StatelessWidget {
                 indicator: const BoxDecoration(),
                 indicatorColor: Colors.transparent,
                 indicatorWeight: 0,
-                labelPadding: EdgeInsets.symmetric(horizontal: isTablet ? 10 : 4),
-                tabs: controller.category.value!.subcategories!.map((subcategory) {
-                  final index = controller.category.value!.subcategories!.indexOf(subcategory);
+                labelPadding:
+                    EdgeInsets.symmetric(horizontal: isTablet ? 10 : 4),
+                tabs: controller.category.value!.subcategories!
+                    .map((subcategory) {
+                  final index = controller.category.value!.subcategories!
+                      .indexOf(subcategory);
                   return Obx(
                     () => buildCustomTab(
                       context,
@@ -64,6 +67,7 @@ class CategoryTabsSection extends StatelessWidget {
           Expanded(
             child: TabBarView(
               controller: controller.tabController,
+              physics: const NeverScrollableScrollPhysics(),
               children: controller.category.value!.subcategories!.map((_) {
                 return CategoryGridView(isTablet: isTablet);
               }).toList(),
