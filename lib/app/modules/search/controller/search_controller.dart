@@ -15,7 +15,7 @@ class SearchController extends GetxController {
     try {
       final carpetData = await _dataService.getCarpetData();
       _products.assignAll(carpetData.products);
-      _filteredProducts.assignAll(carpetData.products);
+      _filteredProducts.assignAll(carpetData.products.take(10).toList());
     } catch (e) {
       // print("Error fetching products: $e");
     }
@@ -30,7 +30,7 @@ class SearchController extends GetxController {
   void search(String query) {
     _searchQuery.value = query;
     if (query.isEmpty) {
-      _filteredProducts.assignAll(_products);
+      _filteredProducts.assignAll(_products.take(10).toList());
     } else {
       _filteredProducts.assignAll(_products.where((product) {
         final lowerCaseQuery = query.toLowerCase();

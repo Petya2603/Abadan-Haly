@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/modules/search/search_view.dart';
 import 'package:hugeicons/hugeicons.dart';
+import '../../bottomnavbar/bottom_nav_bar.dart';
+import '../../bottomnavbar/bottom_nav_bar_controller.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CategoryAppBar({super.key});
@@ -45,7 +46,8 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 width: 54,
               ),
               onPressed: () {
-                Get.to(() => const SearchView());
+                Get.to(CustomBottomNavBar());
+                Get.find<BottomNavBarController>().changeIndex(1);
               },
             ),
           ],

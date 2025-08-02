@@ -53,8 +53,8 @@ Widget buildCustomTab(
             ),
             child: Image.file(
               File(imagePath),
-              width: isTablet ? 50 : 40,
-              height: isTablet ? 50 : 40,
+              width: isTablet ? 140 : 40,
+              height: isTablet ? 140 : 40,
               fit: BoxFit.contain,
             ),
           ),

@@ -9,17 +9,22 @@ import 'package:haly/app/widgets/custom_detail_appbar.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 
-class ProductDetailView extends StatelessWidget {
+class ProductDetailView extends StatefulWidget {
   final Product product;
 
-  ProductDetailView({super.key, required this.product});
+  const ProductDetailView({super.key, required this.product});
 
-  late final ProductDetailController controller;
+  @override
+  State<ProductDetailView> createState() => _ProductDetailViewState();
+}
+
+class _ProductDetailViewState extends State<ProductDetailView> {
+  late ProductDetailController controller;
 
   @override
   Widget build(BuildContext context) {
     final ProductDetailController controller =
-        Get.put(ProductDetailController(product: product));
+        Get.put(ProductDetailController(product: widget.product));
     return Scaffold(
       appBar: const ProductDetailAppbar(),
       body: SingleChildScrollView(
@@ -33,9 +38,9 @@ class ProductDetailView extends StatelessWidget {
                 onPageChanged: (index) {
                   controller.updatePageIndex(index);
                 },
-                itemCount: product.figures.length,
+                itemCount: widget.product.figures.length,
                 itemBuilder: (context, index) {
-                  final figure = product.figures[index];
+                  final figure = widget.product.figures[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -43,8 +48,8 @@ class ProductDetailView extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => ImageZoomScreen(
                             imagePath: figure.image,
-                            productCode: product.code,
-                            productName: product.category.name,
+                            productCode: widget.product.code,
+                            productName: widget.product.category.name,
                           ),
                         ),
                       );
@@ -61,15 +66,15 @@ class ProductDetailView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            if (product.figures.length > 1)
+            if (widget.product.figures.length > 1)
               SizedBox(
                 height: 102,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: product.figures.length,
+                  itemCount: widget.product.figures.length,
                   padding: const EdgeInsets.symmetric(horizontal: 12),
                   itemBuilder: (context, index) {
-                    final figure = product.figures[index];
+                    final figure = widget.product.figures[index];
                     return GestureDetector(
                       onTap: () {
                         controller.updatePageIndex(index);
@@ -120,7 +125,7 @@ class ProductDetailView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          product.category.name,
+                          widget.product.category.name,
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -164,7 +169,7 @@ class ProductDetailView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              product.category.name,
+                              widget.product.category.name,
                               style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.w600,
@@ -173,7 +178,7 @@ class ProductDetailView extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              product.code,
+                              widget.product.code,
                               style: const TextStyle(
                                 fontSize: 24,
                                 color: Color.fromARGB(255, 110, 110, 112),
@@ -184,12 +189,14 @@ class ProductDetailView extends StatelessWidget {
                             Obx(() => Text(
                                   controller.selectedColorName.value.isNotEmpty
                                       ? controller.selectedColorName.value
-                                      : (product
+                                      : (widget
+                                              .product
                                               .figures[controller
                                                   .selectedFigureIndex.value]
                                               .colors
                                               .isNotEmpty
-                                          ? product
+                                          ? widget
+                                              .product
                                               .figures[controller
                                                   .selectedFigureIndex.value]
                                               .colors
@@ -221,7 +228,8 @@ class ProductDetailView extends StatelessWidget {
                             () => Wrap(
                               spacing: 10.0,
                               runSpacing: 10.0,
-                              children: product
+                              children: widget
+                                  .product
                                   .figures[controller.selectedFigureIndex.value]
                                   .colors
                                   .map((color) => GestureDetector(
@@ -329,7 +337,8 @@ class ProductDetailView extends StatelessWidget {
                     () => Wrap(
                       spacing: 10.0,
                       runSpacing: 10.0,
-                      children: product.figures.asMap().entries.map((entry) {
+                      children:
+                          widget.product.figures.asMap().entries.map((entry) {
                         int index = entry.key;
                         Figure figure = entry.value;
                         return GestureDetector(
@@ -376,7 +385,7 @@ class ProductDetailView extends StatelessWidget {
                     () => Wrap(
                       spacing: 10.0,
                       runSpacing: 10.0,
-                      children: product
+                      children: widget.product
                           .figures[controller.selectedFigureIndex.value].sizes
                           .asMap()
                           .entries
@@ -524,7 +533,7 @@ class ProductDetailView extends StatelessWidget {
                   ),
                   const SizedBox(height: 35),
                   Text(
-                    product.description,
+                    widget.product.description,
                     style: const TextStyle(
                       fontSize: 20,
                       color: Color.fromARGB(255, 110, 110, 112),
@@ -542,7 +551,7 @@ class ProductDetailView extends StatelessWidget {
                       color: const Color(0xFFE7E7E7),
                       width: 1,
                     ),
-                    children: product.attributes.map((attr) {
+                    children: widget.product.attributes.map((attr) {
                       return TableRow(
                         children: [
                           Container(

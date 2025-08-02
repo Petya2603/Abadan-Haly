@@ -69,12 +69,31 @@ class HomeCarpetGrid extends StatelessWidget {
             itemCount: categories.length,
             itemBuilder: (context, index) {
               final category = categories[index];
+              const defaultGradient = LinearGradient(colors: [
+                Color.fromARGB(255, 168, 168, 168),
+                Color.fromARGB(255, 135, 129, 129),
+              ]);
+              final gradients = [
+                const LinearGradient(colors: [
+                  Color.fromRGBO(59, 94, 164, 1),
+                  Color.fromRGBO(49, 76, 132, 1),
+                ]),
+                const LinearGradient(colors: [
+                  Color.fromRGBO(201, 53, 19, 1),
+                  Color.fromRGBO(117, 33, 14, 1),
+                ]),
+                const LinearGradient(colors: [
+                  Color.fromRGBO(97, 113, 71, 1),
+                  Color.fromRGBO(185, 215, 135, 1),
+                ]),
+              ];
+              final gradient = index == 0
+                  ? defaultGradient
+                  : gradients[(index - 1) % gradients.length];
+
               return CarpetCard(
                 title: category.name,
-                gradient: const LinearGradient(colors: [
-                  Color.fromARGB(255, 168, 168, 168),
-                  Color.fromARGB(255, 135, 129, 129)
-                ]),
+                gradient: gradient,
                 image: category.image,
                 isTablet: isTablet,
                 onTap: () => Get.to(() => CategoryView(title: category.name)),

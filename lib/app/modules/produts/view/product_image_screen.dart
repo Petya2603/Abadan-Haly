@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -20,65 +19,57 @@ class ImageZoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        iconTheme: const IconThemeData(color: Colors.white),
-        leading: IconButton(
-          icon: const Icon(
-            HugeIcons.strokeRoundedArrowLeft01,
-            size: 30,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            FocusScope.of(context).unfocus();
-            Get.back();
-          },
-        ),
-      ),
-      body: Center(
-        child: PhotoView(
-          imageProvider: FileImage(File(imagePath)),
-          minScale: PhotoViewComputedScale.contained,
-          maxScale: PhotoViewComputedScale.covered * 4,
-          backgroundDecoration: const BoxDecoration(color: Colors.black),
-          loadingBuilder: (context, event) => Center(
-            child: SizedBox(
-              width: 20,
-              height: 20,
-              child: CircularProgressIndicator(
-                value: event == null
-                    ? 0
-                    : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          PhotoView(
+            imageProvider: FileImage(File(imagePath)),
+            minScale: PhotoViewComputedScale.contained,
+            maxScale: PhotoViewComputedScale.covered * 4,
+            backgroundDecoration: const BoxDecoration(color: Colors.white),
+            loadingBuilder: (context, event) => Center(
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  value: event == null
+                      ? 0
+                      : event.cumulativeBytesLoaded / event.expectedTotalBytes!,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
-        ),
-      ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.all(16),
-        color: Colors.black.withOpacity(0.7),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              productName,
-              style: const TextStyle(
+
+          // Back button
+          Positioned(
+            top: MediaQuery.of(context).padding.top + 8,
+            left: 12,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
                 color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
               ),
+              child: IconButton(
+                  icon: const Icon(
+                    HugeIcons.strokeRoundedArrowLeft01,
+                    size: 30,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  padding: const EdgeInsets.all(8)),
             ),
-            Text(
-              productCode,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
