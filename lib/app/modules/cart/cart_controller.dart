@@ -28,10 +28,9 @@ class CartController extends GetxController {
   void addToCart(CartItem item) {
     final existingItemIndex = cartItems.indexWhere(
       (cartItem) =>
-          cartItem.code == item.code &&
-          cartItem.color?.hexCode == item.color?.hexCode &&
-          cartItem.shape?.id == item.shape?.id &&
-          cartItem.size?.id == item.size?.id,
+          cartItem.product.code == item.product.code &&
+          cartItem.colorName == item.colorName &&
+          cartItem.size == item.size,
     );
 
     if (existingItemIndex != -1) {

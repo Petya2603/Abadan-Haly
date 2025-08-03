@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:haly/app/data/carpet_model.dart';
 import 'package:haly/app/data/cart_item_model.dart';
+import 'package:haly/app/data/data_service.dart';
 import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:hugeicons/hugeicons.dart';
 
@@ -24,6 +25,8 @@ class ProductDetailController extends GetxController {
   late PageController pageController;
 
   late final CartController _cartController;
+  final DataService _dataService = DataService();
+  final RxList<Product> filteredProducts = <Product>[].obs;
 
   @override
   void onInit() {
@@ -42,6 +45,16 @@ class ProductDetailController extends GetxController {
       selectedColorHex.value = '';
       selectedColorImage.value = product.figures.first.image;
     }
+    _loadFilteredProducts();
+  }
+
+  void _loadFilteredProducts() async {
+    final carpetData = await _dataService.getCarpetData();
+    final allProducts = carpetData.products;
+    filteredProducts.value = allProducts
+        .where((p) =>
+            p.category.name == product.category.name && p.code == product.code)
+        .toList();
   }
 
   @override
@@ -227,18 +240,42 @@ class ProductDetailController extends GetxController {
     }
 
     final cartItem = CartItem(
-      imagePath: selectedColorImage.value.isNotEmpty
-          ? selectedColorImage.value
-          : selectedFigure.image,
-      name: product.category.name,
-      code: product.code,
-      color: selectedColor,
-      shape: selectedFigure,
-      size: selectedSize,
+      product: product,
       quantity: quantity.value,
+      colorName: selectedColor?.name ?? '',
+      size:
+          '${selectedSize?.width ?? ''}x${selectedSize?.height ?? ''} ${selectedSize?.measurementUnit ?? ''}',
     );
 
     _cartController.addToCart(cartItem);
-    // Get.to(() => CartView());
+  }
+
+  CartItem getCartItem() {
+    final selectedFigure = product.figures[selectedFigureIndex.value];
+    final selectedColor = selectedFigure.colors
+        .firstWhereOrNull((c) => c.hexCode == selectedColorHex.value);
+
+    Size? selectedSize;
+    final customWidth = double.tryParse(widthController.text);
+    final customLength = double.tryParse(lengthController.text);
+
+    if (customWidth != null && customLength != null) {
+      selectedSize = Size(
+          id: 0,
+          width: customWidth.toInt(),
+          height: customLength.toInt(),
+          measurementUnit: 'cm');
+    } else if (selectedSizeIndex.value != -1 &&
+        selectedSizeIndex.value < selectedFigure.sizes.length) {
+      selectedSize = selectedFigure.sizes[selectedSizeIndex.value];
+    }
+
+    return CartItem(
+      product: product,
+      quantity: quantity.value,
+      colorName: selectedColor?.name ?? '',
+      size:
+          '${selectedSize?.width ?? ''}x${selectedSize?.height ?? ''} ${selectedSize?.measurementUnit ?? ''}',
+    );
   }
 }

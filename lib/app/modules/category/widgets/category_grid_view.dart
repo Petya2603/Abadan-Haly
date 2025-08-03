@@ -18,18 +18,21 @@ class CategoryGridView extends StatelessWidget {
         .toList();
 
     return Padding(
-      padding: EdgeInsets.all(isTablet ? 16.0 : 8.0),
-      child: GridView.builder(
-        itemCount: filteredProducts.length,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 231,
-          mainAxisSpacing: isTablet ? 24 : 12,
-          crossAxisSpacing: isTablet ? 24 : 12,
-          childAspectRatio: 231 / 600,
+      padding: const EdgeInsets.all(16.0),
+      child: SizedBox(
+        height: 493,
+        child: GridView.builder(
+          itemCount: filteredProducts.length,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 231,
+            mainAxisSpacing: isTablet ? 24 : 12,
+            crossAxisSpacing: isTablet ? 24 : 12,
+            childAspectRatio: 231 / 600,
+          ),
+          itemBuilder: (context, index) {
+            return buildProductCard(filteredProducts[index]);
+          },
         ),
-        itemBuilder: (context, index) {
-          return buildProductCard(filteredProducts[index], isTablet);
-        },
       ),
     );
   }

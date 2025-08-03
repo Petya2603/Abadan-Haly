@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/carpet_model.dart';
+import 'package:haly/app/modules/category/widgets/product_card_widget.dart';
 import 'package:haly/app/modules/produts/controllers/product_detail_controller.dart';
 import 'package:haly/app/modules/produts/view/product_image_screen.dart';
+import 'package:haly/app/widgets/add_to_cart_dialog.dart';
 import 'package:haly/app/widgets/custom_detail_appbar.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
@@ -292,7 +294,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                                               .selectedColorHex
                                                               .value ==
                                                           color.hexCode
-                                                      ? 3.0
+                                                      ? 4.0
                                                       : 0,
                                                 ),
                                               ),
@@ -619,13 +621,106 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       );
                     }).toList(),
                   ),
+                  const SizedBox(height: 30),
+                  Obx(() {
+                    if (controller.filteredProducts.isNotEmpty) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Iň köp satylan halylar',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: Fonts.gilroySemiBold,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 39, 39, 39),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 493,
+                            child: GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller.filteredProducts.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 12,
+                                childAspectRatio: 600 / 231,
+                              ),
+                              itemBuilder: (context, index) {
+                                final product =
+                                    controller.filteredProducts[index];
+                                return buildProductCard(product);
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
+                  const SizedBox(height: 30),
+                  Obx(() {
+                    if (controller.filteredProducts.length > 1) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Meňzeş halylar',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: Fonts.gilroySemiBold,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 39, 39, 39),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 493,
+                            child: GridView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller.filteredProducts.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1,
+                                mainAxisSpacing: 12,
+                                crossAxisSpacing: 12,
+                                childAspectRatio: 600 / 231,
+                              ),
+                              itemBuilder: (context, index) {
+                                final product =
+                                    controller.filteredProducts[index];
+                                return buildProductCard(product);
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
                   const SizedBox(height: 50),
                   SizedBox(
                     height: 60,
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        controller.addProductToCart();
+                        final cartItem = controller.getCartItem();
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AddToCartDialog(
+                              cartItem: cartItem,
+                              onConfirm: () {
+                                controller.addProductToCart();
+                              },
+                            );
+                          },
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,
@@ -637,7 +732,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SvgPicture.asset(
-                            Assets.boxalt,
+                            "assets/images/sebet.svg",
                             colorFilter: const ColorFilter.mode(
                                 AppColors.white, BlendMode.srcIn),
                           ),

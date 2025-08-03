@@ -92,7 +92,7 @@ class _SearchViewState extends State<SearchView> {
                     ),
                     itemBuilder: (context, index) {
                       return buildProductCard(
-                          controller.filteredProducts[index], isTablet);
+                          controller.filteredProducts[index]);
                     },
                   );
                 }

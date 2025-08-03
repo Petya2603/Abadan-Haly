@@ -68,7 +68,7 @@ class OrderDetailView extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(1),
                           child: Image.file(
-                            File(item.imagePath),
+                            File(item.product.figures.first.colors.first.image),
                             width: 230,
                             height: 329,
                             fit: BoxFit.cover,
@@ -80,27 +80,27 @@ class OrderDetailView extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(item.name,
+                              Text(item.product.category.name,
                                   style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.w600,
                                       fontFamily: Fonts.gilroySemiBold)),
                               const SizedBox(height: 6),
-                              Text("Kody: ${item.code}",
+                              Text("Kody: ${item.product.code}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
                               const SizedBox(height: 6),
                               Text(
-                                  "Ölçegi : ${item.size != null ? '${item.size!.width}x${item.size!.height} ${item.size!.measurementUnit}' : '-'}",
+                                  "Ölçegi : ${item.size}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                       fontFamily: Fonts.gilroyMedium)),
                               const SizedBox(height: 6),
                               Text(
-                                  "Reňki :   ${item.color != null ? item.color!.name : '-'}",
+                                  "Reňki :   ${item.colorName}",
                                   style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w500,
@@ -118,9 +118,7 @@ class OrderDetailView extends StatelessWidget {
                                     const SizedBox(width: 10),
                                     Chip(
                                       label: Text(
-                                          item.shape != null
-                                              ? item.shape!.name
-                                              : '-',
+                                          item.product.figures.first.name,
                                           style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 16,

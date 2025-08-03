@@ -31,7 +31,7 @@ class CartItemCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(1),
                 child: Image.file(
-                  File(cartItem.imagePath),
+                  File(cartItem.product.figures.first.colors.first.image),
                   width: 230,
                   height: 329,
                   fit: BoxFit.cover,
@@ -43,27 +43,27 @@ class CartItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(cartItem.name,
+                    Text(cartItem.product.category.name,
                         style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
                             fontFamily: Fonts.gilroySemiBold)),
                     const SizedBox(height: 6),
-                    Text("Kody: ${cartItem.code}",
+                    Text("Kody: ${cartItem.product.code}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 6),
                     Text(
-                        "Ölçegi : ${cartItem.size != null ? '${cartItem.size!.width}x${cartItem.size!.height} ${cartItem.size!.measurementUnit}' : '-'}",
+                        "Ölçegi : ${cartItem.size}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 6),
                     Text(
-                        "Reňki :   ${cartItem.color != null ? cartItem.color!.name : '-'}",
+                        "Reňki :   ${cartItem.colorName}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
@@ -85,9 +85,7 @@ class CartItemCard extends StatelessWidget {
                           const SizedBox(width: 10),
                           Chip(
                             label: Text(
-                              cartItem.shape != null
-                                  ? cartItem.shape!.name
-                                  : '-',
+                              cartItem.product.figures.first.name,
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,

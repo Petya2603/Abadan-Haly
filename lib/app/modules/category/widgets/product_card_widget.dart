@@ -7,7 +7,7 @@ import 'package:haly/app/produts/theme/theme_colors.dart';
 
 import '../../produts/view/product_detail_view.dart';
 
-Widget buildProductCard(Product product, bool isTablet) {
+Widget buildProductCard(Product product) {
   return Container(
     decoration: BoxDecoration(
       color: AppColors.white,

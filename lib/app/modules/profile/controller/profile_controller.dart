@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/data_service.dart';
+import 'package:haly/app/modules/contacted/contacted_controller.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
 import 'package:haly/app/modules/search/controller/search_controller.dart'
     as search_controller;
@@ -31,6 +32,7 @@ class ProfileController extends GetxController {
         downloadProgress.value = progress;
       });
       Get.find<HomeController>().fetchCarpetData();
+      Get.find<ContactedController>().fetchContacts();
       // Refresh other controllers
       if (Get.isRegistered<search_controller.SearchController>()) {
         Get.find<search_controller.SearchController>().fetchData();
@@ -117,13 +119,11 @@ class ProfileController extends GetxController {
         for (var item in order.items) {
           ordersToUpload.add({
             "order_id": order.id,
-            "category": item.name,
-            "product_code": item.code,
-            "size": item.size != null
-                ? '${item.size!.width}x${item.size!.height} ${item.size!.measurementUnit}'
-                : '-',
-            "color": item.color != null ? item.color!.name : '-',
-            "figure": item.shape != null ? item.shape!.name : '-',
+            "category": item.product.category.name,
+            "product_code": item.product.code,
+            "size": item.size,
+            "color": item.colorName,
+            "figure": item.product.figures.first.name,
             "quantity": item.quantity.toString(),
           });
         }
