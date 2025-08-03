@@ -23,8 +23,7 @@ class ContactScreen extends GetView<ContactedController> {
         return Obx(() {
           if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
-          } // 2. Hata durumu (YENİ EKLENDİ)
-          else if (controller.hasError.value) {
+          } else if (controller.hasError.value) {
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(
@@ -65,7 +64,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedLocation01,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "Bizin salgymyz",
@@ -83,7 +82,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedMail01,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "Email",
@@ -100,7 +99,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedTelephone,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "Telefon belgimiz",
@@ -116,7 +115,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedPrinter,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "FAX",
@@ -169,7 +168,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedLocation01,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "Bizin salgymyz",
@@ -187,7 +186,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedMail01,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "Email",
@@ -204,7 +203,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedTelephone,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "Telefon belgimiz",
@@ -220,7 +219,7 @@ class ContactScreen extends GetView<ContactedController> {
                       child: ContactCard(
                         icon: const HugeIcon(
                           icon: HugeIcons.strokeRoundedPrinter,
-                          size: 24,
+                          size: 32,
                           color: Colors.green,
                         ),
                         title: "FAX",
@@ -292,20 +291,19 @@ class ContactScreen extends GetView<ContactedController> {
     );
   }
 
-  Widget _getIconForContact(String title) {
-    final lowercasedTitle = title.toLowerCase();
+  Widget _getIconForContact(String iconUrl) {
     IconData iconData;
-    if (lowercasedTitle.contains('email')) {
+    if (iconUrl.contains('email')) {
       iconData = HugeIcons.strokeRoundedMail01;
-    } else if (lowercasedTitle.contains('salgy')) {
+    } else if (iconUrl.contains('address')) {
       iconData = HugeIcons.strokeRoundedLocation08;
-    } else if (lowercasedTitle.contains('telefon')) {
+    } else if (iconUrl.contains('phone')) {
       iconData = HugeIcons.strokeRoundedTelephone;
-    } else if (lowercasedTitle.contains('instagram')) {
+    } else if (iconUrl.contains('instagram')) {
       iconData = HugeIcons.strokeRoundedInstagram;
-    } else if (lowercasedTitle.contains('tiktok')) {
+    } else if (iconUrl.contains('tiktok')) {
       iconData = HugeIcons.strokeRoundedTiktok;
-    } else if (lowercasedTitle.contains('fax')) {
+    } else if (iconUrl.contains('fax')) {
       iconData = HugeIcons.strokeRoundedPrinter;
     } else {
       iconData = HugeIcons.strokeRoundedLink01;
@@ -313,7 +311,7 @@ class ContactScreen extends GetView<ContactedController> {
 
     return HugeIcon(
       icon: iconData,
-      size: 24,
+      size: 32,
       color: AppColors.green,
     );
   }

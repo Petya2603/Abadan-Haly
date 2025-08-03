@@ -244,7 +244,7 @@ class ProductDetailController extends GetxController {
       quantity: quantity.value,
       colorName: selectedColor?.name ?? '',
       size:
-          '${selectedSize?.width ?? ''}x${selectedSize?.height ?? ''} ${selectedSize?.measurementUnit ?? ''}',
+          '${selectedSize.width}x${selectedSize.height} ${selectedSize.measurementUnit}',
     );
 
     _cartController.addToCart(cartItem);
