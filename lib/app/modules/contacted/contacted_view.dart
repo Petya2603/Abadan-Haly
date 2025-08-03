@@ -1,116 +1,320 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart'; // Indi bu gerek däl
+import 'package:get/get.dart';
+import 'package:haly/app/modules/contacted/contacted_controller.dart';
 import 'package:haly/app/modules/contacted/widgets/contact_card.dart';
 import 'package:haly/app/produts/theme/app_theme.dart';
 import 'package:haly/app/produts/theme/theme_colors.dart';
 import 'package:haly/app/widgets/custom_app_bar.dart';
+import 'package:hugeicons/hugeicons.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactScreen extends StatelessWidget {
-  const ContactScreen({super.key});
-
+class ContactScreen extends GetView<ContactedController> {
+  ContactScreen({super.key});
+  @override
+  final ContactedController controller = Get.put(ContactedController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(),
       body: LayoutBuilder(builder: (context, constraints) {
         final isTablet = constraints.maxWidth > 600;
-        return SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: isTablet ? 52.0 : 16.0,
-              vertical: 24.0,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: 4,
-                  width: double.infinity,
-                  color: const Color.fromRGBO(245, 245, 245, 1),
+        return Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          } // 2. Hata durumu (YENİ EKLENDİ)
+          else if (controller.hasError.value) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 52.0 : 16.0,
+                  vertical: 24.0,
                 ),
-                SizedBox(height: isTablet ? 24 : 16),
-                Center(
-                  child: Image.asset(
-                    Assets.logo,
-                    height: isTablet ? 102 : 60,
-                    width: 166,
-                  ),
-                ),
-                SizedBox(height: isTablet ? 30 : 20),
-                Text("Habarlaşmak üçin",
-                    style: TextStyle(
-                        fontSize: isTablet ? 24 : 18,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: Fonts.gilroySemiBold,
-                        color: AppColors.green)),
-                const SizedBox(height: 18),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  onTap: () => _launchUrl(
-                      'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
-                  child: ContactCard(
-                    icon: SvgPicture.asset(
-                      Assets.location,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 4,
+                      width: double.infinity,
+                      color: const Color.fromRGBO(245, 245, 245, 1),
                     ),
-                    title: "Bizin salgymyz",
-                    subtitle:
-                        "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
-                    isTablet: isTablet,
-                  ),
-                ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  onTap: () => _launchUrl("mailto:info@biznes.tm"),
-                  child: ContactCard(
-                    icon: SvgPicture.asset(
-                      Assets.email,
+                    SizedBox(height: isTablet ? 24 : 16),
+                    Center(
+                      child: Image.asset(
+                        Assets.logo,
+                        height: isTablet ? 102 : 60,
+                        width: 166,
+                      ),
                     ),
-                    title: "Email",
-                    subtitle: "info@naduaashgabat.com.tm",
-                    isTablet: isTablet,
-                  ),
-                ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  onTap: () => _launchUrl('tel:+99312399006'),
-                  child: ContactCard(
-                    icon: SvgPicture.asset(
-                      Assets.call,
+                    SizedBox(height: isTablet ? 30 : 20),
+                    Text("Habarlaşmak üçin",
+                        style: TextStyle(
+                            fontSize: isTablet ? 24 : 18,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: Fonts.gilroySemiBold,
+                            color: AppColors.green)),
+                    const SizedBox(height: 18),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      onTap: () => _launchUrl(
+                          'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedLocation01,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "Bizin salgymyz",
+                        subtitle:
+                            "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
+                        isTablet: isTablet,
+                      ),
                     ),
-                    title: "Telefon belgimiz",
-                    subtitle: "+993-12-39-90-06",
-                    isTablet: isTablet,
-                  ),
-                ),
-                InkWell(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  child: ContactCard(
-                    icon: SvgPicture.asset(
-                      Assets.fax,
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      onTap: () => _launchUrl("mailto:info@biznes.tm"),
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedMail01,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "Email",
+                        subtitle: "info@naduaashgabat.com.tm",
+                        isTablet: isTablet,
+                      ),
                     ),
-                    title: "FAX",
-                    subtitle: "39-90-05",
-                    isTablet: isTablet,
-                  ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      onTap: () => _launchUrl('tel:+99312399006'),
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedTelephone,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "Telefon belgimiz",
+                        subtitle: "+993-12-39-90-06",
+                        isTablet: isTablet,
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedPrinter,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "FAX",
+                        subtitle: "39-90-05",
+                        isTablet: isTablet,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        );
+              ),
+            );
+          } else if (controller.contacts.isEmpty) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 52.0 : 16.0,
+                  vertical: 24.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 4,
+                      width: double.infinity,
+                      color: const Color.fromRGBO(245, 245, 245, 1),
+                    ),
+                    SizedBox(height: isTablet ? 24 : 16),
+                    Center(
+                      child: Image.asset(
+                        Assets.logo,
+                        height: isTablet ? 102 : 60,
+                        width: 166,
+                      ),
+                    ),
+                    SizedBox(height: isTablet ? 30 : 20),
+                    Text("Habarlaşmak üçin",
+                        style: TextStyle(
+                            fontSize: isTablet ? 24 : 18,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: Fonts.gilroySemiBold,
+                            color: AppColors.green)),
+                    const SizedBox(height: 18),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      onTap: () => _launchUrl(
+                          'https://www.google.com/maps?q=Aşgabat,10+ýyl+Abadançylyk+25'),
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedLocation01,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "Bizin salgymyz",
+                        subtitle:
+                            "Türkmenistan, Aşgabat şäheri, Abadan Etrap, Altyn Asyr köçesi, jaý 27",
+                        isTablet: isTablet,
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      onTap: () => _launchUrl("mailto:info@biznes.tm"),
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedMail01,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "Email",
+                        subtitle: "info@naduaashgabat.com.tm",
+                        isTablet: isTablet,
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      onTap: () => _launchUrl('tel:+99312399006'),
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedTelephone,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "Telefon belgimiz",
+                        subtitle: "+993-12-39-90-06",
+                        isTablet: isTablet,
+                      ),
+                    ),
+                    InkWell(
+                      splashColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      child: ContactCard(
+                        icon: const HugeIcon(
+                          icon: HugeIcons.strokeRoundedPrinter,
+                          size: 24,
+                          color: Colors.green,
+                        ),
+                        title: "FAX",
+                        subtitle: "39-90-05",
+                        isTablet: isTablet,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: isTablet ? 52.0 : 16.0,
+                  vertical: 24.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 4,
+                      width: double.infinity,
+                      color: const Color.fromRGBO(245, 245, 245, 1),
+                    ),
+                    SizedBox(height: isTablet ? 24 : 16),
+                    Center(
+                      child: Image.asset(
+                        Assets.logo,
+                        height: isTablet ? 102 : 60,
+                        width: 166,
+                      ),
+                    ),
+                    SizedBox(height: isTablet ? 30 : 20),
+                    Text(
+                      "Habarlaşmak üçin",
+                      style: TextStyle(
+                          fontSize: isTablet ? 24 : 18,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: Fonts.gilroySemiBold,
+                          color: AppColors.green),
+                    ),
+                    const SizedBox(height: 18),
+                    ...controller.contacts.map((contact) {
+                      return InkWell(
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        onTap: () => contact.link != null
+                            ? _launchUrl(contact.link!)
+                            : null,
+                        child: ContactCard(
+                          icon: _getIconForContact(contact.icon),
+                          title: contact.title,
+                          subtitle: contact.description,
+                          isTablet: isTablet,
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            );
+          }
+        });
       }),
+    );
+  }
+
+  Widget _getIconForContact(String title) {
+    final lowercasedTitle = title.toLowerCase();
+    IconData iconData;
+    if (lowercasedTitle.contains('email')) {
+      iconData = HugeIcons.strokeRoundedMail01;
+    } else if (lowercasedTitle.contains('salgy')) {
+      iconData = HugeIcons.strokeRoundedLocation08;
+    } else if (lowercasedTitle.contains('telefon')) {
+      iconData = HugeIcons.strokeRoundedTelephone;
+    } else if (lowercasedTitle.contains('instagram')) {
+      iconData = HugeIcons.strokeRoundedInstagram;
+    } else if (lowercasedTitle.contains('tiktok')) {
+      iconData = HugeIcons.strokeRoundedTiktok;
+    } else if (lowercasedTitle.contains('fax')) {
+      iconData = HugeIcons.strokeRoundedPrinter;
+    } else {
+      iconData = HugeIcons.strokeRoundedLink01;
+    }
+
+    return HugeIcon(
+      icon: iconData,
+      size: 24,
+      color: AppColors.green,
     );
   }
 

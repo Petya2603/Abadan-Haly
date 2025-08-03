@@ -42,7 +42,7 @@ class OrderView extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Sargyt edeniňizden soň, bu ýerde görnüp bilersiňiz.',
+                        'Sargyt edeniňizden soň, bu ýerde görüp bilersiňiz.',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.grey.shade400,

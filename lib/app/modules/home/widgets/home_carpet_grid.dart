@@ -41,9 +41,10 @@ class HomeCarpetGrid extends StatelessWidget {
                     'Haryt tapylmady',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: Fonts.gilroyBold),
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Fonts.gilroySemiBold,
+                    ),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -61,7 +62,41 @@ class HomeCarpetGrid extends StatelessWidget {
           );
         } else if (controller.carpetData.value == null ||
             controller.carpetData.value!.categories.isEmpty) {
-          return const Center(child: Text('No categories found'));
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  HugeIcon(
+                    icon: HugeIcons.strokeRoundedCloudDownload,
+                    size: 70,
+                    color: Colors.grey,
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Haryt tapylmady',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Fonts.gilroySemiBold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Maglumatlary profil sahypasyndan ýükläp almagyňyzy haýyş edýäris.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: Fonts.gilroyMedium),
+                  ),
+                ],
+              ),
+            ),
+          );
         } else {
           final categories = controller.carpetData.value!.categories;
           return GridView.builder(

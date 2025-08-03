@@ -22,7 +22,12 @@ class CategoryView extends StatelessWidget {
           final isTablet = constraints.maxWidth > 600;
           return Obx(() {
             if (controller.isLoading.value) {
-              return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
+              return Center(
+                  child: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Lottie.asset(
+                          'assets/images/processing-circle.json')));
             }
 
             if (controller.category.value == null) {

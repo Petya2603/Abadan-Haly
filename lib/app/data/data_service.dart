@@ -180,4 +180,9 @@ class DataService {
       throw Exception('Failed to load data from API');
     }
   }
+
+  Future<List<Contact>> getContacts() async {
+    final carpetData = await getCarpetData();
+    return carpetData.contacts;
+  }
 }

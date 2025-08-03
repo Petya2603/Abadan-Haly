@@ -32,7 +32,7 @@ class CategoryTabsSection extends StatelessWidget {
             indicatorColor: Colors.transparent,
             indicatorSize: TabBarIndicatorSize.tab,
             dividerColor: Colors.transparent,
-            overlayColor: MaterialStatePropertyAll(Colors.transparent),
+            overlayColor: WidgetStatePropertyAll(Colors.transparent),
           ),
         ),
         child: Column(

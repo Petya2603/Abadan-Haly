@@ -5,25 +5,72 @@ CarpetData carpetDataFromJson(String str) =>
 
 String carpetDataToJson(CarpetData data) => json.encode(data.toJson());
 
+class Contact {
+  final int id;
+  final String title;
+  final String description;
+  final String? link;
+  final int position;
+  final String icon;
+
+  Contact({
+    required this.id,
+    required this.title,
+    required this.description,
+    this.link,
+    required this.position,
+    required this.icon,
+  });
+
+  factory Contact.fromJson(Map<String, dynamic> json) => Contact(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        link: json["link"],
+        position: json["position"],
+        icon: json["icon"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "link": link,
+        "position": position,
+        "icon": icon,
+      };
+}
+
 class CarpetData {
   final List<Category> categories;
   final List<Product> products;
+  final List<Contact> contacts;
 
   CarpetData({
     required this.categories,
     required this.products,
+    required this.contacts,
   });
 
   factory CarpetData.fromJson(Map<String, dynamic> json) => CarpetData(
-        categories: List<Category>.from(
-            json["categories"].map((x) => Category.fromJson(x))),
-        products: List<Product>.from(
-            json["products"].map((x) => Product.fromJson(x))),
+        categories: json.containsKey('categories') && json['categories'] != null
+            ? List<Category>.from(
+                json["categories"].map((x) => Category.fromJson(x)))
+            : [],
+        products: json.containsKey('products') && json['products'] != null
+            ? List<Product>.from(
+                json["products"].map((x) => Product.fromJson(x)))
+            : [],
+        contacts: json.containsKey('contacts') && json['contacts'] != null
+            ? List<Contact>.from(
+                json["contacts"].map((x) => Contact.fromJson(x)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
+        "contacts": List<dynamic>.from(contacts.map((x) => x.toJson())),
       };
 }
 
