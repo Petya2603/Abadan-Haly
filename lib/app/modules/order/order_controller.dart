@@ -13,7 +13,8 @@ class OrderController extends GetxController {
     super.onInit();
     List? storedOrders = _box.read('orders');
     if (storedOrders != null) {
-      orders.assignAll(storedOrders.map((e) => Order.fromJson(e)).toList());
+      orders.assignAll(storedOrders.map((e) => Order.fromJson(e)).toList()
+        ..sort((a, b) => b.orderDate.compareTo(a.orderDate)));
     }
     ever(orders, (_) => _saveOrdersToStorage());
   }
@@ -23,7 +24,7 @@ class OrderController extends GetxController {
   }
 
   void addOrder(Order order) {
-    orders.add(order);
+    orders.insert(0, order);
     Get.snackbar(
       'Tassyklama',
       'Tassyklama üstünlikli amala aşyryldy',

@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:hugeicons/hugeicons.dart';
-import '../../bottomnavbar/bottom_nav_bar.dart';
 import '../../bottomnavbar/bottom_nav_bar_controller.dart';
 
 class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -46,7 +45,7 @@ class CategoryAppBar extends StatelessWidget implements PreferredSizeWidget {
                 width: 54,
               ),
               onPressed: () {
-                Get.to(CustomBottomNavBar());
+                Get.back();
                 Get.find<BottomNavBarController>().changeIndex(1);
               },
             ),
