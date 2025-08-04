@@ -4,7 +4,7 @@ import 'package:haly/app/modules/category/widgets/product_card_widget.dart';
 import 'package:haly/app/modules/search/controller/search_controller.dart'
     as search_controller;
 import 'package:haly/app/modules/search/widgets/search_input_field.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_app_bar_logo.dart';
 import 'package:hugeicons/hugeicons.dart';
 

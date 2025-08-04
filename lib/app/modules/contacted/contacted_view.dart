@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/contacted/contacted_controller.dart';
 import 'package:haly/app/modules/contacted/widgets/contact_card.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
 import 'package:haly/app/widgets/custom_app_bar.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,7 +23,12 @@ class ContactScreen extends GetView<ContactedController> {
         final isTablet = constraints.maxWidth > 600;
         return Obx(() {
           if (controller.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(
+                child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child:
+                        Lottie.asset('assets/images/processing-circle.json')));
           } else if (controller.hasError.value) {
             return SingleChildScrollView(
               child: Padding(

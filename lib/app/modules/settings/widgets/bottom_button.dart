@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/settings/settings_controller.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
 
 class BottomButton extends StatelessWidget {
   BottomButton({super.key});

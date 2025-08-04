@@ -69,9 +69,15 @@ class DataService {
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
 
-      final allImageUrls = <String>{}; // Use a Set to store unique URLs
-
-      // Collect all image URLs from categories
+      final allImageUrls = <String>{};
+      if (jsonData.containsKey('about') &&
+          jsonData['about']['images'] != null) {
+        for (var imageUrl in jsonData['about']['images']) {
+          if (imageUrl != null) {
+            allImageUrls.add(imageUrl);
+          }
+        }
+      }
       if (jsonData.containsKey('categories')) {
         for (var category in jsonData['categories']) {
           if (category['image'] != null) {
@@ -87,7 +93,6 @@ class DataService {
         }
       }
 
-      // Collect all image URLs from products
       if (jsonData.containsKey('products')) {
         for (var product in jsonData['products']) {
           if (product.containsKey('category') &&
@@ -128,7 +133,17 @@ class DataService {
           onProgress(downloadedCount / totalImages);
         }
       }
-
+      if (jsonData.containsKey('about') &&
+          jsonData['about']['images'] != null) {
+        final List<dynamic> originalImageUrls = jsonData['about']['images'];
+        final List<String> newImagePaths = [];
+        for (var imageUrl in originalImageUrls) {
+          // İndirilen resmin yolunu haritadan bul, bulamazsan orijinal URL'yi kullan
+          newImagePaths.add(downloadedImagePaths[imageUrl] ?? imageUrl);
+        }
+        // JSON verisindeki eski listeyi yenisiyle değiştir
+        jsonData['about']['images'] = newImagePaths;
+      }
       // Replace URLs with local paths in the JSON data
       if (jsonData.containsKey('categories')) {
         for (var category in jsonData['categories']) {
@@ -179,6 +194,12 @@ class DataService {
     } else {
       throw Exception('Failed to load data from API');
     }
+  }
+
+  Future<About> getAbout() async {
+    final carpetData = await getCarpetData();
+
+    return carpetData.about;
   }
 
   Future<List<Contact>> getContacts() async {

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/bottomnavbar/bottom_nav_bar.dart';
 import 'package:haly/app/modules/onboarding/controller/onboarding_controller.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
 
 class OnboardingNavigationButtons extends StatelessWidget {
   final OnboardingController controller;

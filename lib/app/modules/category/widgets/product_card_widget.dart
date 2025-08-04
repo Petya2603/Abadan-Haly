@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/carpet_model.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
 
 import '../../produts/view/product_detail_view.dart';
 
@@ -72,7 +72,11 @@ Widget buildProductCard(Product product) {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {
-                        Get.to(() => ProductDetailView(product: product));
+                        Get.to(
+                            () => ProductDetailView(
+                                  product: product,
+                                ),
+                            preventDuplicates: false);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.green,

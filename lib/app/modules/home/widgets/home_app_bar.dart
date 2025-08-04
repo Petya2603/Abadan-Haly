@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/about_us/about_us_view.dart';
 import 'package:haly/app/modules/contacted/contacted_view.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({super.key});
@@ -20,7 +20,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         TextButton(
             onPressed: () {
-              Get.to(const AboutUsView());
+              Get.to(AboutUsView());
             },
             child: const Text("Biz barada",
                 style: TextStyle(

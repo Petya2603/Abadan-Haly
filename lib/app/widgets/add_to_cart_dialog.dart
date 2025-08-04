@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:haly/app/data/cart_item_model.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class AddToCartDialog extends StatelessWidget {
   final CartItem cartItem;
@@ -18,10 +18,10 @@ class AddToCartDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0), // Daha yumuşak kenarlar
+        borderRadius: BorderRadius.circular(10.0),
       ),
       elevation: 0,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       child: _buildChild(context),
     );
   }
@@ -29,7 +29,7 @@ class AddToCartDialog extends StatelessWidget {
   Widget _buildChild(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor, // Tema rengini kullanır
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
@@ -48,7 +48,7 @@ class AddToCartDialog extends StatelessWidget {
             _buildHeader(context),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -98,24 +98,21 @@ class AddToCartDialog extends StatelessWidget {
   }
 
   Widget _buildProductInfo() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12.0),
-          child: Image.file(
+    return Center(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.file(
             File(cartItem.product.figures.first.colors.first.image),
             width: 100,
             height: 120,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
-        ),
-        const SizedBox(width: 16.0),
-        Expanded(
-          child: Column(
+          const SizedBox(width: 40.0),
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(height: 8.0),
               _buildInfoRow(
                   Icons.shopping_bag_outlined, 'Mukdary: ${cartItem.quantity}'),
               const SizedBox(height: 12.0),
@@ -126,8 +123,8 @@ class AddToCartDialog extends StatelessWidget {
                   Icons.aspect_ratio_outlined, 'Ölçegi: ${cartItem.size}'),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

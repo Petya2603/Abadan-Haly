@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/modules/category/controller/category_controller.dart';
 import 'package:haly/app/modules/category/widgets/category_app_bar.dart';
 import 'package:haly/app/modules/category/widgets/category_tabs_section.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:lottie/lottie.dart';
 
 class CategoryView extends StatelessWidget {

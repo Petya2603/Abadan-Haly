@@ -27,6 +27,7 @@ class ProductDetailController extends GetxController {
   late final CartController _cartController;
   final DataService _dataService = DataService();
   final RxList<Product> filteredProducts = <Product>[].obs;
+  final RxList<Product> filteredProductskopsatylan = <Product>[].obs;
 
   @override
   void onInit() {
@@ -46,6 +47,7 @@ class ProductDetailController extends GetxController {
       selectedColorImage.value = product.figures.first.image;
     }
     _loadFilteredProducts();
+    loadFilteredProductskopsatylan();
   }
 
   void _loadFilteredProducts() async {
@@ -55,6 +57,26 @@ class ProductDetailController extends GetxController {
         .where((p) =>
             p.category.name == product.category.name && p.code == product.code)
         .toList();
+  }
+
+  void loadFilteredProductskopsatylan() async {
+    final carpetData = await _dataService.getCarpetData();
+    final allProducts = carpetData.products;
+    final category = carpetData.categories
+        .firstWhereOrNull((c) => c.id == product.category.id);
+
+    if (category != null) {
+      final topSellingIds = category.topSellingProductsIds;
+
+      if (topSellingIds != null && topSellingIds.isNotEmpty) {
+        filteredProductskopsatylan.value =
+            allProducts.where((p) => topSellingIds.contains(p.id)).toList();
+      } else {
+        filteredProductskopsatylan.value = [];
+      }
+    } else {
+      filteredProductskopsatylan.value = [];
+    }
   }
 
   @override

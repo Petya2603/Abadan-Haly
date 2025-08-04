@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class AboutUsHeader extends StatelessWidget {
-  final bool isTablet;
-
-  const AboutUsHeader({super.key, required this.isTablet});
+  const AboutUsHeader({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +16,15 @@ class AboutUsHeader extends StatelessWidget {
           width: double.infinity,
           color: const Color.fromRGBO(245, 245, 245, 1),
         ),
-        SizedBox(height: isTablet ? 24 : 16),
+        const SizedBox(height: 24),
         Center(
           child: Image.asset(
             Assets.logo,
-            height: isTablet ? 102 : 60,
+            height: 102,
             width: 166,
           ),
         ),
-        SizedBox(height: isTablet ? 24 : 16),
-        Text(
-          "Biz barada",
-          style: TextStyle(
-            fontSize: isTablet ? 16 : 16,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: isTablet ? 10 : 5),
+        const SizedBox(height: 24),
       ],
     );
   }

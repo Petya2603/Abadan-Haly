@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/profile/controller/profile_controller.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class ImportProgressDialog extends StatelessWidget {
   final ProfileController controller;

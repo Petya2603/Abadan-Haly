@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/settings/widgets/bottom_button.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:haly/app/widgets/custom_detail_appbar.dart';
 import 'package:haly/app/modules/settings/settings_controller.dart';
 import 'package:hugeicons/hugeicons.dart';

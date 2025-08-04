@@ -13,6 +13,8 @@ import 'dart:convert';
 
 import 'package:hugeicons/hugeicons.dart';
 
+import '../../about_us/controller.dart';
+
 class ProfileController extends GetxController {
   var isLoading = false.obs;
   final DataService dataService = DataService();
@@ -33,6 +35,7 @@ class ProfileController extends GetxController {
       });
       Get.find<HomeController>().fetchCarpetData();
       Get.find<ContactedController>().fetchContacts();
+      Get.find<AboutController>().fetchAbout();
       // Refresh other controllers
       if (Get.isRegistered<search_controller.SearchController>()) {
         Get.find<search_controller.SearchController>().fetchData();
@@ -78,6 +81,7 @@ class ProfileController extends GetxController {
         dismissDirection: DismissDirection.horizontal,
         forwardAnimationCurve: Curves.easeOutBack,
       );
+      // print(e);
     } finally {
       downloadProgress.value = 0.0;
     }

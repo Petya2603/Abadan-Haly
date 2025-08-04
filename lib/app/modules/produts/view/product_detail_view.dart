@@ -8,8 +8,8 @@ import 'package:haly/app/modules/produts/controllers/product_detail_controller.d
 import 'package:haly/app/modules/produts/view/product_image_screen.dart';
 import 'package:haly/app/widgets/add_to_cart_dialog.dart';
 import 'package:haly/app/widgets/custom_detail_appbar.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
 
 class ProductDetailView extends StatefulWidget {
   final Product product;
@@ -623,7 +623,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                   ),
                   const SizedBox(height: 30),
                   Obx(() {
-                    if (controller.filteredProducts.isNotEmpty) {
+                    if (controller.filteredProductskopsatylan.isNotEmpty) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -641,7 +641,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             height: 493,
                             child: GridView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: controller.filteredProducts.length,
+                              itemCount:
+                                  controller.filteredProductskopsatylan.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 1,
@@ -650,8 +651,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                 childAspectRatio: 600 / 231,
                               ),
                               itemBuilder: (context, index) {
-                                final product =
-                                    controller.filteredProducts[index];
+                                final product = controller
+                                    .filteredProductskopsatylan[index];
                                 return buildProductCard(product);
                               },
                             ),

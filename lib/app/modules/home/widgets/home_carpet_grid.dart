@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
 import 'package:haly/app/modules/category/view/category_view.dart';
 import 'package:haly/app/modules/home/widgets/carpet_card.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:lottie/lottie.dart';
 

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:haly/app/modules/bottomnavbar/bottom_nav_bar_controller.dart';
 import 'package:haly/app/modules/onboarding/views/splash_view.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/app_binding.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final BottomNavBarController controller = Get.put(BottomNavBarController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

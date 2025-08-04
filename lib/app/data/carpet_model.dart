@@ -41,18 +41,45 @@ class Contact {
       };
 }
 
+class About {
+  final String title;
+  final String description;
+  final List<String> images;
+
+  About({
+    required this.title,
+    required this.description,
+    required this.images,
+  });
+
+  factory About.fromJson(Map<String, dynamic> json) => About(
+        title: json["title"],
+        description: json["description"],
+        images: List<String>.from(json["images"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "title": title,
+        "description": description,
+        "images": List<dynamic>.from(images.map((x) => x)),
+      };
+}
+
 class CarpetData {
+  final About about;
   final List<Category> categories;
   final List<Product> products;
   final List<Contact> contacts;
 
   CarpetData({
+    required this.about,
     required this.categories,
     required this.products,
     required this.contacts,
   });
 
   factory CarpetData.fromJson(Map<String, dynamic> json) => CarpetData(
+        about: About.fromJson(json["about"]),
         categories: json.containsKey('categories') && json['categories'] != null
             ? List<Category>.from(
                 json["categories"].map((x) => Category.fromJson(x)))
@@ -68,6 +95,7 @@ class CarpetData {
       );
 
   Map<String, dynamic> toJson() => {
+        "about": about.toJson(),
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),
         "contacts": List<dynamic>.from(contacts.map((x) => x.toJson())),
@@ -80,6 +108,7 @@ class Category {
   final String image;
   final int position;
   final List<Subcategory>? subcategories;
+  final List<int>? topSellingProductsIds;
 
   Category({
     required this.id,
@@ -87,6 +116,7 @@ class Category {
     required this.image,
     required this.position,
     this.subcategories,
+    this.topSellingProductsIds,
   });
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
@@ -98,6 +128,9 @@ class Category {
             ? []
             : List<Subcategory>.from(
                 json["subcategories"]!.map((x) => Subcategory.fromJson(x))),
+        topSellingProductsIds: json["top_selling_products_ids"] == null
+            ? []
+            : List<int>.from(json["top_selling_products_ids"]!.map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -108,6 +141,9 @@ class Category {
         "subcategories": subcategories == null
             ? []
             : List<dynamic>.from(subcategories!.map((x) => x.toJson())),
+        "top_selling_products_ids": topSellingProductsIds == null
+            ? []
+            : List<dynamic>.from(topSellingProductsIds!.map((x) => x)),
       };
 }
 

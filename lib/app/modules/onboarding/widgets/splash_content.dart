@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:haly/app/modules/onboarding/widgets/splash_text_gradient.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class SplashContent extends StatelessWidget {
   final bool isTablet;

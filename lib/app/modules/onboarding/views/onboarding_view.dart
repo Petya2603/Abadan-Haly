@@ -4,7 +4,7 @@ import 'package:haly/app/modules/onboarding/controller/onboarding_controller.dar
 import 'package:haly/app/modules/onboarding/widgets/onboarding_navigation_buttons.dart';
 import 'package:haly/app/modules/onboarding/widgets/onboarding_page.dart';
 import 'package:haly/app/modules/onboarding/widgets/onboarding_page_indicator.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class OnboardingScreen extends StatelessWidget {
   OnboardingScreen({super.key});

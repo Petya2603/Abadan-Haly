@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class SearchInputField extends StatelessWidget {
   final ValueChanged<String> onChanged;

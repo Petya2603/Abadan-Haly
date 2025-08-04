@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
 import 'package:haly/app/modules/home/widgets/home_app_bar.dart';
 import 'package:haly/app/modules/home/widgets/home_carpet_grid.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});

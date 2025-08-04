@@ -3,14 +3,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:haly/app/modules/order/order_controller.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
-import 'package:haly/app/produts/theme/theme_colors.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/theme_colors.dart';
 import 'package:haly/app/modules/bottomnavbar/bottom_nav_bar_controller.dart';
+
+import '../about_us/controller.dart';
+import '../contacted/contacted_controller.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
 
   final BottomNavBarController controller = Get.put(BottomNavBarController());
+  final ContactedController contactedController =
+      Get.put(ContactedController());
+  final AboutController aboutController = Get.put(AboutController());
   final CartController cartController = Get.find<CartController>();
 
   BottomNavigationBarItem buildNavItem({

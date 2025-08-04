@@ -1,6 +1,6 @@
 // widgets/onboarding_page.dart
 import 'package:flutter/material.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class OnboardingPage extends StatelessWidget {
   final String image;

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:haly/app/data/cart_item_model.dart';
 import 'package:haly/app/modules/cart/cart_controller.dart';
 import 'package:haly/app/modules/cart/widgets/quantity_button.dart';
-import 'package:haly/app/produts/theme/app_theme.dart';
+import 'package:haly/app/theme/theme/app_theme.dart';
 
 class CartItemCard extends StatelessWidget {
   final CartItem cartItem;
