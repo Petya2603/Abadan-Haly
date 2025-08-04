@@ -31,7 +31,7 @@ class CartItemCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(1),
                 child: Image.file(
-                  File(cartItem.product.figures.first.colors.first.image),
+                  File(cartItem.imageUrl),
                   width: 230,
                   height: 329,
                   fit: BoxFit.cover,

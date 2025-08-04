@@ -104,7 +104,7 @@ class AddToCartDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.file(
-            File(cartItem.product.figures.first.colors.first.image),
+            File(cartItem.imageUrl),
             width: 100,
             height: 120,
             fit: BoxFit.contain,

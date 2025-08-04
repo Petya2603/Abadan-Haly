@@ -96,12 +96,13 @@ class ProductDetailController extends GetxController {
         curve: Curves.easeInOut,
       );
     }
-    // Update selectedColorImage when figure changes
-    if (product.figures.isNotEmpty &&
-        product.figures[index].colors.isNotEmpty) {
-      selectedColorImage.value = product.figures[index].colors.first.image;
-    } else if (product.figures.isNotEmpty) {
-      selectedColorImage.value = product.figures[index].image;
+    // When the page view changes, update the selected color details
+    final currentFigure = product.figures[selectedFigureIndex.value];
+    if (index < currentFigure.colors.length) {
+      final color = currentFigure.colors[index];
+      selectedColorName.value = color.name;
+      selectedColorHex.value = color.hexCode;
+      selectedColorImage.value = color.image;
     }
   }
 
@@ -267,6 +268,7 @@ class ProductDetailController extends GetxController {
       colorName: selectedColor?.name ?? '',
       size:
           '${selectedSize.width}x${selectedSize.height} ${selectedSize.measurementUnit}',
+      imageUrl: selectedColorImage.value,
     );
 
     _cartController.addToCart(cartItem);
@@ -298,6 +300,7 @@ class ProductDetailController extends GetxController {
       colorName: selectedColor?.name ?? '',
       size:
           '${selectedSize?.width ?? ''}x${selectedSize?.height ?? ''} ${selectedSize?.measurementUnit ?? ''}',
+      imageUrl: selectedColorImage.value,
     );
   }
 }

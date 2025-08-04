@@ -68,7 +68,7 @@ class OrderDetailView extends StatelessWidget {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(1),
                           child: Image.file(
-                            File(item.product.figures.first.colors.first.image),
+                            File(item.imageUrl),
                             width: 230,
                             height: 329,
                             fit: BoxFit.cover,
