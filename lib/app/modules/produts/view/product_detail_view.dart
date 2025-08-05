@@ -566,6 +566,12 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                                 EdgeInsets.symmetric(
                                                     horizontal: 12),
                                             hintText: 'Ini (sm)',
+                                            suffixText: 'sm',
+                                            suffixStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    Fonts.gilroySemiBold,
+                                                fontWeight: FontWeight.w600),
                                             hintStyle: TextStyle(
                                                 color: Color(0xFF9E9E9E)),
                                           ),
@@ -600,6 +606,12 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                                 EdgeInsets.symmetric(
                                                     horizontal: 12),
                                             hintText: 'Uzynlygy (sm)',
+                                            suffixText: 'sm',
+                                            suffixStyle: TextStyle(
+                                                color: Colors.black,
+                                                fontFamily:
+                                                    Fonts.gilroySemiBold,
+                                                fontWeight: FontWeight.w600),
                                             hintStyle: TextStyle(
                                                 color: Color(0xFF9E9E9E)),
                                           ),

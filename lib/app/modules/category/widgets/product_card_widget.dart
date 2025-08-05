@@ -8,96 +8,105 @@ import 'package:haly/app/theme/theme/theme_colors.dart';
 import '../../produts/view/product_detail_view.dart';
 
 Widget buildProductCard(Product product) {
-  return Container(
-    decoration: BoxDecoration(
-      color: AppColors.white,
-      borderRadius: BorderRadius.circular(1),
-      border: Border.all(
-        color: const Color.fromARGB(255, 231, 231, 231),
-        width: 1,
-      ),
-    ),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Expanded(
-          flex: 7,
-          child: Image.file(
-            File(product.figures.first.colors.first.image),
-            fit: BoxFit.cover,
-          ),
+  return GestureDetector(
+    onTap: () {
+      Get.to(
+          () => ProductDetailView(
+                product: product,
+              ),
+          preventDuplicates: false);
+    },
+    child: Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(1),
+        border: Border.all(
+          color: const Color.fromARGB(255, 231, 231, 231),
+          width: 1,
         ),
-        Expanded(
-          flex: 3,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  product.category.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontFamily: Fonts.gilroySemiBold,
-                    fontSize: 20,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            flex: 7,
+            child: Image.file(
+              File(product.figures.first.colors.first.image),
+              fit: BoxFit.cover,
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.category.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Fonts.gilroySemiBold,
+                      fontSize: 20,
+                    ),
                   ),
-                ),
-                Text(
-                  product.code,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: Fonts.gilroyMedium,
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 110, 110, 112),
+                  Text(
+                    product.code,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontFamily: Fonts.gilroyMedium,
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 110, 110, 112),
+                    ),
                   ),
-                ),
-                Text(
-                  product.figures.first.colors.first.name,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontFamily: Fonts.gilroyMedium,
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 110, 110, 112),
+                  Text(
+                    product.figures.first.colors.first.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontFamily: Fonts.gilroyMedium,
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 110, 110, 112),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 3,
-                    right: 3,
-                    bottom: 3,
-                  ),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(
-                            () => ProductDetailView(
-                                  product: product,
-                                ),
-                            preventDuplicates: false);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.green,
-                        minimumSize: Size.fromHeight(44),
-                        foregroundColor: AppColors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 3,
+                      right: 3,
+                      bottom: 3,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Get.to(
+                              () => ProductDetailView(
+                                    product: product,
+                                  ),
+                              preventDuplicates: false);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.green,
+                          minimumSize: Size.fromHeight(44),
+                          foregroundColor: AppColors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "Görmek",
-                        style: TextStyle(fontSize: 16),
+                        child: const Text(
+                          "Görmek",
+                          style: TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }

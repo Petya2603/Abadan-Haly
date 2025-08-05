@@ -134,6 +134,12 @@ class ProductDetailController extends GetxController {
 
   void selectSize(int index) {
     selectedSizeIndex.value = index;
+    final selectedFigure = product.figures[selectedFigureIndex.value];
+    if (index >= 0 && index < selectedFigure.sizes.length) {
+      final size = selectedFigure.sizes[index];
+      widthController.text = size.width.toString();
+      lengthController.text = size.height.toString();
+    }
   }
 
   void selectColor(CarpetColor color) {
@@ -241,7 +247,7 @@ class ProductDetailController extends GetxController {
     } else {
       Get.snackbar(
         'Ýalňyşlyk',
-        "Standart ölçegi saýlaň ýa-da ölçegi elde giriziň!",
+        "Ölçegi giriziň!",
         icon: const Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: HugeIcon(

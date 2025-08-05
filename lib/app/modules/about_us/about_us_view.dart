@@ -134,10 +134,10 @@ class AboutUsView extends StatelessWidget {
                 data: aboutData.title,
                 style: {
                   "body": Style(
-                    fontSize: FontSize(26),
+                    // fontSize: FontSize(26),
                     // fontWeight: FontWeight.bold,
-                    margin: Margins.zero,
-                    padding: HtmlPaddings.zero,
+                    // margin: Margins.zero,
+                    // padding: HtmlPaddings.zero,
                   ),
                 },
               ),
@@ -151,11 +151,11 @@ class AboutUsView extends StatelessWidget {
                 data: aboutData.description,
                 style: {
                   "body": Style(
-                    fontSize: FontSize(16),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: Fonts.gilroyRegular,
-                    margin: Margins.zero,
-                    padding: HtmlPaddings.zero,
+                    // fontSize: FontSize(16),
+                    // fontWeight: FontWeight.w400,
+                    // fontFamily: Fonts.gilroyRegular,
+                    // margin: Margins.zero,
+                    // padding: HtmlPaddings.zero,
                   ),
                 },
               ),
