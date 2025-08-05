@@ -155,6 +155,19 @@ class DataService {
         // JSON verisindeki eski listeyi yenisiyle değiştir
         jsonData['about']['images'] = newImagePaths;
       }
+
+      // Replace intro image URLs with local paths
+      if (jsonData.containsKey('intros') && jsonData['intros'] != null) {
+        for (var intro in jsonData['intros']) {
+          if (intro['image'] != null) {
+            intro['image'] = downloadedImagePaths[intro['image']];
+          }
+          if (intro['logo'] != null) {
+            intro['logo'] = downloadedImagePaths[intro['logo']];
+          }
+        }
+      }
+
       // Replace URLs with local paths in the JSON data
       if (jsonData.containsKey('categories')) {
         for (var category in jsonData['categories']) {
