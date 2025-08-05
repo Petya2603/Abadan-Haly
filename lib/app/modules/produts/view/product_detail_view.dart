@@ -29,6 +29,53 @@ class _ProductDetailViewState extends State<ProductDetailView> {
         Get.put(ProductDetailController(product: widget.product));
     return Scaffold(
       appBar: const ProductDetailAppbar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+        ),
+        child: SizedBox(
+          height: 60,
+          width: double.infinity,
+          child: FloatingActionButton.extended(
+            onPressed: () {
+              final cartItem = controller.getCartItem();
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AddToCartDialog(
+                    cartItem: cartItem,
+                    onConfirm: () {
+                      controller.addProductToCart();
+                    },
+                  );
+                },
+              );
+            },
+            backgroundColor: AppColors.green,
+            label: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  "assets/images/sebet.svg",
+                  colorFilter:
+                      const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
+                ),
+                const SizedBox(width: 12),
+                const Text(
+                  'Sebede goş',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Fonts.gilroySemiBold,
+                      color: AppColors.white),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -704,52 +751,9 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       return const SizedBox.shrink();
                     }
                   }),
-                  const SizedBox(height: 50),
-                  SizedBox(
-                    height: 60,
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        final cartItem = controller.getCartItem();
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AddToCartDialog(
-                              cartItem: cartItem,
-                              onConfirm: () {
-                                controller.addProductToCart();
-                              },
-                            );
-                          },
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.green,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/images/sebet.svg",
-                            colorFilter: const ColorFilter.mode(
-                                AppColors.white, BlendMode.srcIn),
-                          ),
-                          const SizedBox(width: 12),
-                          const Text(
-                            'Sebede goş',
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: Fonts.gilroySemiBold,
-                                color: AppColors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  const SizedBox(
+                    height: 80,
+                  )
                 ],
               ),
             ),

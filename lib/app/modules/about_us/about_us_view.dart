@@ -135,7 +135,7 @@ class AboutUsView extends StatelessWidget {
                 style: {
                   "body": Style(
                     fontSize: FontSize(26),
-                    fontWeight: FontWeight.bold,
+                    // fontWeight: FontWeight.bold,
                     margin: Margins.zero,
                     padding: HtmlPaddings.zero,
                   ),

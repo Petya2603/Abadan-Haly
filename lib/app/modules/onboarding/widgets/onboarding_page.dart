@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:haly/app/theme/theme/app_theme.dart';
 
 class OnboardingPage extends StatelessWidget {
-  final String image;
+  final Widget imageWidget;
   final String title;
   final String desc;
   final bool isTablet;
 
   const OnboardingPage({
     super.key,
-    required this.image,
+    required this.imageWidget,
     required this.title,
     required this.desc,
     this.isTablet = false,
@@ -21,15 +21,10 @@ class OnboardingPage extends StatelessWidget {
     return Column(
       children: [
         Expanded(
-          child: Center(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(
-                image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
-            ),
+          flex: 10,
+          child: SizedBox(
+            width: double.infinity,
+            child: imageWidget,
           ),
         ),
         SizedBox(height: isTablet ? 35 : 20),

@@ -5,6 +5,38 @@ CarpetData carpetDataFromJson(String str) =>
 
 String carpetDataToJson(CarpetData data) => json.encode(data.toJson());
 
+class Intro {
+  final int id;
+  final String title;
+  final String description;
+  final String image;
+  final String logo;
+
+  Intro({
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.image,
+    required this.logo,
+  });
+
+  factory Intro.fromJson(Map<String, dynamic> json) => Intro(
+        id: json["id"],
+        title: json["title"],
+        description: json["description"],
+        image: json["image"],
+        logo: json["logo"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "description": description,
+        "image": image,
+        "logo": logo,
+      };
+}
+
 class Contact {
   final int id;
   final String title;
@@ -66,12 +98,14 @@ class About {
 }
 
 class CarpetData {
+  final List<Intro> intros;
   final About about;
   final List<Category> categories;
   final List<Product> products;
   final List<Contact> contacts;
 
   CarpetData({
+    required this.intros,
     required this.about,
     required this.categories,
     required this.products,
@@ -79,6 +113,9 @@ class CarpetData {
   });
 
   factory CarpetData.fromJson(Map<String, dynamic> json) => CarpetData(
+        intros: json.containsKey('intros') && json['intros'] != null
+            ? List<Intro>.from(json["intros"].map((x) => Intro.fromJson(x)))
+            : [],
         about: About.fromJson(json["about"]),
         categories: json.containsKey('categories') && json['categories'] != null
             ? List<Category>.from(
@@ -95,6 +132,7 @@ class CarpetData {
       );
 
   Map<String, dynamic> toJson() => {
+        "intros": List<dynamic>.from(intros.map((x) => x.toJson())),
         "about": about.toJson(),
         "categories": List<dynamic>.from(categories.map((x) => x.toJson())),
         "products": List<dynamic>.from(products.map((x) => x.toJson())),

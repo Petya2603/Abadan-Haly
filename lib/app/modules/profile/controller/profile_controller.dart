@@ -4,15 +4,14 @@ import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/data_service.dart';
 import 'package:haly/app/modules/contacted/contacted_controller.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
+import 'package:haly/app/modules/onboarding/controller/onboarding_controller.dart';
 import 'package:haly/app/modules/search/controller/search_controller.dart'
     as search_controller;
 import 'package:haly/app/modules/profile/widgets/import_progress_dialog.dart';
 import 'package:haly/app/modules/order/order_controller.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:hugeicons/hugeicons.dart';
-
 import '../../about_us/controller.dart';
 
 class ProfileController extends GetxController {
@@ -36,6 +35,9 @@ class ProfileController extends GetxController {
       if (!Get.isRegistered<HomeController>()) {
         Get.put(HomeController());
       }
+      if (!Get.isRegistered<OnboardingController>()) {
+        Get.put(OnboardingController());
+      }
       if (!Get.isRegistered<ContactedController>()) {
         Get.put(ContactedController());
       }
@@ -48,6 +50,7 @@ class ProfileController extends GetxController {
       Get.find<HomeController>().fetchCarpetData();
       Get.find<ContactedController>().fetchContacts();
       Get.find<AboutController>().fetchAbout();
+      Get.find<OnboardingController>().fetchIntros();
 
       if (Get.isRegistered<search_controller.SearchController>()) {
         Get.find<search_controller.SearchController>().fetchData();
@@ -93,7 +96,7 @@ class ProfileController extends GetxController {
         dismissDirection: DismissDirection.horizontal,
         forwardAnimationCurve: Curves.easeOutBack,
       );
-      print(e);
+      // print(e);
     } finally {
       downloadProgress.value = 0.0;
     }

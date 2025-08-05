@@ -70,6 +70,17 @@ class DataService {
       final Map<String, dynamic> jsonData = json.decode(response.body);
 
       final allImageUrls = <String>{};
+      if (jsonData.containsKey('intros') && jsonData['intros'] != null) {
+        for (var intro in jsonData['intros']) {
+          if (intro['image'] != null) {
+            allImageUrls.add(intro['image']);
+          }
+          if (intro['logo'] != null) {
+            allImageUrls.add(intro['logo']);
+          }
+        }
+      }
+
       if (jsonData.containsKey('about') &&
           jsonData['about']['images'] != null) {
         for (var imageUrl in jsonData['about']['images']) {
@@ -205,5 +216,10 @@ class DataService {
   Future<List<Contact>> getContacts() async {
     final carpetData = await getCarpetData();
     return carpetData.contacts;
+  }
+
+  Future<List<Intro>> getIntros() async {
+    final carpetData = await getCarpetData();
+    return carpetData.intros;
   }
 }

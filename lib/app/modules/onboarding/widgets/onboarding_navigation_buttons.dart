@@ -8,11 +8,13 @@ import 'package:haly/app/theme/theme/theme_colors.dart';
 class OnboardingNavigationButtons extends StatelessWidget {
   final OnboardingController controller;
   final bool isTablet;
+  final int totalPages;
 
   const OnboardingNavigationButtons({
     super.key,
     required this.controller,
     required this.isTablet,
+    required this.totalPages,
   });
 
   @override
@@ -29,7 +31,7 @@ class OnboardingNavigationButtons extends StatelessWidget {
                 borderRadius: BorderRadii.borderRadius12,
               ),
             ),
-            onPressed: controller.nextPage,
+            onPressed: () => controller.nextPage(totalPages),
             child: Text(
               'Dowam et',
               style: TextStyle(

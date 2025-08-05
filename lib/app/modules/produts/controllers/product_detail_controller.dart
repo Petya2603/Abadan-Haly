@@ -55,7 +55,7 @@ class ProductDetailController extends GetxController {
     final allProducts = carpetData.products;
     filteredProducts.value = allProducts
         .where((p) =>
-            p.category.name == product.category.name && p.code == product.code)
+            p.category.name == product.category.name && p.code != product.code)
         .toList();
   }
 
