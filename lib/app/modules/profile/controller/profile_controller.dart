@@ -33,10 +33,22 @@ class ProfileController extends GetxController {
       await dataService.importDataFromApi(onProgress: (progress) {
         downloadProgress.value = progress;
       });
+      if (!Get.isRegistered<HomeController>()) {
+        Get.put(HomeController());
+      }
+      if (!Get.isRegistered<ContactedController>()) {
+        Get.put(ContactedController());
+      }
+      if (!Get.isRegistered<AboutController>()) {
+        Get.put(AboutController());
+      }
+      if (!Get.isRegistered<SearchController>()) {
+        Get.put(SearchController());
+      }
       Get.find<HomeController>().fetchCarpetData();
       Get.find<ContactedController>().fetchContacts();
       Get.find<AboutController>().fetchAbout();
-      // Refresh other controllers
+
       if (Get.isRegistered<search_controller.SearchController>()) {
         Get.find<search_controller.SearchController>().fetchData();
       }
@@ -81,7 +93,7 @@ class ProfileController extends GetxController {
         dismissDirection: DismissDirection.horizontal,
         forwardAnimationCurve: Curves.easeOutBack,
       );
-      // print(e);
+      print(e);
     } finally {
       downloadProgress.value = 0.0;
     }

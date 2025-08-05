@@ -9,6 +9,7 @@ import 'package:haly/app/modules/bottomnavbar/bottom_nav_bar_controller.dart';
 
 import '../about_us/controller.dart';
 import '../contacted/contacted_controller.dart';
+import '../profile/controller/profile_controller.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({super.key});
@@ -17,6 +18,7 @@ class CustomBottomNavBar extends StatelessWidget {
   final ContactedController contactedController =
       Get.put(ContactedController());
   final AboutController aboutController = Get.put(AboutController());
+  final ProfileController profileController = Get.put(ProfileController());
   final CartController cartController = Get.find<CartController>();
 
   BottomNavigationBarItem buildNavItem({
