@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:haly/app/modules/about_us/controller.dart';
 import 'package:haly/app/modules/about_us/widgets/about_us_header.dart';
-import 'package:haly/app/modules/about_us/widgets/about_us_images.dart';
 import 'package:haly/app/widgets/custom_app_bar.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:io';
 import '../../theme/theme/app_theme.dart';
+import 'widgets/media_viewer.dart';
 
 class AboutUsView extends StatelessWidget {
   AboutUsView({super.key});
@@ -51,8 +51,6 @@ class AboutUsView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: isTablet ? 24 : 16),
-                      AboutUsImages(isTablet: isTablet),
-                      SizedBox(height: isTablet ? 24 : 16),
                       Text(
                         "1. Ýygnanýan Maglumatlarymyz\n"
                         "Biz siziň maglumatyňyzy aşakdaky usullar bilen ýygnap bilýäris:Şahsy Maglumatlar: Hasap döredenizde, satyn alma edenizde ýa-da müşderi hyzmaty bilen habarlaşanyňyzda bize berýän adyňyz, e-poçta salgynyz, telefon belgiňiz, hasap we iberiş salgyňyz.Töleg Maglumatlary: Töleg we bank maglumatlary üçünji tarap töleg işläp taýýarlaýjylar tarapyndan dolandyrylýar. Biz bu duýgur maglumatlary gönüden-göni saklamaýarys ýa-da dolandyrmaýarys.Ulanyş Maglumaty: IP salgylary, brauzer görnüşleri, enjam görnüşleri we sahypamyz bilen interaksiýaňyz ýaly maglumatlar.Cookies we Yzarlama Tehnologiýalary: Sahypamyzyň işini gowulandyrmak, traffigi analiz etmek we tejribäňizi uýgunlaşdyrmak üçin cookies we şuňa meňzeş tehnologiýalary ulanýarys.",
@@ -91,8 +89,6 @@ class AboutUsView extends StatelessWidget {
                           fontFamily: Fonts.gilroyRegular,
                         ),
                       ),
-                      SizedBox(height: isTablet ? 24 : 16),
-                      AboutUsImages(isTablet: isTablet),
                       SizedBox(height: isTablet ? 24 : 16),
                       Text(
                         "1. Ýygnanýan Maglumatlarymyz\n"
@@ -133,12 +129,7 @@ class AboutUsView extends StatelessWidget {
               Html(
                 data: aboutData.title,
                 style: {
-                  "body": Style(
-                      // fontSize: FontSize(26),
-                      // fontWeight: FontWeight.bold,
-                      // margin: Margins.zero,
-                      // padding: HtmlPaddings.zero,
-                      ),
+                  "body": Style(),
                 },
               ),
               const SizedBox(height: 24),
@@ -150,13 +141,7 @@ class AboutUsView extends StatelessWidget {
               Html(
                 data: aboutData.description,
                 style: {
-                  "body": Style(
-                      // fontSize: FontSize(16),
-                      // fontWeight: FontWeight.w400,
-                      // fontFamily: Fonts.gilroyRegular,
-                      // margin: Margins.zero,
-                      // padding: HtmlPaddings.zero,
-                      ),
+                  "body": Style(),
                 },
               ),
             ],
@@ -189,25 +174,50 @@ class _AboutImagesSlider extends StatelessWidget {
         separatorBuilder: (context, index) => const SizedBox(width: 10.0),
         itemBuilder: (context, index) {
           final imagePath = imagePaths[index];
-          final imageFile = File(imagePath);
+          final isVideo = imagePath.endsWith('.mp4') ||
+              imagePath.endsWith('.mov') ||
+              imagePath.endsWith('.avi');
 
           return SizedBox(
             width: cardWidth,
-            child: Card(
-              color: Colors.white,
-              clipBehavior: Clip.antiAlias,
-              margin: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(1.0),
-              ),
-              child: imageFile.existsSync()
-                  ? Image.file(
-                      imageFile,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MediaViewer(mediaPath: imagePath),
+                  ),
+                );
+              },
+              child: Card(
+                color: Colors.white,
+                clipBehavior: Clip.antiAlias,
+                margin: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1.0),
+                ),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.file(
+                      File(imagePath),
                       fit: BoxFit.cover,
-                    )
-                  : SizedBox(
-                      child: Image.asset(Assets.about1, fit: BoxFit.cover),
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset('assets/images/about1.jpg',
+                            fit: BoxFit.cover);
+                      },
                     ),
+                    if (isVideo)
+                      const Center(
+                        child: Icon(
+                          Icons.play_circle_fill,
+                          color: Colors.white,
+                          size: 50,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
             ),
           );
         },

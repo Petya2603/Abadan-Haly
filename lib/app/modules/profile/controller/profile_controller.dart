@@ -96,7 +96,7 @@ class ProfileController extends GetxController {
         dismissDirection: DismissDirection.horizontal,
         forwardAnimationCurve: Curves.easeOutBack,
       );
-      // print(e);
+      print(e);
     } finally {
       downloadProgress.value = 0.0;
     }
