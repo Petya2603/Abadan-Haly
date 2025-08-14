@@ -91,8 +91,9 @@ class _SearchViewState extends State<SearchView> {
                       childAspectRatio: 231 / 600,
                     ),
                     itemBuilder: (context, index) {
-                      return buildProductCard(
-                          controller.filteredProducts[index]);
+                      return ProductCardWidget(
+                        product: controller.filteredProducts[index],
+                      );
                     },
                   );
                 }

@@ -35,7 +35,7 @@ class SearchController extends GetxController {
       _filteredProducts.assignAll(_products.where((product) {
         final lowerCaseQuery = query.toLowerCase();
         return product.code.toLowerCase().contains(lowerCaseQuery) ||
-            product.description.toLowerCase().contains(lowerCaseQuery) ||
+            product.description!.toLowerCase().contains(lowerCaseQuery) ||
             product.figures.any((figure) => figure.colors
                 .any((color) => color.name.toLowerCase().contains(lowerCaseQuery)));
       }));

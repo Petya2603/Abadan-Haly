@@ -20,6 +20,11 @@ class DataService {
     return imagesDirectory.path;
   }
 
+  Future<Settings> getSettings() async {
+    final carpetData = await getCarpetData();
+    return carpetData.settings;
+  }
+
   Future<String> _downloadImage(String imageUrl) async {
     if (imageUrl.startsWith('http')) {
       final response = await http.get(Uri.parse(imageUrl));
@@ -81,9 +86,8 @@ class DataService {
         }
       }
 
-      if (jsonData.containsKey('about') &&
-          jsonData['about']['images'] != null) {
-        for (var imageUrl in jsonData['about']['images']) {
+      if (jsonData.containsKey('about') && jsonData['about']['files'] != null) {
+        for (var imageUrl in jsonData['about']['files']) {
           if (imageUrl != null) {
             allImageUrls.add(imageUrl);
           }
@@ -144,16 +148,14 @@ class DataService {
           onProgress(downloadedCount / totalImages);
         }
       }
-      if (jsonData.containsKey('about') &&
-          jsonData['about']['images'] != null) {
-        final List<dynamic> originalImageUrls = jsonData['about']['images'];
+      if (jsonData.containsKey('about') && jsonData['about']['files'] != null) {
+        final List<dynamic> originalImageUrls = jsonData['about']['files'];
         final List<String> newImagePaths = [];
         for (var imageUrl in originalImageUrls) {
-          // İndirilen resmin yolunu haritadan bul, bulamazsan orijinal URL'yi kullan
           newImagePaths.add(downloadedImagePaths[imageUrl] ?? imageUrl);
         }
-        // JSON verisindeki eski listeyi yenisiyle değiştir
-        jsonData['about']['images'] = newImagePaths;
+
+        jsonData['about']['files'] = newImagePaths;
       }
 
       // Replace intro image URLs with local paths
@@ -234,5 +236,10 @@ class DataService {
   Future<List<Intro>> getIntros() async {
     final carpetData = await getCarpetData();
     return carpetData.intros;
+  }
+
+  Future<List<Edge>> getEdges() async {
+    final carpetData = await getCarpetData();
+    return carpetData.edges;
   }
 }

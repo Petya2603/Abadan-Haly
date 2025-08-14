@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:haly/app/data/data_service.dart';
+import 'package:haly/app/data/carpet_model.dart';
 import 'package:haly/app/modules/contacted/contacted_controller.dart';
 import 'package:haly/app/modules/home/controller/home_controller.dart';
+import 'package:haly/app/modules/order/order_controller.dart';
 import 'package:haly/app/modules/onboarding/controller/onboarding_controller.dart';
 import 'package:haly/app/modules/search/controller/search_controller.dart'
     as search_controller;
 import 'package:haly/app/modules/profile/widgets/import_progress_dialog.dart';
-import 'package:haly/app/modules/order/order_controller.dart';
+import 'package:haly/app/data/carpet_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:hugeicons/hugeicons.dart';
@@ -96,7 +98,7 @@ class ProfileController extends GetxController {
         dismissDirection: DismissDirection.horizontal,
         forwardAnimationCurve: Curves.easeOutBack,
       );
-      print(e);
+      print("asibka   $e");
     } finally {
       downloadProgress.value = 0.0;
     }
@@ -104,6 +106,8 @@ class ProfileController extends GetxController {
 
   Future<void> uploadOrders() async {
     final OrderController orderController = Get.find<OrderController>();
+    final carpetData =
+        await dataService.getCarpetData(); // Fetch carpetData here
     if (orderController.orders.isEmpty) {
       Get.snackbar(
         'Ýalňyşlyk',
@@ -138,11 +142,15 @@ class ProfileController extends GetxController {
         for (var item in order.items) {
           ordersToUpload.add({
             "order_id": order.id,
-            "category": item.product.category.name,
+            "category": carpetData.categories
+                .firstWhere((c) => c.id == item.product.categoryId)
+                .name,
             "product_code": item.product.code,
             "size": item.size,
             "color": item.colorName,
             "figure": item.product.figures.first.name,
+            "edge": item.edge,
+            "note": item.note,
             "quantity": item.quantity.toString(),
           });
         }

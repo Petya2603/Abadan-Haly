@@ -12,9 +12,9 @@ class CategoryGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     final CategoryController controller = Get.find();
     final selectedSubcategory = controller
-        .category.value!.subcategories![controller.selectedTabIndex.value];
+        .category.value!.subcategories[controller.selectedTabIndex.value];
     final filteredProducts = controller.products
-        .where((p) => p.subcategory.name == selectedSubcategory.name)
+        .where((p) => p.subCategoryId == selectedSubcategory.id)
         .toList();
 
     return Padding(
@@ -30,7 +30,7 @@ class CategoryGridView extends StatelessWidget {
             childAspectRatio: 231 / 600,
           ),
           itemBuilder: (context, index) {
-            return buildProductCard(filteredProducts[index]);
+            return ProductCardWidget(product: filteredProducts[index]);
           },
         ),
       ),

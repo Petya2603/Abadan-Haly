@@ -15,25 +15,35 @@ class ProductDetailController extends GetxController {
   final RxInt quantity = 1.obs;
   final RxInt selectedFigureIndex = 0.obs;
   final RxInt selectedSizeIndex = (-1).obs;
+  final RxInt selectedEdgeIndex = 0.obs;
 
   final RxString selectedColorName = ''.obs;
   final RxString selectedColorHex = ''.obs;
   final RxString selectedColorImage = ''.obs;
+  final RxString note = ''.obs;
 
   late TextEditingController widthController;
   late TextEditingController lengthController;
+  late TextEditingController noteController;
   late PageController pageController;
 
   late final CartController _cartController;
   final DataService _dataService = DataService();
   final RxList<Product> filteredProducts = <Product>[].obs;
   final RxList<Product> filteredProductskopsatylan = <Product>[].obs;
-
+  final RxList<Edge> edges = <Edge>[].obs;
+  var settings = Rx<Settings?>(null);
+  Rx<CarpetData?> _carpetData = Rx<CarpetData?>(null);
+  final widthFocusNode = FocusNode();
+  final lengthFocusNode = FocusNode();
+  var widthErrorText = Rx<String?>(null);
+  var heightErrorText = Rx<String?>(null);
   @override
   void onInit() {
     super.onInit();
     widthController = TextEditingController();
     lengthController = TextEditingController();
+    noteController = TextEditingController();
     pageController = PageController(initialPage: selectedIndex.value);
     _cartController = Get.find<CartController>();
 
@@ -48,22 +58,36 @@ class ProductDetailController extends GetxController {
     }
     _loadFilteredProducts();
     loadFilteredProductskopsatylan();
+    _loadSettingsAndAddListeners();
+    _loadEdges();
+  }
+
+  void _loadEdges() async {
+    edges.value = await _dataService.getEdges();
   }
 
   void _loadFilteredProducts() async {
     final carpetData = await _dataService.getCarpetData();
+    _carpetData.value = carpetData;
     final allProducts = carpetData.products;
     filteredProducts.value = allProducts
         .where((p) =>
-            p.category.name == product.category.name && p.code != product.code)
+            carpetData.categories
+                .firstWhere((c) => c.id == p.categoryId)
+                .name ==
+            carpetData.categories
+                .firstWhere((c) => c.id == product.categoryId)
+                .name &&
+            p.code != product.code)
         .toList();
   }
 
   void loadFilteredProductskopsatylan() async {
     final carpetData = await _dataService.getCarpetData();
+    _carpetData.value = carpetData;
     final allProducts = carpetData.products;
     final category = carpetData.categories
-        .firstWhereOrNull((c) => c.id == product.category.id);
+        .firstWhereOrNull((c) => c.id == product.categoryId);
 
     if (category != null) {
       final topSellingIds = category.topSellingProductsIds;
@@ -79,11 +103,106 @@ class ProductDetailController extends GetxController {
     }
   }
 
+  void _loadSettingsAndAddListeners() async {
+    try {
+      settings.value = await _dataService.getSettings();
+    } catch (e) {
+      print("Ayarları yüklerken hata oluştu: $e");
+    }
+
+    widthFocusNode.addListener(() {
+      if (!widthFocusNode.hasFocus) {
+        validateWidth(widthController.text);
+      }
+    });
+
+    lengthFocusNode.addListener(() {
+      if (!lengthFocusNode.hasFocus) {
+        validateHeight(lengthController.text);
+      }
+    });
+  }
+
+  bool canAddToCart() {
+    final w = widthController.text;
+    final l = lengthController.text;
+
+    if ((w.isNotEmpty && l.isEmpty) || (w.isEmpty && l.isNotEmpty)) {
+      Get.snackbar(
+        'Ýalňyşlyk',
+        'Halyň ini we uzynlygyny doly giriziň',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+
+    if (w.isNotEmpty && l.isNotEmpty) {
+      final isWidthValid = validateWidth(w);
+      final isHeightValid = validateHeight(l);
+      if (!isWidthValid || !isHeightValid) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  bool validateWidth(String value) {
+    widthErrorText.value = null;
+    final min = settings.value?.sizeRange.width.min;
+    final max = settings.value?.sizeRange.width.max;
+
+    if (value.isEmpty) return true;
+
+    final intValue = int.tryParse(value);
+    if (intValue == null) {
+      widthErrorText.value = "Diňe san giriziň";
+      return false;
+    }
+    if (min != null && intValue < min) {
+      widthErrorText.value = "Ini $min sm-den az bolmaly däl";
+      return false;
+    }
+    if (max != null && intValue > max) {
+      widthErrorText.value = "Ini $max sm-den köp bolmaly däl";
+      return false;
+    }
+    return true;
+  }
+
+  bool validateHeight(String value) {
+    heightErrorText.value = null;
+    final min = settings.value?.sizeRange.height.min;
+    final max = settings.value?.sizeRange.height.max;
+
+    if (value.isEmpty) return true;
+
+    final intValue = int.tryParse(value);
+    if (intValue == null) {
+      heightErrorText.value = "Diňe san giriziň";
+      return false;
+    }
+    if (min != null && intValue < min) {
+      heightErrorText.value = "Uzynlyk $min sm-den az bolmaly däl";
+      return false;
+    }
+    if (max != null && intValue > max) {
+      heightErrorText.value = "Uzynlyk $max sm-den köp bolmaly däl";
+      return false;
+    }
+    return true;
+  }
+
   @override
   void onClose() {
     widthController.dispose();
     lengthController.dispose();
+    noteController.dispose();
     pageController.dispose();
+    widthFocusNode.dispose();
+    lengthFocusNode.dispose();
     super.onClose();
   }
 
@@ -142,6 +261,10 @@ class ProductDetailController extends GetxController {
     }
   }
 
+  void selectEdge(int index) {
+    selectedEdgeIndex.value = index;
+  }
+
   void selectColor(CarpetColor color) {
     selectedColorName.value = color.name;
     selectedColorHex.value = color.hexCode;
@@ -156,98 +279,50 @@ class ProductDetailController extends GetxController {
   }
 
   void addProductToCart() {
+    // Geometrik şekil ve renk seçimi kontrolleri aynı kalıyor...
     if (selectedFigureIndex.value < 0 ||
         selectedFigureIndex.value >= product.figures.length) {
-      Get.snackbar(
-        'Ýalňyşlyk',
-        "Gemetrik şekili saýlaň!",
-        icon: const Padding(
-          padding: EdgeInsets.only(left: 8.0),
-          child: HugeIcon(
-            icon: HugeIcons.strokeRoundedAlertCircle,
-            size: 28,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.red.shade600,
-        colorText: Colors.white,
-        borderRadius: 12,
-        margin: const EdgeInsets.all(15),
-        isDismissible: true,
-        dismissDirection: DismissDirection.horizontal,
-        forwardAnimationCurve: Curves.easeOutBack,
-      );
+      // ... hata mesajı
       return;
     }
     final selectedFigure = product.figures[selectedFigureIndex.value];
 
     CarpetColor? selectedColor;
     if (selectedFigure.colors.isNotEmpty) {
+      // ... renk seçimi kontrolü ...
       if (selectedColorHex.value.isEmpty) {
-        Get.snackbar(
-          'Ýalňyşlyk',
-          "Haly reňkini saýlaň",
-          icon: const Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: HugeIcon(
-              icon: HugeIcons.strokeRoundedAlertCircle,
-              size: 28,
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Colors.red.shade600,
-          colorText: Colors.white,
-          borderRadius: 12,
-          margin: const EdgeInsets.all(15),
-          isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
-          forwardAnimationCurve: Curves.easeOutBack,
-        );
-        return;
+        /*...*/ return;
       }
       selectedColor = selectedFigure.colors
           .firstWhereOrNull((c) => c.hexCode == selectedColorHex.value);
       if (selectedColor == null) {
-        Get.snackbar(
-          'Ýalňyşlyk',
-          "Saýlanan reňk tapylmady!",
-          icon: const Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: HugeIcon(
-              icon: HugeIcons.strokeRoundedAlertCircle,
-              size: 28,
-              color: Colors.white,
-            ),
-          ),
-          backgroundColor: Colors.red.shade600,
-          colorText: Colors.white,
-          borderRadius: 12,
-          margin: const EdgeInsets.all(15),
-          isDismissible: true,
-          dismissDirection: DismissDirection.horizontal,
-          forwardAnimationCurve: Curves.easeOutBack,
-        );
-        return;
+        /*...*/ return;
       }
     }
 
+    // --- ÖLÇÜ KONTROLÜNÜ BURADA YAPACAĞIZ ---
     Size? selectedSize;
     final customWidth = double.tryParse(widthController.text);
     final customLength = double.tryParse(lengthController.text);
 
     if (customWidth != null && customLength != null) {
+      // Özel ölçü girilmişse onu kullan
       selectedSize = Size(
           id: 0,
           width: customWidth.toInt(),
           height: customLength.toInt(),
-          measurementUnit: 'cm');
+          measurementUnit: 'sm');
     } else if (selectedSizeIndex.value != -1 &&
         selectedSizeIndex.value < selectedFigure.sizes.length) {
+      // Standart ölçü seçilmişse onu kullan
       selectedSize = selectedFigure.sizes[selectedSizeIndex.value];
-    } else {
+    }
+
+    // YENİ KONTROL: Eğer ne özel ölçü girilmiş ne de standart ölçü seçilmişse HATA VER.
+    if (selectedSize == null) {
       Get.snackbar(
         'Ýalňyşlyk',
-        "Ölçegi giriziň!",
+        "Standart ölçegi saýlaň ýa-da ölçegleri özüňiz giriziň!", // Standart ölçü seçin ya da ölçüleri kendiniz girin!
         icon: const Padding(
           padding: EdgeInsets.only(left: 8.0),
           child: HugeIcon(
@@ -264,10 +339,12 @@ class ProductDetailController extends GetxController {
         dismissDirection: DismissDirection.horizontal,
         forwardAnimationCurve: Curves.easeOutBack,
       );
-
-      return;
+      return; // İşlemi durdur
     }
 
+    final selectedEdge = edges[selectedEdgeIndex.value];
+
+    // Hata yoksa, sepet öğesini oluştur ve ekle
     final cartItem = CartItem(
       product: product,
       quantity: quantity.value,
@@ -275,12 +352,14 @@ class ProductDetailController extends GetxController {
       size:
           '${selectedSize.width}x${selectedSize.height} ${selectedSize.measurementUnit}',
       imageUrl: selectedColorImage.value,
+      edge: selectedEdge.name,
+      note: note.value,
     );
 
     _cartController.addToCart(cartItem);
   }
 
-  CartItem getCartItem() {
+  CartItem? getCartItem() {
     final selectedFigure = product.figures[selectedFigureIndex.value];
     final selectedColor = selectedFigure.colors
         .firstWhereOrNull((c) => c.hexCode == selectedColorHex.value);
@@ -294,19 +373,38 @@ class ProductDetailController extends GetxController {
           id: 0,
           width: customWidth.toInt(),
           height: customLength.toInt(),
-          measurementUnit: 'cm');
+          measurementUnit: 'sm');
     } else if (selectedSizeIndex.value != -1 &&
         selectedSizeIndex.value < selectedFigure.sizes.length) {
       selectedSize = selectedFigure.sizes[selectedSizeIndex.value];
     }
+
+    // Eğer ölçü bulunamadıysa null döndür, bu diyalogun gösterilmemesini tetikleyebilir.
+    if (selectedSize == null) return null;
+    final selectedEdge = edges[selectedEdgeIndex.value];
 
     return CartItem(
       product: product,
       quantity: quantity.value,
       colorName: selectedColor?.name ?? '',
       size:
-          '${selectedSize?.width ?? ''}x${selectedSize?.height ?? ''} ${selectedSize?.measurementUnit ?? ''}',
+          '${selectedSize.width}x${selectedSize.height} ${selectedSize.measurementUnit}',
       imageUrl: selectedColorImage.value,
+      edge: selectedEdge.name,
+      note: note.value,
     );
+  }
+
+  String getCategoryName(int categoryId) {
+    if (_carpetData.value == null) return 'Unknown';
+    final category = _carpetData.value!.categories
+        .firstWhereOrNull((c) => c.id == categoryId);
+    return category?.name ?? 'Unknown';
+  }
+
+  Category? getCategory(int categoryId) {
+    if (_carpetData.value == null) return null;
+    return _carpetData.value!.categories
+        .firstWhereOrNull((c) => c.id == categoryId);
   }
 }

@@ -22,60 +22,18 @@ class ProductDetailView extends StatefulWidget {
 
 class _ProductDetailViewState extends State<ProductDetailView> {
   late ProductDetailController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(ProductDetailController(product: widget.product));
+  }
 
   @override
   Widget build(BuildContext context) {
-    final ProductDetailController controller =
-        Get.put(ProductDetailController(product: widget.product));
     return Scaffold(
       appBar: const ProductDetailAppbar(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(
-          left: 16,
-          right: 16,
-        ),
-        child: SizedBox(
-          height: 60,
-          width: double.infinity,
-          child: FloatingActionButton.extended(
-            onPressed: () {
-              final cartItem = controller.getCartItem();
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AddToCartDialog(
-                    cartItem: cartItem,
-                    onConfirm: () {
-                      controller.addProductToCart();
-                    },
-                  );
-                },
-              );
-            },
-            backgroundColor: AppColors.green,
-            label: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  "assets/images/sebet.svg",
-                  colorFilter:
-                      const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
-                ),
-                const SizedBox(width: 12),
-                const Text(
-                  'Sebede goş',
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: Fonts.gilroySemiBold,
-                      color: AppColors.white),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+      floatingActionButton: bottomNavBar(controller, context),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -107,7 +65,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             builder: (context) => ImageZoomScreen(
                               imagePath: color.image,
                               productCode: widget.product.code,
-                              productName: widget.product.category.name,
+                              productName: controller
+                                  .getCategoryName(widget.product.categoryId),
                             ),
                           ),
                         );
@@ -205,7 +164,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
-                          widget.product.category.name,
+                          controller.getCategoryName(widget.product.categoryId),
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -251,7 +210,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.product.category.name,
+                              controller
+                                  .getCategoryName(widget.product.categoryId),
                               style: const TextStyle(
                                 fontSize: 32,
                                 fontWeight: FontWeight.w600,
@@ -410,6 +370,52 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                   ),
                   const SizedBox(height: 40),
                   const Text(
+                    'Halynyň kenary',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: Fonts.gilroySemiBold,
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Obx(
+                    () => Wrap(
+                      spacing: 10.0,
+                      runSpacing: 10.0,
+                      children: controller.edges.asMap().entries.map((entry) {
+                        int index = entry.key;
+                        Edge edge = entry.value;
+                        return GestureDetector(
+                          onTap: () {
+                            controller.selectEdge(index);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: controller.selectedEdgeIndex.value == index
+                                  ? AppColors.green
+                                  : const Color.fromRGBO(239, 244, 254, 1),
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            child: Text(
+                              edge.name,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: Fonts.gilroySemiBold,
+                                  fontWeight: FontWeight.w600,
+                                  color: controller.selectedEdgeIndex.value ==
+                                          index
+                                      ? AppColors.white
+                                      : AppColors.black),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
                     'Geometrik şekli',
                     style: TextStyle(
                       fontSize: 20,
@@ -456,7 +462,9 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       }).toList(),
                     ),
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(
+                    height: 40,
+                  ),
                   const Text(
                     'Standart ölçegler',
                     style: TextStyle(
@@ -541,6 +549,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                           Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
                                   child: Column(
@@ -556,28 +566,88 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
-                                        child: TextField(
-                                          controller:
-                                              controller.widthController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 12),
-                                            hintText: 'Ini (sm)',
-                                            suffixText: 'sm',
-                                            suffixStyle: TextStyle(
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    Fonts.gilroySemiBold,
-                                                fontWeight: FontWeight.w600),
-                                            hintStyle: TextStyle(
-                                                color: Color(0xFF9E9E9E)),
-                                          ),
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
+                                        child: Obx(() => TextField(
+                                              controller:
+                                                  controller.widthController,
+                                              focusNode:
+                                                  controller.widthFocusNode,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              onChanged: (value) => controller
+                                                  .validateWidth(value),
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
+                                                hintText: 'Ini (sm)',
+                                                suffixText: 'sm',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: controller
+                                                                .widthErrorText
+                                                                .value ==
+                                                            null
+                                                        ? const Color(
+                                                            0xFFE0E0E0)
+                                                        : Colors.red,
+                                                    width: controller
+                                                                .widthErrorText
+                                                                .value ==
+                                                            null
+                                                        ? 1.0
+                                                        : 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: controller
+                                                                .widthErrorText
+                                                                .value ==
+                                                            null
+                                                        ? Theme.of(context)
+                                                            .primaryColor
+                                                        : Colors.red,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                suffixStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        Fonts.gilroySemiBold,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                hintStyle: const TextStyle(
+                                                    color: Color(0xFF9E9E9E)),
+                                              ),
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            )),
                                       ),
+                                      Obx(() {
+                                        if (controller.widthErrorText.value !=
+                                            null) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 4.0, left: 2.0),
+                                            child: Text(
+                                              controller.widthErrorText.value!,
+                                              style: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 16),
+                                            ),
+                                          );
+                                        } else {
+                                          return const SizedBox
+                                              .shrink(); // Hata yoksa boşluk bırakma
+                                        }
+                                      }),
                                     ],
                                   ),
                                 ),
@@ -586,6 +656,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Container(
                                         height: 48,
@@ -596,28 +667,87 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                         ),
-                                        child: TextField(
-                                          controller:
-                                              controller.lengthController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: 12),
-                                            hintText: 'Uzynlygy (sm)',
-                                            suffixText: 'sm',
-                                            suffixStyle: TextStyle(
-                                                color: Colors.black,
-                                                fontFamily:
-                                                    Fonts.gilroySemiBold,
-                                                fontWeight: FontWeight.w600),
-                                            hintStyle: TextStyle(
-                                                color: Color(0xFF9E9E9E)),
-                                          ),
-                                          style: const TextStyle(fontSize: 16),
-                                        ),
+                                        child: Obx(() => TextField(
+                                              controller:
+                                                  controller.lengthController,
+                                              focusNode:
+                                                  controller.lengthFocusNode,
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              onChanged: (value) => controller
+                                                  .validateHeight(value),
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
+                                                hintText: 'Uzynlygy (sm)',
+                                                suffixText: 'sm',
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: controller
+                                                                .heightErrorText
+                                                                .value ==
+                                                            null
+                                                        ? const Color(
+                                                            0xFFE0E0E0)
+                                                        : Colors.red,
+                                                    width: controller
+                                                                .heightErrorText
+                                                                .value ==
+                                                            null
+                                                        ? 1.0
+                                                        : 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: controller
+                                                                .heightErrorText
+                                                                .value ==
+                                                            null
+                                                        ? Theme.of(context)
+                                                            .primaryColor
+                                                        : Colors.red,
+                                                    width: 2.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                suffixStyle: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontFamily:
+                                                        Fonts.gilroySemiBold,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                                hintStyle: const TextStyle(
+                                                    color: Color(0xFF9E9E9E)),
+                                              ),
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            )),
                                       ),
+                                      Obx(() {
+                                        if (controller.heightErrorText.value !=
+                                            null) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 4.0, left: 2.0),
+                                            child: Text(
+                                              controller.heightErrorText.value!,
+                                              style: const TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize: 16),
+                                            ),
+                                          );
+                                        } else {
+                                          return const SizedBox.shrink();
+                                        }
+                                      }),
                                     ],
                                   ),
                                 ),
@@ -628,10 +758,67 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       ),
                     ),
                   ),
-                  if (widget.product.description.isNotEmpty) ...[
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 247, 247, 247),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(20),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Bellik',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppColors.green,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: Fonts.gilroySemiBold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                border: Border.all(color: const Color(0xFFE0E0E0)),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: TextField(
+                                controller: controller.noteController,
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 5,
+                                minLines: 3,
+                                decoration: InputDecoration(
+                                  hintText: 'Bellik giriziň ',
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: const BorderSide(
+                                        color: Color(0xFF9E9E9E)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2),
+                                  ),
+                                ),
+                                onChanged: (value) =>
+                                    controller.note.value = value,
+                              ),
+                            ),
+                          ]),
+                    ),
+                  ),
+                  if (widget.product.description != null &&
+                      widget.product.description!.isNotEmpty) ...[
                     const SizedBox(height: 35),
                     Text(
-                      widget.product.description,
+                      widget.product.description ??
+                          "", // Buradaki '?? ""' kullanımı zaten güvenli.
                       style: const TextStyle(
                         fontSize: 20,
                         color: Color.fromARGB(255, 110, 110, 112),
@@ -650,7 +837,11 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       color: const Color(0xFFE7E7E7),
                       width: 1,
                     ),
-                    children: widget.product.attributes.map((attr) {
+                    children: (controller
+                                .getCategory(widget.product.categoryId)
+                                ?.attributes ??
+                            [])
+                        .map((attr) {
                       return TableRow(
                         children: [
                           Container(
@@ -714,7 +905,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                               itemBuilder: (context, index) {
                                 final product = controller
                                     .filteredProductskopsatylan[index];
-                                return buildProductCard(product);
+                                return ProductCardWidget(product: product);
                               },
                             ),
                           ),
@@ -755,7 +946,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                               itemBuilder: (context, index) {
                                 final product =
                                     controller.filteredProducts[index];
-                                return buildProductCard(product);
+                                return ProductCardWidget(product: product);
                               },
                             ),
                           ),
@@ -772,6 +963,64 @@ class _ProductDetailViewState extends State<ProductDetailView> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Padding bottomNavBar(
+      ProductDetailController controller, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+      ),
+      child: SizedBox(
+        height: 60,
+        width: double.infinity,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            if (controller.canAddToCart()) {
+              final cartItem = controller.getCartItem();
+
+              if (cartItem != null) {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AddToCartDialog(
+                      cartItem: cartItem,
+                      onConfirm: () {
+                        controller.addProductToCart();
+                        Navigator.of(context).pop();
+                      },
+                    );
+                  },
+                );
+              } else {
+                controller.addProductToCart();
+              }
+            }
+          },
+          backgroundColor: AppColors.green,
+          label: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset(
+                "assets/images/sebet.svg",
+                colorFilter:
+                    const ColorFilter.mode(AppColors.white, BlendMode.srcIn),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'Sebede goş',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: Fonts.gilroySemiBold,
+                    color: AppColors.white),
+              ),
+            ],
+          ),
         ),
       ),
     );

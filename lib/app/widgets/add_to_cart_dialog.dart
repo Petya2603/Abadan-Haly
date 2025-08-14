@@ -1,18 +1,23 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:haly/app/data/cart_item_model.dart';
 import 'package:haly/app/theme/theme/theme_colors.dart';
 import 'package:haly/app/theme/theme/app_theme.dart';
+import 'package:haly/app/widgets/add_to_cart_dialog_controller.dart';
 
-class AddToCartDialog extends StatelessWidget {
+class AddToCartDialog extends GetView<AddToCartDialogController> {
   final CartItem cartItem;
   final VoidCallback onConfirm;
 
-  const AddToCartDialog({
-    super.key,
-    required this.cartItem,
-    required this.onConfirm,
-  });
+  AddToCartDialog(
+      {super.key, required this.cartItem, required this.onConfirm}) {
+    Get.put(AddToCartDialogController(cartItem: cartItem),
+        tag: cartItem.product.id.toString());
+  }
+
+  @override
+  String? get tag => cartItem.product.id.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -82,15 +87,15 @@ class AddToCartDialog extends StatelessWidget {
           const SizedBox(height: 8.0),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text(
-              '"${cartItem.product.category.name}" harydyny sebede goşmak isleýärsiňizmi?',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontFamily: Fonts.gilroySemiBold,
-                color: Theme.of(context).textTheme.titleSmall?.color,
-              ),
-            ),
+            child: Obx(() => Text(
+                  '"${controller.categoryName.value}" harydyny sebede goşmak isleýärsiňizmi?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontFamily: Fonts.gilroySemiBold,
+                    color: Theme.of(context).textTheme.titleSmall?.color,
+                  ),
+                )),
           ),
         ],
       ),
@@ -115,6 +120,9 @@ class AddToCartDialog extends StatelessWidget {
             children: <Widget>[
               _buildInfoRow(
                   Icons.shopping_bag_outlined, 'Mukdary: ${cartItem.quantity}'),
+              const SizedBox(height: 12.0),
+              _buildInfoRow(
+                  Icons.aspect_ratio_outlined, 'Kenary: ${cartItem.edge}'),
               const SizedBox(height: 12.0),
               _buildInfoRow(
                   Icons.color_lens_outlined, 'Reňki: ${cartItem.colorName}'),

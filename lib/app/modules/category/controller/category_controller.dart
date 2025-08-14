@@ -29,9 +29,13 @@ class CategoryController extends GetxController
       category.value =
           carpetData.categories.firstWhere((c) => c.name == categoryName);
       products.value = carpetData.products
-          .where((p) => p.category.name == categoryName)
+          .where((p) =>
+              carpetData.categories
+                  .firstWhere((c) => c.id == p.categoryId)
+                  .name ==
+              categoryName)
           .toList();
-      if (category.value != null && category.value!.subcategories!.isNotEmpty) {
+      if (category.value != null && category.value!.subcategories.isNotEmpty) {
         tabController = TabController(
             length: category.value!.subcategories!.length, vsync: this);
         isTabControllerReady.value = true;

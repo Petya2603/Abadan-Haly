@@ -4,14 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/cart_item_model.dart';
 import 'package:haly/app/modules/cart/cart_controller.dart';
+import 'package:haly/app/modules/cart/widgets/cart_item_card_controller.dart';
 import 'package:haly/app/modules/cart/widgets/quantity_button.dart';
 import 'package:haly/app/theme/theme/app_theme.dart';
 
-class CartItemCard extends StatelessWidget {
+class CartItemCard extends GetView<CartItemCardController> {
   final CartItem cartItem;
 
-  CartItemCard({super.key, required this.cartItem});
+  CartItemCard({Key? key, required this.cartItem}) : super(key: key) {
+    Get.put(CartItemCardController(cartItem: cartItem),
+        tag: cartItem.product.id.toString());
+  }
   final CartController cartController = Get.find<CartController>();
+  @override
+  String? get tag => cartItem.product.id.toString();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,11 +50,11 @@ class CartItemCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(cartItem.product.category.name,
+                    Obx(() => Text(controller.categoryName.value,
                         style: const TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
-                            fontFamily: Fonts.gilroySemiBold)),
+                            fontFamily: Fonts.gilroySemiBold))),
                     const SizedBox(height: 6),
                     Text("Kody: ${cartItem.product.code}",
                         style: const TextStyle(
@@ -55,15 +62,19 @@ class CartItemCard extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 6),
-                    Text(
-                        "Ölçegi : ${cartItem.size}",
+                    Text("Kenary: ${cartItem.edge}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,
                             fontFamily: Fonts.gilroyMedium)),
                     const SizedBox(height: 6),
-                    Text(
-                        "Reňki :   ${cartItem.colorName}",
+                    Text("Ölçegi : ${cartItem.size}",
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: Fonts.gilroyMedium)),
+                    const SizedBox(height: 6),
+                    Text("Reňki :   ${cartItem.colorName}",
                         style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w500,

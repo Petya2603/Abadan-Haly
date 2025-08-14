@@ -21,7 +21,7 @@ class SplashContent extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Container(
-            padding: EdgeInsets.only(left: isTablet ? 160 : 20),
+            padding: EdgeInsets.only(left: isTablet ? 220 : 20),
             alignment: Alignment.center,
             child: GradientText(
               text: 'Owadan haly...',
