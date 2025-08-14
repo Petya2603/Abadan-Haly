@@ -27,7 +27,6 @@ class AboutUsView extends StatelessWidget {
                     child:
                         Lottie.asset('assets/images/processing-circle.json')));
           }
-
           if (controller.hasError.value) {
             return LayoutBuilder(
               builder: (context, constraints) {

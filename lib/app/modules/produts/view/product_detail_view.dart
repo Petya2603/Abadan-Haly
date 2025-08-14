@@ -628,16 +628,18 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 35),
-                  Text(
-                    widget.product.description,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Color.fromARGB(255, 110, 110, 112),
-                      fontWeight: FontWeight.w400,
-                      fontFamily: Fonts.gilroyRegular,
+                  if (widget.product.description.isNotEmpty) ...[
+                    const SizedBox(height: 35),
+                    Text(
+                      widget.product.description,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 110, 110, 112),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: Fonts.gilroyRegular,
+                      ),
                     ),
-                  ),
+                  ],
                   const SizedBox(height: 40),
                   Table(
                     columnWidths: const {

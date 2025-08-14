@@ -31,10 +31,16 @@ Widget buildProductCard(Product product) {
         children: [
           Expanded(
             flex: 7,
-            child: Image.file(
-              File(product.figures.first.colors.first.image),
-              fit: BoxFit.cover,
-            ),
+            child: (product.figures.isNotEmpty &&
+                    product.figures.first.colors.isNotEmpty)
+                ? Image.file(
+                    File(product.figures.first.colors.first.image),
+                    fit: BoxFit.cover,
+                  )
+                : Image.asset(
+                    'assets/images/card1.png', // Placeholder image
+                    fit: BoxFit.cover,
+                  ),
           ),
           Expanded(
             flex: 3,
@@ -62,7 +68,10 @@ Widget buildProductCard(Product product) {
                     ),
                   ),
                   Text(
-                    product.figures.first.colors.first.name,
+                    (product.figures.isNotEmpty &&
+                            product.figures.first.colors.isNotEmpty)
+                        ? product.figures.first.colors.first.name
+                        : '',
                     style: const TextStyle(
                       fontWeight: FontWeight.w500,
                       fontFamily: Fonts.gilroyMedium,
