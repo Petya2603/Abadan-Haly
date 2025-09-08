@@ -1,19 +1,19 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:haly/app/data/carpet_model.dart';
+import 'package:haly/app/modules/category/widgets/product_card_widget_controller.dart';
 import 'package:haly/app/theme/theme/app_theme.dart';
 import 'package:haly/app/theme/theme/theme_colors.dart';
-import 'package:haly/app/modules/category/widgets/product_card_widget_controller.dart';
 
 import '../../produts/view/product_detail_view.dart';
 
 class ProductCardWidget extends GetView<ProductCardWidgetController> {
   final Product product;
 
-  ProductCardWidget({Key? key, required this.product}) : super(key: key) {
-    Get.put(ProductCardWidgetController(product: product),
-        tag: product.id.toString());
+  ProductCardWidget({super.key, required this.product}) {
+    Get.put(ProductCardWidgetController(product: product), tag: product.id.toString());
   }
 
   @override
@@ -44,11 +44,10 @@ class ProductCardWidget extends GetView<ProductCardWidgetController> {
           children: [
             Expanded(
               flex: 7,
-              child: (product.figures.isNotEmpty &&
-                      product.figures.first.colors.isNotEmpty)
+              child: (product.figures.isNotEmpty && product.figures.first.colors.isNotEmpty)
                   ? Image.file(
                       File(product.figures.first.colors.first.image),
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                     )
                   : Image.asset(
                       'assets/images/card1.png', // Placeholder image
@@ -81,10 +80,7 @@ class ProductCardWidget extends GetView<ProductCardWidgetController> {
                       ),
                     ),
                     Text(
-                      (product.figures.isNotEmpty &&
-                              product.figures.first.colors.isNotEmpty)
-                          ? product.figures.first.colors.first.name
-                          : '',
+                      (product.figures.isNotEmpty && product.figures.first.colors.isNotEmpty) ? product.figures.first.colors.first.name : '',
                       style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         fontFamily: Fonts.gilroyMedium,

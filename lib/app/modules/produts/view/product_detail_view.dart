@@ -784,7 +784,8 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                             Container(
                               decoration: BoxDecoration(
                                 color: AppColors.white,
-                                border: Border.all(color: const Color(0xFFE0E0E0)),
+                                border:
+                                    Border.all(color: const Color(0xFFE0E0E0)),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: TextField(
@@ -828,25 +829,26 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     ),
                   ],
                   const SizedBox(height: 40),
-                  Table(
-                    columnWidths: const {
-                      0: FlexColumnWidth(2.5),
-                      1: FlexColumnWidth(2.5),
-                    },
-                    border: TableBorder.all(
-                      color: const Color(0xFFE7E7E7),
-                      width: 1,
-                    ),
-                    children: (controller
-                                .getCategory(widget.product.categoryId)
-                                ?.attributes ??
-                            [])
-                        .map((attr) {
-                      return TableRow(
-                        children: [
-                          Container(
-                            color: const Color.fromARGB(255, 247, 250, 252),
-                            child: Padding(
+                  Container(
+                    color: const Color.fromARGB(255, 247, 250, 252),
+                    child: Table(
+                      defaultVerticalAlignment:
+                          TableCellVerticalAlignment.middle,
+                      border: TableBorder.all(color: Color(0xFFE7E7E7)),
+                      columnWidths: const <int, TableColumnWidth>{
+                        0: FlexColumnWidth(2), // Sol sütun için esnek genişlik
+                        1: FlexColumnWidth(2), // Sağ sütun için esnek genişlik
+                      },
+                      children: (controller
+                                  .getCategory(widget.product.categoryId)
+                                  ?.attributes ??
+                              [])
+                          .map((attr) {
+                        return TableRow(
+                          children: [
+                            // Sol Hücre (İsim)
+                            Container(
+                              color: const Color.fromARGB(255, 247, 250, 252),
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
                                 attr.name,
@@ -857,21 +859,23 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              attr.value,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontFamily: Fonts.gilroyRegular,
-                                fontSize: 20,
+                            // Sağ Hücre (Değer)
+                            Container(
+                              color: Colors.white,
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                attr.value,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: Fonts.gilroyRegular,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
+                          ],
+                        );
+                      }).toList(),
+                    ),
                   ),
                   const SizedBox(height: 30),
                   Obx(() {

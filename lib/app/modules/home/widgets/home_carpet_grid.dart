@@ -19,11 +19,7 @@ class HomeCarpetGrid extends StatelessWidget {
     return Expanded(
       child: Obx(() {
         if (controller.isLoading.value) {
-          return Center(
-              child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: Lottie.asset('assets/images/processing-circle.json')));
+          return Center(child: SizedBox(width: 40, height: 40, child: Lottie.asset('assets/images/processing-circle.json')));
         } else if (controller.hasError.value) {
           return const Center(
             child: Padding(
@@ -50,18 +46,13 @@ class HomeCarpetGrid extends StatelessWidget {
                   Text(
                     'Maglumatlary profil sahypasyndan ýükläp almagyňyzy haýyş edýäris.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: Fonts.gilroyMedium),
+                    style: TextStyle(fontSize: 20, color: Colors.grey, fontWeight: FontWeight.w500, fontFamily: Fonts.gilroyMedium),
                   ),
                 ],
               ),
             ),
           );
-        } else if (controller.carpetData.value == null ||
-            controller.carpetData.value!.categories.isEmpty) {
+        } else if (controller.carpetData.value == null || controller.carpetData.value!.categories.isEmpty) {
           return const Center(
             child: Padding(
               padding: EdgeInsets.all(16.0),
@@ -87,11 +78,7 @@ class HomeCarpetGrid extends StatelessWidget {
                   Text(
                     'Maglumatlary profil sahypasyndan ýükläp almagyňyzy haýyş edýäris.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: Fonts.gilroyMedium),
+                    style: TextStyle(fontSize: 20, color: Colors.grey, fontWeight: FontWeight.w500, fontFamily: Fonts.gilroyMedium),
                   ),
                 ],
               ),
@@ -104,7 +91,7 @@ class HomeCarpetGrid extends StatelessWidget {
               crossAxisCount: isTablet ? 2 : 2,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 1.50,
+              childAspectRatio: 1.70,
             ),
             itemCount: categories.length,
             itemBuilder: (context, index) {
@@ -127,9 +114,7 @@ class HomeCarpetGrid extends StatelessWidget {
                   Color.fromRGBO(185, 215, 135, 1),
                 ]),
               ];
-              final gradient = index == 0
-                  ? defaultGradient
-                  : gradients[(index - 1) % gradients.length];
+              final gradient = index == 0 ? defaultGradient : gradients[(index - 1) % gradients.length];
 
               return CarpetCard(
                 title: category.name,
